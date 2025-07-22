@@ -16,7 +16,17 @@ table 50961 "Revenue Recognition Item"
         {
             DataClassification = ToBeClassified;
             Caption = 'Item Type';
-            TableRelation = Item.Description WHERE("Item type template" = const("Item Type Template Enum"::"Secondary Item"), "Charges Status" = CONST("Regular Charges"));
+            TableRelation = Item WHERE("Item type template" = const("Item Type Template Enum"::"Secondary Item"), "Charges Status" = CONST("Regular Charges"));
+
+            trigger OnValidate()
+            var
+                SecondaryItemRec: Record Item;
+            begin
+                // Check if a record with the selected Secondary Item Type exists
+                SecondaryItemRec.SetRange("No.", Rec."Item Type");
+                if SecondaryItemRec.FindFirst() then
+                    "Item Type" := SecondaryItemRec.Description;
+            end;
         }
         field(50102; "Link"; Integer)
         {

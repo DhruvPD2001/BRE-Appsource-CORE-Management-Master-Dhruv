@@ -311,7 +311,8 @@ table 50934 "Payment Schedule2"
 
         TenancyContractRec.SetRange("Contract ID", Rec."Contract ID");
         if TenancyContractRec.FindSet() then
-            if Rec."Secondary Item Type" = 'Security Deposit Amount' then begin
+            if (Rec."Secondary Item Type" = 'Security Deposit Amount') and
+     (Rec."Payment Status" = 'Received') then begin
                 // Update the Balance Amount with Amount Including VAT from current Payment Schedule record
                 if TenancyContractRec."Balance Amount" <> 0 then begin
                     TenancyContractRec."Balance Amount" += Rec."Amount Including VAT";

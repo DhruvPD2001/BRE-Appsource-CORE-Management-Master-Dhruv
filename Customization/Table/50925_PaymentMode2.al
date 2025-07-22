@@ -275,7 +275,6 @@ table 50925 "Payment Mode2"
                         if paymentschedule2.FindSet() then begin
                             repeat
                                 paymentschedule2.Validate("Payment Status", Format(Rec."Payment Status"));
-                                paymentschedule2."Payment Status" := Format(Rec."Payment Status");
                                 paymentschedule2.Modify();
                             until paymentschedule2.Next() = 0;
 
