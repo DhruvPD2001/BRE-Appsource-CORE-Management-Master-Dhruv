@@ -253,23 +253,13 @@ tableextension 50102 ItemExtension extends Item
             Caption = 'Item Type';
             DataClassification = ToBeClassified;
         }
-        field(50141; "Service Type"; code[20])
-        {
-            Caption = 'Service Type';
-            DataClassification = ToBeClassified;
-            TableRelation = "Service Category Master"."Service Category ID";
-        }
+
         field(50142; "Item Template"; Enum "Item Template Enum")
         {
             Caption = 'Item Template';
             DataClassification = ToBeClassified;
         }
-        field(50143; "Service category"; code[20])
-        {
-            Caption = 'Service category';
-            DataClassification = ToBeClassified;
-            TableRelation = "Vendor Category Master".ID;
-        }
+
         field(50144; "Item type template"; Enum "Item Type Template Enum")
         {
             Caption = 'Item type template';

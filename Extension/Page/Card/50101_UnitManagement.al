@@ -355,48 +355,7 @@ pageextension 50101 Items extends "Item Card"
         }
         addafter("Item Category Code")
         {
-            group("Facility Management")
-            {
-                ShowCaption = false;
-                Visible = isVenderService;
-                field("Service category"; Rec."Service category")
-                {
-                    ApplicationArea = All;
-                    Lookup = true;
-                    NotBlank = true;
-                    ShowMandatory = true;
-                    trigger OnLookup(var Text: Text): Boolean
-                    var
-                        VendorCategory: Record "Vendor Category Master";
-                        VendorCategoryList: Page "Vendor Category Master List";
-                    begin
-                        // Set the lookup page to show dropdown style
-                        VendorCategoryList.LookupMode(true);
-                        VendorCategoryList.SetRecord(VendorCategory);
 
-                        // If current value exists, position on that record
-                        if Rec."Service category" <> '' then begin
-                            VendorCategory.SetRange(Name, Rec."Service category");
-                            if VendorCategory.FindFirst() then
-                                VendorCategoryList.SetRecord(VendorCategory);
-                        end;
-
-                        if VendorCategoryList.RunModal() = Action::LookupOK then begin
-                            VendorCategoryList.GetRecord(VendorCategory);
-                            Text := VendorCategory.Name;
-                            exit(true);
-                        end;
-                        exit(false);
-                    end;
-                }
-                field("Service Type"; Rec."Service Type")
-                {
-                    ApplicationArea = All;
-                    Lookup = true;
-                    NotBlank = true;
-                    ShowMandatory = true;
-                }
-            }
         }
 
     }
