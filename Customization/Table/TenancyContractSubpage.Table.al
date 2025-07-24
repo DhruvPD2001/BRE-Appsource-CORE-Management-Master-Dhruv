@@ -1,8 +1,6 @@
 table 50938 "Tenancy Contract Subpage"
 {
     DataClassification = ToBeClassified;
-
-
     fields
     {
         field(50100; "ContractID"; Integer)
@@ -10,65 +8,49 @@ table 50938 "Tenancy Contract Subpage"
             DataClassification = ToBeClassified;
             Caption = 'Contract ID';
         }
-
         field(50101; "Secondary Item Type"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Secondary Item';
             TableRelation = Item where("Item Type Template" = const("Item Type Template Enum"::"Secondary Item"));
             Editable = false;
-            //TableRelation = "Secondary Item"."Secondary Item Type" WHERE("Payment System" = const("Installment"));
-
             trigger OnValidate()
             var
                 SecondaryItemRec: Record Item;
             begin
-                // Check if a record with the selected Secondary Item Type exists
                 SecondaryItemRec.SetRange("No.", Rec."Secondary Item Type");
                 if SecondaryItemRec.FindFirst() then begin
                     "Secondary Item Type" := SecondaryItemRec.Description;
-                    // Retrieve the VAT % from the Secondary Item record
                     "VAT %" := SecondaryItemRec."VAT %";
-                end else begin
-                    // Clear the VAT % field if no matching record is found
+                end else
                     "VAT %" := 0;
-                end;
             end;
-
-
         }
-
         field(50102; "Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Amount';
             Editable = false;
-
             trigger OnValidate()
             begin
                 CalcVATAndTotal();
             end;
-
         }
-
         field(50103; "VAT %"; Option)
         {
             OptionMembers = "0%","5%";
             Caption = 'VAT %';
             Editable = false;
-
             trigger OnValidate()
             begin
                 CalcVATAndTotal();
             end;
         }
-
         field(50104; "VAT Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'VAT Amount';
             Editable = false;
-
             trigger OnValidate()
             var
                 vatPer: Integer;
@@ -77,83 +59,59 @@ table 50938 "Tenancy Contract Subpage"
                     vatPer := 5
                 else
                     vatPer := 0;
-
                 "VAT Amount" := Amount * (vatPer / 100);
             end;
-
         }
-
         field(50105; "Amount Including VAT"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Amount Including VAT';
             Editable = false;
-
             trigger OnValidate()
             begin
                 "Amount Including VAT" := Amount + "VAT Amount";
             end;
         }
-
         field(50106; "Start Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Start Date';
             Editable = false;
         }
-
         field(50107; "End Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'End Date';
             Editable = false;
         }
-
-        // field(50108; "No. of Installments"; Integer)
-        // {
-        //     DataClassification = ToBeClassified;
-        //     Caption = 'No. of Installments';
-        // }
-
         field(50109; "Generate Payment Schedule"; Text[250])
         {
             DataClassification = ToBeClassified;
             Caption = 'Generate Payment Schedule';
             InitValue = 'Generate Payment Schedule';
             Editable = false;
-
         }
         field(50110; "Entry No."; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
         }
-
         field(50111; "Payment Type"; Option)
         {
             OptionMembers = "","One Time Payment","Installment";
             Caption = 'Payment Type';
-
-
         }
-
-
         field(50113; "Link"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Revenue Structure Link';
             Editable = false;
-            //InitValue = 'link';
-
-
         }
-
         field(50114; "TenantID"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant ID';
         }
-
         field(50115; "ProposalID"; Integer)
         {
             DataClassification = ToBeClassified;
@@ -163,10 +121,8 @@ table 50938 "Tenancy Contract Subpage"
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract Renewal ID';
-
         }
     }
-
     keys
     {
         key(Key1; "Entry No.", ContractID)
@@ -174,12 +130,6 @@ table 50938 "Tenancy Contract Subpage"
             Clustered = true;
         }
     }
-
-
-
-
-
-    //--------------Method to calculate VAT Amount and Amount Including VAT-----------------//
     local procedure CalcVATAndTotal()
     var
         vatPer: Integer;
@@ -188,10 +138,7 @@ table 50938 "Tenancy Contract Subpage"
             vatPer := 5
         else
             vatPer := 0;
-
         "VAT Amount" := Amount * (vatPer / 100);
         "Amount Including VAT" := Amount + "VAT Amount";
     end;
-
-    //--------------Method to calculate VAT Amount and Amount Including VAT-----------------//
 }

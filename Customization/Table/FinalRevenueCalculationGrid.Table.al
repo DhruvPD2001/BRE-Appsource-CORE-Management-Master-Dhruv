@@ -2,7 +2,6 @@ table 50945 "Final Revenue Calculation Grid"
 {
     DataClassification = ToBeClassified;
     Caption = 'Final Revenue Calculation Grid';
-
     fields
     {
         field(50100; "Contract ID"; Integer)
@@ -69,7 +68,6 @@ table 50945 "Final Revenue Calculation Grid"
             Caption = 'Difference Amount Incl.';
             DecimalPlaces = 2 : 2;
         }
-
         field(50112; "Entry No."; Integer)
         {
             DataClassification = ToBeClassified;
@@ -94,7 +92,6 @@ table 50945 "Final Revenue Calculation Grid"
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract Year On Termination Date';
-
         }
         field(50117; "Annual Rent Amount TermiYear"; Decimal)
         {
@@ -105,7 +102,6 @@ table 50945 "Final Revenue Calculation Grid"
         {
             DataClassification = ToBeClassified;
             Caption = 'Total No. Of Days(Termination Year)';
-
         }
         field(50119; "Total Original Amount"; Decimal)
         {
@@ -119,7 +115,6 @@ table 50945 "Final Revenue Calculation Grid"
             Caption = 'Total Original VAT';
             FieldClass = FlowField;
             CalcFormula = sum("Final Revenue Calculation Grid"."Original VAT" where("Contract ID" = field("Contract ID")));
-
         }
         field(50121; "Total Orgininal AmountIncl.VAT"; Decimal)
         {
@@ -128,7 +123,6 @@ table 50945 "Final Revenue Calculation Grid"
             DecimalPlaces = 2 : 2;
             CalcFormula = sum("Final Revenue Calculation Grid"."Original Amount Incl." where("Contract ID" = field("Contract ID")));
         }
-
         field(50122; "Total Revised Amount"; Decimal)
         {
             Caption = 'Total Revised Amount';
@@ -142,7 +136,6 @@ table 50945 "Final Revenue Calculation Grid"
             FieldClass = FlowField;
             DecimalPlaces = 2 : 2;
             CalcFormula = sum("Final Revenue Calculation Grid"."Revised VAT" where("Contract ID" = field("Contract ID")));
-
         }
         field(50124; "Total Revised AmountIncl.VAT"; Decimal)
         {
@@ -164,7 +157,6 @@ table 50945 "Final Revenue Calculation Grid"
             FieldClass = FlowField;
             DecimalPlaces = 2 : 2;
             CalcFormula = sum("Final Revenue Calculation Grid"."Difference VAT" where("Contract ID" = field("Contract ID")));
-
         }
         field(50127; "Total DifferenceAmountIncl.VAT"; Decimal)
         {
@@ -172,18 +164,13 @@ table 50945 "Final Revenue Calculation Grid"
             FieldClass = FlowField;
             DecimalPlaces = 2 : 2;
             CalcFormula = sum("Final Revenue Calculation Grid"."Difference Amount Incl." where("Contract ID" = field("Contract ID")));
-
         }
         field(50128; "Payment Type"; Text[250])
         {
             Caption = 'Payment Type';
             DataClassification = ToBeClassified;
         }
-
-
-
     }
-
     keys
     {
         key(PK; "Contract ID", "Entry No.")

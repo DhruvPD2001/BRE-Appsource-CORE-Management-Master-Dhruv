@@ -1,7 +1,6 @@
 table 50927 "Vendor Contract Document"
 {
     DataClassification = ToBeClassified;
-
     fields
     {
         field(50100; "Vendor ID"; Code[20])
@@ -61,7 +60,6 @@ table 50927 "Vendor Contract Document"
             Editable = false;
             AutoIncrement = true;
         }
-
         field(50110; "Invoice Document URL"; Text[2000])
         {
             DataClassification = ToBeClassified;
@@ -73,7 +71,6 @@ table 50927 "Vendor Contract Document"
             Caption = 'Receipt Document URL';
         }
     }
-
     keys
     {
         key(PK; "Entry No.", "Vendor ID")

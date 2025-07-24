@@ -1,7 +1,6 @@
 table 50957 "Credit Note Approval"
 {
     DataClassification = ToBeClassified;
-
     fields
     {
         field(50100; "ID"; Integer)
@@ -20,7 +19,6 @@ table 50957 "Credit Note Approval"
             DataClassification = ToBeClassified;
             Caption = 'Tenant ID';
         }
-
         field(50103; "Contract Start Date"; Date)
         {
             DataClassification = ToBeClassified;
@@ -35,7 +33,6 @@ table 50957 "Credit Note Approval"
         {
             DataClassification = ToBeClassified;
             Caption = 'Credit Note Amount';
-
         }
         field(50116; "Tenant Name"; Text[250])
         {
@@ -59,10 +56,7 @@ table 50957 "Credit Note Approval"
             DataClassification = ToBeClassified;
             Caption = 'FC ID';
         }
-
     }
-
-
     keys
     {
         key(PK; "ID")

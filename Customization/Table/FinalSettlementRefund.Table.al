@@ -1,10 +1,8 @@
 table 50923 "FinalSettlementRefund"
 {
     DataClassification = ToBeClassified;
-
     fields
     {
-
         field(50100; "FC ID"; Integer)
         {
             DataClassification = ToBeClassified;
@@ -15,13 +13,11 @@ table 50923 "FinalSettlementRefund"
             DataClassification = ToBeClassified;
             Caption = 'Refund Contract ID';
         }
-
         field(50102; "Net Refund to the Tenant"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Net Refund to the Tenant';
         }
-
         field(50103; "Refund Processed"; Decimal)
         {
             DataClassification = ToBeClassified;
@@ -32,13 +28,11 @@ table 50923 "FinalSettlementRefund"
             DataClassification = ToBeClassified;
             Caption = 'Balance Refundable';
         }
-
         field(50105; "Refund Status"; Option)
         {
             OptionMembers = "Pending","Paid";
             Caption = 'Refund Status';
         }
-
         field(50106; "Refund Total Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
@@ -60,13 +54,11 @@ table 50923 "FinalSettlementRefund"
             OptionMembers = "Scheduled","Due","Overdue","Paid","Cancelled";
             Caption = 'Payment Status';
         }
-
         field(50110; "Refund Cheque No."; Text[300])
         {
             DataClassification = ToBeClassified;
             Caption = 'Cheque No.';
         }
-
         field(50111; "Payment Receipt/Proof"; Text[250])
         {
             DataClassification = ToBeClassified;
@@ -81,27 +73,16 @@ table 50923 "FinalSettlementRefund"
         field(50119; "Deposit Bank"; Code[100])
         {
             Caption = 'Deposit Bank';
-            TableRelation = "Bank Account"; // You can add a TableRelation here if required
-
+            TableRelation = "Bank Account";
             trigger OnValidate()
             var
                 BankAccountRec: Record "Bank Account";
             begin
-                // When a Deposit Bank is selected (i.e., a Bank Account No. is provided)
-                if "Deposit Bank" <> '' then begin
-                    // Attempt to find the Bank Account using the No. from the Deposit Bank
+                if "Deposit Bank" <> '' then
                     if BankAccountRec.Get("Deposit Bank") then
-                        "Deposit Bank" := BankAccountRec."Name"; // Populating the Name field from the Bank Account table
-                end;
+                        "Deposit Bank" := BankAccountRec."Name";
             end;
         }
-
-        // field(50113; "Entry No."; Integer)
-        // {
-        //     DataClassification = ToBeClassified;
-        //     AutoIncrement = true;
-        // }
-
         field(50114; "Tenant ID"; Code[50])
         {
             DataClassification = ToBeClassified;
@@ -120,15 +101,6 @@ table 50923 "FinalSettlementRefund"
             DataClassification = ToBeClassified;
         }
     }
-
-    // keys
-    // {
-    //     key(Key1; "Entry No.", "FC ID")
-    //     {
-    //         Clustered = true;
-    //     }
-    // }
-
     keys
     {
         key(PK; "FC ID")
@@ -136,15 +108,10 @@ table 50923 "FinalSettlementRefund"
             Clustered = true;
         }
     }
-
     trigger OnInsert()
     begin
-
-        if Rec."Refund Payment Mode" = 'Cheque' then begin
+        if Rec."Refund Payment Mode" = 'Cheque' then
             if DelChr(Rec."Refund Cheque No.", '=', ' ') = '' then
                 Error('Cheque Number cannot be blank when Payment Mode is Cheque.');
-        end;
     end;
-
 }
-

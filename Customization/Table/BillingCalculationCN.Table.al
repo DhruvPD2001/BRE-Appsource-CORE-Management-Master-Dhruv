@@ -1,15 +1,8 @@
 table 50958 "Billing Calculation CN"
 {
     DataClassification = ToBeClassified;
-
     fields
     {
-        // field(50100; "ID"; Integer)
-        // {
-        //     DataClassification = ToBeClassified;
-        //     Caption = 'ID';
-        //     Editable = false;
-        // }
         field(50101; "Contract ID"; Integer)
         {
             DataClassification = ToBeClassified;
@@ -20,7 +13,6 @@ table 50958 "Billing Calculation CN"
             DataClassification = ToBeClassified;
             Caption = 'Tenant ID';
         }
-
         field(50103; "Item"; Text[100])
         {
             DataClassification = ToBeClassified;
@@ -55,23 +47,17 @@ table 50958 "Billing Calculation CN"
         }
         field(50109; "Total Amount"; Decimal)
         {
-            // DataClassification = ToBeClassified;
             Caption = 'Total Amount';
             Editable = false;
             FieldClass = FlowField;
             CalcFormula = sum("Billing Calculation CN"."Amount Including VAT" where("Contract ID" = field("Contract ID"), "Tenant ID" = field("Tenant ID")));
         }
-
         field(50110; "Credit Note ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Credit Note ID';
         }
-
-
     }
-
-
     keys
     {
         key(PK; "Entry No.", "Contract ID")
