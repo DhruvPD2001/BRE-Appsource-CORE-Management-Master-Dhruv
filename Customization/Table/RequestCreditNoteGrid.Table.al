@@ -2,7 +2,6 @@ table 50968 "Request Credit Note Grid"
 {
     DataClassification = ToBeClassified;
     Caption = 'Request Credit Note Grid';
-
     fields
     {
         field(50958; "Request No."; Code[20])
@@ -39,13 +38,11 @@ table 50968 "Request Credit Note Grid"
         {
             DataClassification = ToBeClassified;
             Caption = 'Current Rent Amount';
-
         }
         field(50972; "Total Reduction"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Total Reduction';
-
         }
         field(50965; "Line No."; Integer)
         {
@@ -82,45 +79,25 @@ table 50968 "Request Credit Note Grid"
         {
             DataClassification = ToBeClassified;
             Caption = 'Charges';
-
         }
-
-
-
-
-
-
     }
-
     keys
     {
         key(Key1; "Line No.", "Request No.")
         {
             Clustered = true;
         }
-
-
     }
     trigger OnInsert()
-
     var
         requestcreditnote: Record "Request Credit Note";
     begin
-
         requestcreditnote.SetRange("Contract ID", Rec."Contract ID");
         if requestcreditnote.FindFirst() then begin
             Rec."Customer Name" := requestcreditnote."Customer Name";
             Rec."Tenant No." := requestcreditnote."Tenant No.";
             Rec."Property Classification" := requestcreditnote."Property Classification";
-        end else begin
+        end else
             Error('No Request Credit Note found for the specified Request No.');
-        end;
-
     end;
-
-
-
-
-
-
 }

@@ -1,7 +1,6 @@
 table 50966 "Revenue Allocation Approval"
 {
     DataClassification = ToBeClassified;
-
     fields
     {
         field(50100; "RA_ID"; Integer)
@@ -21,7 +20,6 @@ table 50966 "Revenue Allocation Approval"
             DataClassification = ToBeClassified;
             Caption = 'Financial Year';
         }
-
         field(50103; "Month"; Option)
         {
             OptionMembers = " ",January,February,March,April,May,June,July,August,September,October,November,December;
@@ -33,10 +31,7 @@ table 50966 "Revenue Allocation Approval"
             Caption = 'Status';
             OptionMembers = "Pending","Approved","Reject";
         }
-
     }
-
-
     keys
     {
         key(PK; "RA_ID")

@@ -3,7 +3,6 @@ table 53759 "Vendor Profile Template"
     Caption = 'Vendor Profile Template';
     TableType = Normal;
     DataClassification = ToBeClassified;
-
     fields
     {
         field(53100; Code; Code[50])
@@ -25,7 +24,6 @@ table 53759 "Vendor Profile Template"
             TableRelation = "No. Series";
         }
     }
-
     keys
     {
         key(PK; Code)
