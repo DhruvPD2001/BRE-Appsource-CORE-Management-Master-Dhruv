@@ -1,10 +1,8 @@
 table 50964 "Brokerage Calculation Sub"
 {
     DataClassification = ToBeClassified;
-
     fields
     {
-
         field(50100; "Owner ID"; Integer)
         {
             DataClassification = ToBeClassified;
@@ -29,14 +27,12 @@ table 50964 "Brokerage Calculation Sub"
             Caption = 'Contract ID';
             Editable = false;
         }
-
         field(50104; "Start Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Start Date';
             Editable = false;
         }
-
         field(50105; "End Date"; Date)
         {
             DataClassification = ToBeClassified;
@@ -107,7 +103,6 @@ table 50964 "Brokerage Calculation Sub"
             DataClassification = ToBeClassified;
             Caption = 'Action Date';
         }
-
         field(50117; "Entry No."; Integer)
         {
             DataClassification = ToBeClassified;
@@ -129,7 +124,6 @@ table 50964 "Brokerage Calculation Sub"
             FieldClass = FlowField;
             CalcFormula = sum("Brokerage Calculation Sub"."Brokerage Amount" where("ID" = field("ID"), "Owner ID" = field("Owner ID")));
         }
-
         field(50120; "Percentage"; Integer)
         {
             DataClassification = ToBeClassified;
@@ -156,17 +150,13 @@ table 50964 "Brokerage Calculation Sub"
             OptionMembers = " ","Revenue","Collection","Annual Rent","Monthly Rent";
             Editable = false;
         }
-
         field(50124; "Base Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Base Amount';
             Editable = false;
         }
-
     }
-
-
     keys
     {
         key(PK; "Entry No.", "ID")
@@ -174,13 +164,10 @@ table 50964 "Brokerage Calculation Sub"
             Clustered = true;
         }
     }
-
     fieldgroups
     {
         fieldgroup(DropDown; "Property ID", "Owner ID")
         {
-
         }
     }
-
 }

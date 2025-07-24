@@ -1,8 +1,6 @@
 table 50961 "Revenue Recognition Item"
 {
-
     DataClassification = ToBeClassified;
-
     fields
     {
         field(50100; "RR_No."; Integer)
@@ -11,18 +9,15 @@ table 50961 "Revenue Recognition Item"
             Caption = 'No.';
             Editable = false;
         }
-
         field(50101; "Item Type"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Item Type';
             TableRelation = Item WHERE("Item type template" = const("Item Type Template Enum"::"Secondary Item"), "Charges Status" = CONST("Regular Charges"));
-
             trigger OnValidate()
             var
                 SecondaryItemRec: Record Item;
             begin
-                // Check if a record with the selected Secondary Item Type exists
                 SecondaryItemRec.SetRange("No.", Rec."Item Type");
                 if SecondaryItemRec.FindFirst() then
                     "Item Type" := SecondaryItemRec.Description;
@@ -40,14 +35,11 @@ table 50961 "Revenue Recognition Item"
             AutoIncrement = true;
         }
     }
-
     keys
     {
         key(Key1; "Entry No.")
         {
             Clustered = true;
         }
-
     }
-
 }
