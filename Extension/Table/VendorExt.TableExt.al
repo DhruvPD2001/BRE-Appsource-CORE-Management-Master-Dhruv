@@ -1,9 +1,7 @@
-tableextension 50301 VendorExtention extends Vendor
+tableextension 50301 "Vendor Ext" extends Vendor
 {
-
     fields
     {
-
         field(50114; "Country"; Text[100])
         {
             DataClassification = ToBeClassified;
@@ -21,7 +19,6 @@ tableextension 50301 VendorExtention extends Vendor
             Caption = 'Emirate';
             TableRelation = Emirate."Emirate Name"
                  where("Country Code" = field(Country));
-
             trigger OnValidate()
             begin
                 "Community" := '';
@@ -31,12 +28,9 @@ tableextension 50301 VendorExtention extends Vendor
         {
             DataClassification = ToBeClassified;
             Caption = 'Community';
-            // Filter the Property Type values based on the selected Primary Classification
             TableRelation = Community."Community Name"
                  where("Emirate Name" = field(Emirate));
-
         }
-
         field(50100; "Vendor Category"; Text[100])
         {
             DataClassification = ToBeClassified;
@@ -44,6 +38,4 @@ tableextension 50301 VendorExtention extends Vendor
             TableRelation = "Vendor Category"."Vendor Category Type";
         }
     }
-
-
 }

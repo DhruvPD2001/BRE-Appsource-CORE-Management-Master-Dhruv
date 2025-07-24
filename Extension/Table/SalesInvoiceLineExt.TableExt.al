@@ -1,4 +1,4 @@
-tableextension 50505 "PostedSalesInvoiceLine" extends "Sales Invoice Line"
+tableextension 50505 "Sales Invoice Line Ext" extends "Sales Invoice Line"
 {
     fields
     {
@@ -11,7 +11,6 @@ tableextension 50505 "PostedSalesInvoiceLine" extends "Sales Invoice Line"
         {
             Caption = 'FC ID';
             DataClassification = ToBeClassified;
-
         }
     }
 }

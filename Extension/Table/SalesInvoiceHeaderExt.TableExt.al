@@ -1,4 +1,4 @@
-tableextension 50502 SalesInvoiceHeaderExt extends "Sales Header"
+tableextension 50504 "Sales Invoice Header Ext" extends "Sales Invoice Header"
 {
     fields
     {
@@ -6,15 +6,11 @@ tableextension 50502 SalesInvoiceHeaderExt extends "Sales Header"
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract ID';
-
-
         }
-
         field(50102; "Property Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Property Name';
-
         }
         field(50103; "Unit Name"; Text[100])
         {
@@ -52,17 +48,17 @@ tableextension 50502 SalesInvoiceHeaderExt extends "Sales Header"
             DataClassification = ToBeClassified;
             Caption = 'Contract Period';
         }
-        field(50110; "Reason for Rejection"; Text[1000])
+        field(50110; "Reason For Rejection"; Text[1000])
         {
             DataClassification = ToBeClassified;
-            Caption = 'Reason for Rejection';
+            Caption = 'Reason For Rejection';
         }
         field(50111; "View Invoice"; Text[250])
         {
             DataClassification = ToBeClassified;
             Caption = 'View Invoice';
         }
-        field(50112; "View Document URL"; Text[1000])
+        field(50112; "View Document URL"; Text[250])
         {
             DataClassification = ToBeClassified;
             Caption = 'View Document URL';
@@ -77,47 +73,41 @@ tableextension 50502 SalesInvoiceHeaderExt extends "Sales Header"
             Caption = 'FC ID';
             DataClassification = ToBeClassified;
         }
-        field(50115; "Property Classification"; Text[40])
-        {
-            DataClassification = ToBeClassified;
-            Caption = 'Property Classification';
-        }
-        field(50116; "Approval Status for CreditNote"; Option)
-        {
-            DataClassification = ToBeClassified;
-            Caption = 'Approval Status';
-            OptionMembers = " ",Approved,Rejected;
-        }
-        field(50117; "Rejection Reason CreditNote"; Text[1000])
-        {
-            DataClassification = ToBeClassified;
-            Caption = 'Rejection Reason';
-        }
-        field(50118; "Credit Memo Document"; Text[250])
-        {
-            DataClassification = ToBeClassified;
-            Caption = 'Credit Memo ID';
-        }
-        field(50119; "Credit Memo URL"; Text[1000])
-        {
-            DataClassification = ToBeClassified;
-            Caption = 'Credit Memo No';
-        }
-        field(50120; "Contract Amount"; Decimal)
-        {
-            DataClassification = ToBeClassified;
-            Caption = 'Contract Amount';
-
-        }
-        field(50121; "Terminated Credit Note"; Boolean)
-        {
-            DataClassification = ToBeClassified;
-            Caption = 'Terminated Credit Note';
-        }
-
     }
+    trigger OnAfterInsert()
+    var
+        paymentschedule2: Record "Payment Schedule2";
+        additionalcharges: Record "Additional Charges Sub";
+        billingcalculationgrid: Record "Final Billing Calculation Grid";
+    begin
+        paymentschedule2.SetRange("Contract ID", Rec."Contract ID");
+        paymentschedule2.SetRange("Invoice ID", Rec."Pre-Assigned No.");
+        if paymentschedule2.FindSet() then
+            repeat
+                paymentschedule2."Invoice ID" := Rec."No.";
+                paymentschedule2.Modify();
+            until paymentschedule2.Next() = 0;
 
+        additionalcharges.SetRange("Contract ID", Rec."Contract ID");
+        additionalcharges.SetRange("Invoiced ID", Rec."Pre-Assigned No.");
+        if additionalcharges.FindSet() then
+            repeat
+                additionalcharges."Invoiced ID" := Rec."No.";
+                additionalcharges."Posted Invoice ID" := Rec."No.";
+                additionalcharges."Invoice Document" := Rec."View Invoice";
+                additionalcharges."Invoice Document URL" := Rec."View Document URL";
+                additionalcharges.Modify();
+            until additionalcharges.Next() = 0;
+
+        billingcalculationgrid.SetRange("Contract ID", Rec."Contract ID");
+        billingcalculationgrid.SetRange("Invoice ID", Rec."Pre-Assigned No.");
+        if billingcalculationgrid.FindSet() then
+            repeat
+                billingcalculationgrid."Invoice ID" := Rec."No.";
+                billingcalculationgrid."Posted Invoice ID" := Rec."No.";
+                billingcalculationgrid."Invoice Document" := Rec."View Invoice";
+                billingcalculationgrid."Invoice Document URL" := Rec."View Document URL";
+                billingcalculationgrid.Modify();
+            until billingcalculationgrid.Next() = 0;
+    end;
 }
-
-
-

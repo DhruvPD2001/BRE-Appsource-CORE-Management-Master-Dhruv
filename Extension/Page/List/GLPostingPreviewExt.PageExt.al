@@ -15,12 +15,9 @@ pageextension 50108 "G/L Posting Preview Ext" extends "G/L Posting Preview"
                 trigger OnAction()
                 var
                     GenJournal: Record "Gen. Journal Line";
-                    GeneralLedgerSetup: Record "General Ledger Setup";
-                    CurrentJnlBatchName: Code[20];
                 begin
-                    if GenJournal.FindSet() then begin
+                    if GenJournal.FindSet() then
                         GenJournal.SendToPosting(Codeunit::"Gen. Jnl.-Post");
-                    end;
                 end;
             }
         }

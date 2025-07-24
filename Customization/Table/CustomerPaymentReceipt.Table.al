@@ -14,11 +14,9 @@ table 50115 "Customer Payment Receipt"
             DataClassification = ToBeClassified;
             Editable = false;
         }
-        field(50102; "Account Type"; Option)
+        field(50102; "Account Type"; Enum "Gen. Journal Account Type")
         {
             DataClassification = CustomerContent;
-            OptionCaption = 'G/L Account,Customer,Vendor,Bank Account,Fixed Asset,IC Partner,Employee,Allocation Account'; // Include an empty option for flexibility
-            OptionMembers = "G/L Account",Customer,Vendor,"Bank Account","Fixed Asset","IC Partner",Employee,"Allocation Account";
         }
         field(50103; "Account No."; Code[20])
         {

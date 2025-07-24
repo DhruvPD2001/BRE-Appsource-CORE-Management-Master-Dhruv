@@ -1,4 +1,4 @@
-tableextension 50503 SalesLineExt extends "Sales Line"
+tableextension 50503 "Sales Line Ext" extends "Sales Line"
 {
     fields
     {
@@ -10,8 +10,6 @@ tableextension 50503 SalesLineExt extends "Sales Line"
         {
             Caption = 'FC ID';
             DataClassification = ToBeClassified;
-
         }
     }
-
 }
