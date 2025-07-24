@@ -15,14 +15,17 @@ page 50504 "Unit Document SubPage"
                 field("Document Type"; Rec."Document Type")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the type of document associated with the unit.';
                 }
                 field("Document Name"; Rec."Document Name")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the name of the document associated with the unit.';
                 }
                 field("Upload Document"; Rec."Upload Document")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the uploaded document for the unit.';
                     Editable = false;
                     DrillDown = true;
                     trigger OnDrillDown()
@@ -35,8 +38,8 @@ page 50504 "Unit Document SubPage"
                         folderName := 'UnitDocuments';
                         fileName := azureBlobUploader.ValidateDocument(uploadResult, folderName);
                         if fileName <> '' then begin
-                            Rec."Upload Document" := fileName;
-                            Rec."View Document URL" := uploadResult;
+                            Rec."Upload Document" := CopyStr(fileName, 1, StrLen(fileName));
+                            Rec."View Document URL" := CopyStr(uploadResult, 1, StrLen(uploadResult));
                             Rec.Modify();
                             Message('File uploaded successfully: %1', fileName);
                         end;
@@ -46,26 +49,25 @@ page 50504 "Unit Document SubPage"
                 field("View & Download"; Rec."View & Download")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'View or download the uploaded document.';
                     Editable = false;
                     DrillDown = true;
                     trigger OnDrillDown()
                     var
                         FileURL: Text;
                     begin
-                        // Get the URL of the uploaded document
                         FileURL := Rec."View Document URL";
 
-                        // Check if the file URL is not empty
                         if FileURL = '' then
                             Error('No document is available to view.');
 
-                        // Open the file URL in the browser (new tab)
                         OpenFileInBrowser(FileURL);
                     end;
                 }
                 field(Download; Rec.Download)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Download the uploaded document.';
                     Editable = false;
                     DrillDown = true;
                     Visible = false;
@@ -74,40 +76,20 @@ page 50504 "Unit Document SubPage"
                     var
                         DownloadUrl: Text;
                     begin
-                        // Get the URL of the uploaded document
                         DownloadUrl := Rec."View Document URL";
 
-                        // Check if the URL is not empty
                         if DownloadUrl = '' then
                             Error('No document is available to download.');
 
-                        // Open the document URL in the browser (this triggers a download)
                         Hyperlink(DownloadUrl);
-
                     end;
                 }
             }
         }
     }
 
-    actions
-    {
-        area(Processing)
-        {
-            action(ActionName)
-            {
-
-                trigger OnAction()
-                begin
-
-                end;
-            }
-        }
-    }
-
     local procedure OpenFileInBrowser(URL: Text)
     begin
-        // Use the Hyperlink method to open the file in the browser
         if URL <> '' then
             Hyperlink(URL)
         else
@@ -126,5 +108,4 @@ page 50504 "Unit Document SubPage"
 
     var
         unitId: code[20];
-        documentattachment: Codeunit UploadAttachment;
 }

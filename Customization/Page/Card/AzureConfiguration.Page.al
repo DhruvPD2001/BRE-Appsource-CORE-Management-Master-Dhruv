@@ -19,13 +19,11 @@ page 50505 "Azure Configuration"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the name of your Azure Storage account';
                 }
-
                 field("Default Container"; Rec."Default Container")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the default container name to use for uploads';
                 }
-
                 field("SAS URL"; Rec."SAS URL")
                 {
                     ApplicationArea = All;
@@ -33,7 +31,6 @@ page 50505 "Azure Configuration"
                     Visible = false;
                 }
             }
-
             group("Azure AD Authentication")
             {
                 Caption = 'Azure AD Authentication';
@@ -43,13 +40,11 @@ page 50505 "Azure Configuration"
                     ApplicationArea = All;
                     ToolTip = 'The Azure AD Tenant ID';
                 }
-
                 field("Client ID"; Rec."Client ID")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The Client ID (Application ID) from your Azure AD app registration';
                 }
-
                 field("Client Secret"; Rec."Client Secret")
                 {
                     ApplicationArea = All;
@@ -84,7 +79,6 @@ page 50505 "Azure Configuration"
                     if not Confirm('Do you want to test the Azure connection?') then
                         exit;
 
-                    // Create a small test file
                     TempBlob.CreateOutStream(OutStream);
                     OutStream.WriteText('This is a test file to validate Azure blob storage connection.');
                     TempBlob.CreateInStream(InStream);
@@ -93,7 +87,7 @@ page 50505 "Azure Configuration"
                     TestFileName := ConvertStr(TestFileName, ' :', '__');
 
                     TestFolderName := 'TestFolder';
-                    // Attempt to upload test file
+
                     Result := AzureADBlob.UploadDocumentToBlob(InStream, TestFileName, TestFolderName);
 
                     if Result <> '' then

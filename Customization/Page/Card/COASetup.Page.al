@@ -44,7 +44,7 @@ page 50524 "COA Setup"
 
     trigger OnOpenPage()
     begin
-        Rec.Reset;
+        Rec.Reset();
         if not Rec.Get() then begin
             Rec.Init();
             Rec.Insert();
