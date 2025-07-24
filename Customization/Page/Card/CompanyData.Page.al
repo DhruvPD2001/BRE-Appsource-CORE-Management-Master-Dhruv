@@ -4,6 +4,7 @@ page 50701 "Company Data"
     SourceTable = "testData";
     ApplicationArea = All;
     Caption = 'Company Data';
+    UsageCategory = Administration;
 
     layout
     {
@@ -15,11 +16,13 @@ page 50701 "Company Data"
                 {
                     ApplicationArea = All;
                     Caption = 'Company Name';
+                    ToolTip = 'Specifies the name of the company.';
                 }
 
                 field("Company Logo"; Rec."Company Logo")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the logo of the company.';
                     Editable = false;
                     DrillDown = true;
 
@@ -34,8 +37,8 @@ page 50701 "Company Data"
                         folderName := 'CompanyLogos';
                         fileName := azureBlobUploader.ValidateDocument(uploadResult, folderName);
                         if fileName <> '' then begin
-                            Rec."Company Logo" := fileName;
-                            Rec."Logo URL" := uploadResult;
+                            Rec."Company Logo" := CopyStr(fileName, 1, StrLen(fileName));
+                            Rec."Logo URL" := CopyStr(uploadResult, 1, StrLen(uploadResult));
                             Rec.Modify();
                             Message('File uploaded successfully: %1', fileName);
                         end;
@@ -46,22 +49,19 @@ page 50701 "Company Data"
 
                 field("Azure Blob URL"; Rec."Logo URL")
                 {
-
                     ApplicationArea = All;
+                    ToolTip = 'The URL of the company logo stored in Azure Blob Storage.';
                     Editable = true;
                     DrillDown = true;
                     trigger OnDrillDown()
                     var
                         FileURL: Text;
                     begin
-                        // Get the URL of the uploaded document
                         FileURL := Rec."View Document URL";
 
-                        // Check if the file URL is not empty
                         if FileURL = '' then
                             Error('No document is available to view.');
 
-                        // Open the file URL in the browser (new tab)
                         OpenFileInBrowser(FileURL);
                     end;
                 }
@@ -70,11 +70,13 @@ page 50701 "Company Data"
                 {
                     ApplicationArea = All;
                     Caption = 'Tenant Id';
+                    ToolTip = 'Specifies the Azure AD Tenant ID for the company.';
                 }
                 field("Environment Name"; Rec."Environment Name")
                 {
                     ApplicationArea = All;
                     Caption = 'Environment Name';
+                    ToolTip = 'Specifies the name of the environment for the company.';
                 }
                 field("API URL"; Rec."API URL")
                 {
@@ -86,6 +88,7 @@ page 50701 "Company Data"
                 {
                     ApplicationArea = All;
                     Caption = 'Revenue Methods';
+                    ToolTip = 'Specifies the revenue methods used by the company.';
                 }
             }
 
@@ -93,31 +96,25 @@ page 50701 "Company Data"
             {
                 part("Workflow Frequency"; "Workflow Frequency Card")
                 {
-                    SubPageLink = "Company ID" = FIELD("Company ID"); // Link to filter attachments for this owner only
+                    SubPageLink = "Company ID" = FIELD("Company ID");
                     ApplicationArea = All;
-                    // Visible = isVisible;
                 }
-
-
-
             }
             field("Access Validity"; Rec."Access Validity")
             {
                 ApplicationArea = All;
                 Caption = 'Access Validity (Days)';
+                ToolTip = 'Specifies the number of days for which the access is valid.';
             }
         }
     }
     procedure OpenFileInBrowser(URL: Text)
     begin
-        // Use the Hyperlink method to open the file in the browser
         if URL <> '' then
             Hyperlink(URL)
         else
             Error('The file URL is invalid.');
     end;
-
-
 
     trigger OnNewRecord(BelowxRec: Boolean)
     var

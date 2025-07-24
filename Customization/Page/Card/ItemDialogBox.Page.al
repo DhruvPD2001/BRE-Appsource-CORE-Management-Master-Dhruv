@@ -2,7 +2,7 @@ page 51263 "Item Dialog Box"
 {
     PageType = StandardDialog;
     ApplicationArea = All;
-    Caption = 'Item Dialog Box';
+    Caption = 'Select Item Category';
 
     layout
     {
@@ -13,6 +13,7 @@ page 51263 "Item Dialog Box"
                 field(ItemCategory; ItemCategory)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the category of the item.';
                     Caption = 'Item Category';
                 }
             }
