@@ -1,4 +1,4 @@
-pageextension 50101 Items extends "Item Card"
+pageextension 50101 "Item Card Ext" extends "Item Card"
 {
     Caption = 'Unit Card';
 
@@ -12,12 +12,6 @@ pageextension 50101 Items extends "Item Card"
         {
             Visible = isVenderService;
         }
-
-        // modify(Description)
-        // {
-        //     //  Visible = isVenderService or Unitcharges;
-        //     Visible = Unitcharges;
-        // }
         modify("Automatic Ext. Texts")
         {
             Visible = false;
@@ -74,31 +68,15 @@ pageextension 50101 Items extends "Item Card"
         {
             Visible = false;
         }
-        // modify("Gen. Prod. Posting Group")
-        // {
-        //     ShowMandatory = false;
-        //     // Editable = hideshowfields;
-        //     Visible = hideshowfields and isVenderService;
-
-        // }
         addafter(Description)
         {
             group("Posting setup")
             {
                 ShowCaption = false;
                 Visible = hideshowfields and isVenderService or Unitcharges;
-
             }
-
         }
         movefirst("Posting setup"; "Gen. Prod. Posting Group", "VAT Prod. Posting Group")
-
-        // modify("VAT Prod. Posting Group")
-        // {
-        //     ShowMandatory = false;
-        //     //  Editable = hideshowfields;
-        //     Visible = hideshowfields and isVenderService or Unitcharges;
-        // }
         modify("Service Item Group")
         {
             Editable = editablefalsefieldNonInventoryType;
@@ -143,7 +121,6 @@ pageextension 50101 Items extends "Item Card"
             }
         }
         movefirst("Unit Charges Description"; Description)
-
         addafter("Base Unit of Measure")
         {
             group("BaseUnitofMeasure")
@@ -153,12 +130,11 @@ pageextension 50101 Items extends "Item Card"
                 field("Market Rate per Sq. Ft."; rec."Market Rate per Sq. Ft.")
                 {
                     ApplicationArea = All;
-                    //Editable = true;
                     Editable = editablefalsefieldNonInventoryType;
+                    ToolTip = 'Market Rate per Square Foot';
                 }
             }
         }
-
         addafter("Market Rate per Sq. Ft.")
         {
             group("MarketRateperSq.Ft.")
@@ -169,24 +145,12 @@ pageextension 50101 Items extends "Item Card"
                 {
                     ApplicationArea = All;
                     Caption = 'Unit Size';
-                    // Editable = true;
+                    ToolTip = 'Size of the Unit in Square Feet';
                     Editable = editablefalsefieldNonInventoryType;
                 }
             }
 
         }
-        // addafter(Type)
-        // {
-        //     field("Select Unit Type"; Rec."Select Unit Type")
-        //     {
-        //         ApplicationArea = All;
-        //         trigger OnValidate()
-        //         begin
-        //             UpdateGroupVisibility();
-        //         end;
-
-        //     }
-        // }
         addafter("Unit Size")
         {
             group("UnitSize")
@@ -197,6 +161,7 @@ pageextension 50101 Items extends "Item Card"
                 {
                     ApplicationArea = All;
                     Caption = 'Amount';
+                    ToolTip = 'Calculated Amount based on Market Rate and Unit Size';
                     Editable = false;
                 }
             }
@@ -212,7 +177,7 @@ pageextension 50101 Items extends "Item Card"
                     ApplicationArea = All;
                     Caption = 'Primary Classification Type';
                     Editable = ISPrimaryType;
-                    //Visible = hideshowfields;
+                    ToolTip = 'Primary Classification Type for the Unit';
                 }
             }
         }
@@ -222,11 +187,12 @@ pageextension 50101 Items extends "Item Card"
             {
                 Visible = isUnitService;
                 Caption = 'Unit Management';
-                // Visible = IsUnitManagementVisible;
+
                 field(FixedNumber; Rec.FixedNumber)
                 {
                     ApplicationArea = All;
                     Caption = 'FixedNumber';
+                    ToolTip = 'Fixed Number for the Unit';
                     Editable = false;
                     Visible = false;
                 }
@@ -234,11 +200,12 @@ pageextension 50101 Items extends "Item Card"
                 {
                     ApplicationArea = All;
                     Caption = 'Country';
+                    ToolTip = 'Country where the Unit is located';
                     Lookup = true;
                     Editable = editablefalsefieldNonInventoryType;
                     trigger OnValidate()
                     begin
-                        AutoGenerateUnitName(Rec); // Call to auto-generate the Unit Name when Merge Units changes
+                        AutoGenerateUnitName(Rec);
                     end;
 
                 }
@@ -246,29 +213,56 @@ pageextension 50101 Items extends "Item Card"
                 {
                     ApplicationArea = All;
                     Caption = 'Emirate';
+                    ToolTip = 'Emirate where the Unit is located';
                     Lookup = true;
                     Editable = editablefalsefieldNonInventoryType;
                     trigger OnValidate()
                     begin
-                        AutoGenerateUnitName(Rec); // Call to auto-generate the Unit Name when Merge Units changes
+                        AutoGenerateUnitName(Rec);
                     end;
                 }
                 field("Community"; Rec.Community)
                 {
                     ApplicationArea = All;
                     Caption = 'Community';
+                    ToolTip = 'Community where the Unit is located';
                     Lookup = true;
                     Editable = editablefalsefieldNonInventoryType;
                     trigger OnValidate()
                     begin
-                        AutoGenerateUnitName(Rec); // Call to auto-generate the Unit Name when Merge Units changes
+                        AutoGenerateUnitName(Rec);
                     end;
                 }
-                field("Property ID"; Rec."Property ID") // OOB Field (or create custom if not OOB)
+                field("Property ID"; Rec."Property ID")
                 {
                     ApplicationArea = All;
                     Caption = 'Property ID';
-                    // ShowMandatory = true;
+                    ToolTip = 'Unique Identifier for the Property';
+                    Editable = editablefalsefieldNonInventoryType;
+                    trigger OnValidate()
+                    begin
+                        AutoGenerateUnitName(Rec);
+                    end;
+                }
+                field("Property Name"; Rec."Property Name")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Property Name';
+                    ToolTip = 'Name of the Property where the Unit is located';
+                    Editable = false;
+                }
+                field("Floor Number"; Rec."Floor Number")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Floor Number';
+                    ToolTip = 'Floor Number of the Unit';
+                    Editable = editablefalsefieldNonInventoryType;
+                }
+                field("Unit Number"; Rec."Unit Number")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Unit Number';
+                    ToolTip = 'Actual Unit Number within the Property';
                     Editable = editablefalsefieldNonInventoryType;
                     trigger OnValidate()
                     begin
@@ -276,47 +270,25 @@ pageextension 50101 Items extends "Item Card"
                     end;
                 }
 
-                field("Property Name"; Rec."Property Name") // Custom Field
-                {
-                    ApplicationArea = All;
-                    Caption = 'Property Name';
-                    Editable = false;
-                }
-                field("Floor Number"; Rec."Floor Number") // Custom Field
-                {
-                    ApplicationArea = All;
-                    Caption = 'Floor Number';
-                    //Editable = true;
-                    Editable = editablefalsefieldNonInventoryType;
-                }
-                field("Unit Number"; Rec."Unit Number") // Custom Field
-                {
-                    ApplicationArea = All;
-                    Caption = 'Unit Number';
-                    // Editable = true;
-                    Editable = editablefalsefieldNonInventoryType;
-                    trigger OnValidate()
-                    begin
-                        AutoGenerateUnitName(Rec); // Call to auto-generate the Unit Name when Merge Units changes
-                    end;
-                }
-
-                field("Unit ID"; Rec.UnitID) // Auto-generated Unit ID
+                field("Unit ID"; Rec.UnitID)
                 {
                     ApplicationArea = All;
                     Caption = 'Unit ID';
+                    ToolTip = 'Unique Identifier for the Unit';
                     Editable = false;
                 }
-                field("Unit Name"; Rec."Unit Name") // Custom Field
+                field("Unit Name"; Rec."Unit Name")
                 {
                     ApplicationArea = All;
                     Caption = 'Unit Name';
+                    ToolTip = 'Name of the Unit';
                     Editable = false;
                 }
 
                 field("Usage Type"; rec."Usage Type")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Usage Type of the Unit';
                     Lookup = true;
                     Editable = false;
                 }
@@ -324,40 +296,38 @@ pageextension 50101 Items extends "Item Card"
                 field("Unit Type"; rec."Unit Type")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Type of the Unit';
                     Lookup = true;
                     Editable = editablefalsefieldNonInventoryType;
                 }
                 field("Unit Address"; rec."Unit Address")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Address of the Unit';
                     Editable = editablefalsefieldNonInventoryType;
                 }
                 field("Merging/Splitting"; rec."MergeSplitOption")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Option for Merging or Splitting the Unit';
                     Editable = false;
                 }
 
                 field("Unit Status"; rec."Unit Status")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Current Status of the Unit';
                     Lookup = true;
                 }
             }
             part("Document Attachments"; "Unit Document SubPage")
             {
-                SubPageLink = UnitID = FIELD("No."); // Link to filter attachments for this owner only
+                SubPageLink = UnitID = FIELD("No.");
                 ApplicationArea = All;
-                // Visible = isVisible;
                 Editable = editablefalsefieldNonInventoryType;
                 Visible = ShowFinancialFields and isUnitService and isVisible;
             }
         }
-        addafter("Item Category Code")
-        {
-
-        }
-
     }
 
     actions
@@ -365,8 +335,6 @@ pageextension 50101 Items extends "Item Card"
         modify(CopyItem)
         {
             trigger OnAfterAction()
-            var
-                myInt: Integer;
             begin
                 AutoGenerateUnitName(Rec);
             end;
@@ -376,23 +344,18 @@ pageextension 50101 Items extends "Item Card"
             action("Add New Line")
             {
                 ApplicationArea = All;
-                // Promoted = true;
+                ToolTip = 'Add a new line to the Unit Charges';
                 Visible = isService;
                 trigger OnAction()
                 var
                     CustomLinesPage: Record "Revenue Structure Subpage";
                     CustomLinesPage2: Record "Revenue Structure";
-                // DocumentUploadDetails: Record DocumentUploadDetails;
                 begin
-                    if CustomLinesPage.FindSet() then begin
+                    if CustomLinesPage.FindSet() then
                         CustomLinesPage.DeleteAll();
-                        // DocumentUploadDetails.DeleteAll();
-                    end;
 
-                    if CustomLinesPage2.FindSet() then begin
+                    if CustomLinesPage2.FindSet() then
                         CustomLinesPage2.DeleteAll();
-                        // DocumentUploadDetails.DeleteAll();
-                    end;
                 end;
             }
         }
@@ -406,44 +369,26 @@ pageextension 50101 Items extends "Item Card"
         EmiratesCode: Text;
         CommunityCode: Text;
         UnitnumberCode: Text;
-
-        Country: Text;
+        lCountry: Text;
         Emirates: Text;
-        Community: Text;
+        lCommunity: Text;
         Unitnumber: Text;
     begin
-        // Fixed starting number for new records
-        // FixedNumber := 101;
-
-        // Get Property Name and Format it
         PropertyCode := FormatName(TargetItem."Property Name");
-
-        // Convert Option fields to Text using Format
-        Country := Format(TargetItem.Country); // Assuming Rec has an "Option" field for Country
-        Emirates := Format(TargetItem.Emirate); // Assuming Rec has an "Option" field for Emirates
-        Community := Format(TargetItem."Community"); // Assuming Rec has an "Option" field for Community
-        Unitnumber := Format(TargetItem."Unit Number"); // Assuming "Unit Number" is a field in the record
-
-
-        // Format Country, Emirates, and Community the same way as Property Name
-        CountryCode := FormatName(Country);
+        lCountry := Format(TargetItem.Country);
+        Emirates := Format(TargetItem.Emirate);
+        lCommunity := Format(TargetItem."Community");
+        Unitnumber := Format(TargetItem."Unit Number");
+        CountryCode := FormatName(lCountry);
         EmiratesCode := FormatName(Emirates);
-        CommunityCode := FormatName(Community);
-        UnitnumberCode := Format(Unitnumber); // Assuming "Unit Number" is a field in the record
-
-        // Step 1: Generate Unit Name: PropertyCode-UnitType-FixedNumber
-        TargetItem."Unit Name" := PropertyCode + '-SU-' + Format(TargetItem.FixedNumber); // Assuming 'SU' is the Unit Type for Single Unit
-
-        // Step 2: Generate Unit ID: CountryCode-EmiratesCode-CommunityCode-PropertyCode-FixedNumber
+        CommunityCode := FormatName(lCommunity);
+        UnitnumberCode := Format(Unitnumber);
+        TargetItem."Unit Name" := PropertyCode + '-SU-' + Format(TargetItem.FixedNumber);
         UnitID := CountryCode + '-' + EmiratesCode + '-' + CommunityCode + '-' + PropertyCode + '-' + UnitnumberCode;
-
-        // Set the Unit ID in the record
-        TargetItem.UnitID := UnitID;
+        TargetItem.UnitID := CopyStr(UnitID, 1, StrLen(UnitID));
         TargetItem.Modify();
     end;
 
-
-    // Helper function to format the name
     procedure FormatName(Name: Text): Text
     var
         Words: List of [Text];
@@ -451,62 +396,52 @@ pageextension 50101 Items extends "Item Card"
         Code: Text;
         i: Integer;
     begin
-        // Split the Name into words
-        Words := Name.Split(' '); // Split by space
+        Words := Name.Split(' ');
 
-        // Check if it's a single word or multiple words
-        if Words.Count() = 1 then begin
-            // For single-word names, use the first three letters
-            Code := CopyStr(Words.Get(1), 1, 3);
-        end else begin
-            // For multi-word names, use the first letter of each word
+        if Words.Count() = 1 then
+            Code := CopyStr(Words.Get(1), 1, 3)
+        else begin
             Code := '';
             for i := 1 to Words.Count() do begin
                 Word := Words.Get(i);
-                Code += CopyStr(Word, 1, 1); // Take the first letter of each word
+                Code += CopyStr(Word, 1, 1);
             end;
         end;
 
-        exit(Code); // Return the formatted code
+        exit(Code);
     end;
 
-    //-------------------------------------- Unit Management Page Extension ------------------------------------------//
     var
         isVisible: Boolean;
         isUnitService: Boolean;
         isVenderService: Boolean;
 
-
     procedure EvaluateFastTabVisibility(): Boolean
     begin
-        if Rec."Item Template" = Enum::"Item Template Enum"::Service then begin
+        if Rec."Item Template" = Enum::"Item Template Enum"::Service then
             if Rec."Item type template" = Enum::"Item Type Template Enum"::"Unit Service" then
                 exit(true)
             else
                 exit(false);
-        end;
     end;
 
     procedure EvaluateFastTabVisibilityService(): Boolean
     begin
-        if Rec."Item Template" = Enum::"Item Template Enum"::Service then begin
+        if Rec."Item Template" = Enum::"Item Template Enum"::Service then
             if Rec."Item type template" = Enum::"Item Type Template Enum"::"Vendor Service" then
                 exit(true)
             else
                 exit(false);
-        end;
     end;
 
     procedure UnitChargesFieldsVisiblity(): Boolean
     begin
-        if Rec."Item Template" = Enum::"Item Template Enum"::Service then begin
+        if Rec."Item Template" = Enum::"Item Template Enum"::Service then
             if Rec."Item type template" = Enum::"Item Type Template Enum"::"Secondary Item" then
                 exit(true)
             else
                 exit(false);
-        end;
     end;
-
 
     trigger OnModifyRecord(): Boolean
     begin
@@ -523,31 +458,28 @@ pageextension 50101 Items extends "Item Card"
     begin
         CurrPage."Document Attachments".Page.SetUnitId(Rec."No.");
         isVisible := true;
-        if Rec."Property Name" = '' then begin
-            exit; // Default value for new records
-        end
-        else if Rec."Property Name" <> '' then begin
-            AutoGenerateUnitName(Rec); // Call to auto-generate the Unit Name when a new record is inserted
-        end;
+
+        if Rec."Property Name" = '' then
+            exit
+        else
+            AutoGenerateUnitName(Rec);
     end;
 
     trigger OnAfterGetRecord()
-    // UpdateGroupVisibility();
+
     begin
         CurrPage."Document Attachments".Page.SetUnitId(Rec."No.");
-        if Format(Rec."No.") <> '' then begin
-            isVisible := true;
-        end
-        else begin
+        if Format(Rec."No.") <> '' then
+            isVisible := true
+        else
             isVisible := false;
-        end;
+
         ISPrimaryType := SetPrimaryType();
         hideshowfields := hidefields();
         editablefalsefieldNonInventoryType := editablefalseNonInventory();
         isUnitService := EvaluateFastTabVisibility();
         isVenderService := EvaluateFastTabVisibilityService();
         Unitcharges := UnitChargesFieldsVisiblity();
-
     end;
 
     trigger OnAfterGetCurrRecord()
@@ -556,7 +488,6 @@ pageextension 50101 Items extends "Item Card"
         hideshowfields := hidefields();
         editablefalsefieldNonInventoryType := editablefalseNonInventory();
         Unitcharges := UnitChargesFieldsVisiblity();
-
     end;
 
     procedure SetPrimaryType(): Boolean
@@ -597,13 +528,9 @@ pageextension 50101 Items extends "Item Card"
 
     var
         ISPrimaryType: Boolean;
-
         ShowFinancialFields: Boolean;
-        documentattachment: Codeunit UploadAttachment;
-
         hideshowfields: Boolean;
         editablefalsefieldNonInventoryType: Boolean;
-
         Unitcharges: Boolean;
 
     local procedure IsUserInProfile(ProfileID: Code[20]): Boolean
@@ -612,7 +539,7 @@ pageextension 50101 Items extends "Item Card"
     begin
         AccessControl.SetRange("User ID", UserId());
         AccessControl.SetRange("Profile ID", ProfileID);
-        exit(AccessControl.FindFirst());
+        exit(not AccessControl.IsEmpty());
     end;
 
 

@@ -1,4 +1,4 @@
-tableextension 51251 ItemTemplate extends "Item Templ."
+tableextension 51251 "Item Templ. Ext" extends "Item Templ."
 {
     fields
     {

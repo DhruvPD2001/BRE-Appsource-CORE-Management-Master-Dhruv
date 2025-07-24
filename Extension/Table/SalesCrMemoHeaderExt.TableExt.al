@@ -1,4 +1,4 @@
-tableextension 50506 "Posted Sales Credit Memo" extends "Sales Cr.Memo Header"
+tableextension 50506 "Sales Cr. Memo Header Ext" extends "Sales Cr.Memo Header"
 {
     fields
     {
@@ -103,21 +103,16 @@ tableextension 50506 "Posted Sales Credit Memo" extends "Sales Cr.Memo Header"
                         paymentmodegrid."Credit Note Amount" += Requestcreditnotegrid1."Total Reduction";
                         paymentmodegrid.Modify();
                     until Requestcreditnotegrid1.Next() = 0;
-            //   until Requestcreditnotegrid1.Next() = 0;
             until paymentmodegrid.Next() = 0;
-
 
         paymentschedulegrid.SetRange("Contract ID", "Contract ID");
         if paymentschedulegrid.FindSet() then
             repeat
-                // paymentschedulegrid."Credit Note No." := "No.";
-                // paymentschedulegrid.Modify();
                 Requestcreditnotegrid2.SetRange("Contract ID", paymentschedulegrid."Contract ID");
                 Requestcreditnotegrid2.SetRange("Payment Series", paymentschedulegrid."Payment Series");
-                // Requestcreditnotegrid2.SetRange("Credit Note No.", paymentschedulegrid."Credit Note No.");
                 Requestcreditnotegrid2.SetRange(Charges, paymentschedulegrid."Secondary Item Type");
                 Requestcreditnotegrid2.SetRange("Credit Memo Generated", true);
-                if Requestcreditnotegrid2.FindSet() then begin
+                if Requestcreditnotegrid2.FindFirst() then begin
                     paymentschedulegrid."Credit Note No." := Requestcreditnotegrid2."Credit Note No.";
                     paymentschedulegrid."Credit Note Amount" := Requestcreditnotegrid2."Total Reduction";
                     paymentschedulegrid.Modify();
