@@ -3,7 +3,7 @@ page 50702 "tenantProfileAPI"
     PageType = API;
     DelayedInsert = true;
     SourceTable = Customer;
-    APIPublisher = 'RealeststeDev';
+    APIPublisher = 'realestate';
     APIGroup = 'tenants';
     APIVersion = 'v2.0';
     EntityName = 'tenantProfile';
