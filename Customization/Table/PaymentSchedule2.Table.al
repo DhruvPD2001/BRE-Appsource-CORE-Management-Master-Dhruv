@@ -1,161 +1,97 @@
 table 50934 "Payment Schedule2"
 {
     DataClassification = ToBeClassified;
-
-
     fields
     {
-
-
-
-
         field(50100; "Secondary Item Type"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Secondary Item Type';
-
             trigger OnValidate()
-
-
             begin
-                // Check if the payment status is 'Received'
                 if "Secondary Item Type" = 'Security Deposit Amount' then
-                    // Call the procedure to update the balance amount
                     UpdateBalanceAmountOnPaymentReceived();
             end;
-
         }
-
-
         field(50101; "Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Amount';
-
         }
-
-
         field(50102; "VAT Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'VAT Amount';
-
         }
-
-
-
         field(50103; "Amount Including VAT"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Amount Including VAT';
-
             trigger OnValidate()
-
             begin
-                // Check if the payment status is 'Received'
-
-                // Call the procedure to update the balance amount
                 UpdateBalanceAmountOnPaymentReceived();
             end;
-
-
-
         }
-
         field(50104; "Installment Start Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Installment Start Date';
-
         }
-
         field(50105; "Installment End Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Installment End Date';
-
         }
-
-
-
         field(50106; "Due Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Due Date';
-
         }
-
         field(50107; "Installment No."; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Installment No.';
-
         }
-
-
-
         field(50116; "Payment Series"; Text[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Payment Series';
-
         }
-
         field(50108; "Entry No."; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
         }
-
-
         field(50110; "Tenant ID"; Code[20])
         {
-
             Caption = 'Tenant ID';
-
         }
         field(50111; "Tenant Name"; Text[100])
         {
-
             Caption = 'Tenant Name';
-
         }
         field(50915; "Invoiced"; Boolean)
         {
             Caption = 'Invoiced';
         }
-
-
         field(50914; "Contract ID"; Integer)
         {
             Caption = 'Contract ID';
         }
-
         field(50916; "Payment Status"; Text[100])
         {
             Caption = 'Payment Status';
-
             trigger OnValidate()
-
             begin
-                // Check if the payment status is 'Received'
                 if "Payment Status" = 'Received' then
-                    // Call the procedure to update the balance amount
                     UpdateBalanceAmountOnPaymentReceived();
             end;
-
-
         }
         field(50917; "Property Classification"; Text[100])
         {
             Caption = 'Property Classification';
             DataClassification = ToBeClassified;
         }
-        // field(50916; "Tenant Name"; Text[100])
-        // {
-        //     Caption = 'Tenant Name';
-        // }
-
         field(50918; "Contract Status"; Text[100])
         {
             Caption = 'Contract Status';
@@ -176,12 +112,10 @@ table 50934 "Payment Schedule2"
             Caption = 'Payment Recived Date';
             DataClassification = ToBeClassified;
         }
-
         field(50922; "Payment Mode"; Text[100])
         {
             Caption = 'Payment Mode';
         }
-
         field(50923; "Cheque Number"; Text[100])
         {
             Caption = 'Cheque Number';
@@ -195,13 +129,11 @@ table 50934 "Payment Schedule2"
         {
             DataClassification = ToBeClassified;
             Caption = 'Property ID';
-
         }
         field(50926; "No of Days"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'No of Days';
-
         }
         field(50927; "Workflow frequency date"; Date)
         {
@@ -210,25 +142,21 @@ table 50934 "Payment Schedule2"
         }
         field(50928; "VAT%"; Integer)
         {
-            //OptionMembers = "0%","5%";
             DataClassification = ToBeClassified;
             Caption = 'VAT%';
         }
         field(50929; "Credit Note No."; Code[100])
         {
-            //OptionMembers = "0%","5%";
             DataClassification = ToBeClassified;
             Caption = 'Credit Note No.';
         }
         field(50930; "Credit Note Amount"; Decimal)
         {
-            //OptionMembers = "0%","5%";
             DataClassification = ToBeClassified;
             Caption = 'Credit Note Amount';
         }
         field(50931; "Final Rent Amount"; Decimal)
         {
-            //OptionMembers = "0%","5%";
             DataClassification = ToBeClassified;
             Caption = 'Final Rent Amount';
         }
@@ -237,19 +165,14 @@ table 50934 "Payment Schedule2"
             DataClassification = ToBeClassified;
             Caption = 'Final Rent Amount Including VAT';
         }
-
-
     }
-
     keys
     {
         key(Key1; "Entry No.")
         {
             Clustered = true;
         }
-
     }
-
     fieldgroups
     {
         fieldgroup(DropDown; "Secondary Item Type", "Amount", "VAT Amount", "Amount Including VAT")
@@ -257,80 +180,23 @@ table 50934 "Payment Schedule2"
             Caption = 'Payment Schedule';
         }
     }
-
-
-
-
-    // local procedure UpdateBalanceAmountOnPaymentReceived()
-    // var
-    //     PaymentScheduleRec: Record "Payment Schedule2";
-    //     TenancyContractRec: Record "Tenancy Contract";
-    // begin
-    //     // Filter records where 'Secondary Item Type' is 'Security Deposit Amount' and 'Payment Status' is 'Received'
-    //     PaymentScheduleRec.SetRange("Secondary Item Type", 'Security Deposit Amount');
-    //     PaymentScheduleRec.SetRange("Payment Status", 'Received');
-
-    //     if PaymentScheduleRec.FindSet() then begin
-    //         repeat
-    //             // Filter Tenancy Contract records based on Contract ID
-    //             if Rec."Secondary Item Type" = 'Security Deposit Amount' then begin
-    //                 TenancyContractRec.SetRange("Contract ID", PaymentScheduleRec."Contract ID");
-
-    //                 if TenancyContractRec.FindSet() then begin
-    //                     repeat
-    //                         // If Balance Amount has a value, update it
-    //                         if TenancyContractRec."Balance Amount" <> 0 then begin
-    //                             TenancyContractRec."Balance Amount" += PaymentScheduleRec."Amount Including VAT";
-    //                             TenancyContractRec."Security Balanced Amount" += PaymentScheduleRec."Amount Including VAT";
-    //                         end
-    //                         else begin
-    //                             // If Balance Amount is 0, set it to Amount Including VAT
-    //                             TenancyContractRec."Balance Amount" := PaymentScheduleRec."Amount Including VAT";
-    //                             TenancyContractRec."Security Balanced Amount" := PaymentScheduleRec."Amount Including VAT";
-    //                         end;
-
-    //                         // Modify the record to save changes
-    //                         TenancyContractRec.Modify();
-    //                     until TenancyContractRec.Next() = 0;
-    //                 end;
-    //             end;
-    //         until PaymentScheduleRec.Next() = 0;
-    //     end;
-    // end;
-
     local procedure UpdateBalanceAmountOnPaymentReceived()
     var
-        PaymentScheduleRec: Record "Payment Schedule2";
         TenancyContractRec: Record "Tenancy Contract";
     begin
-        // Filter only for the current record and matching required values
-        // if (Rec."Secondary Item Type" = 'Security Deposit Amount') and
-        //    (Rec."Payment Status" = 'Received') then begin
-
-        // Find the related Tenancy Contract using the Contract ID from current PaymentSchedule record
-
         TenancyContractRec.SetRange("Contract ID", Rec."Contract ID");
         if TenancyContractRec.FindSet() then
             if (Rec."Secondary Item Type" = 'Security Deposit Amount') and
      (Rec."Payment Status" = 'Received') then begin
-                // Update the Balance Amount with Amount Including VAT from current Payment Schedule record
                 if TenancyContractRec."Balance Amount" <> 0 then begin
                     TenancyContractRec."Balance Amount" += Rec."Amount Including VAT";
                     TenancyContractRec."Security Balanced Amount" += Rec."Amount Including VAT";
                 end
                 else begin
-                    // If Balance Amount is 0, set it to Amount Including VAT
                     TenancyContractRec."Balance Amount" := Rec."Amount Including VAT";
                     TenancyContractRec."Security Balanced Amount" := Rec."Amount Including VAT";
                 end;
-
-
-                // TenancyContractRec."Balance Amount" := Rec."Amount Including VAT";
                 TenancyContractRec.Modify();
             end;
-
     end;
-
-
-
 }

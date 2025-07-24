@@ -20,7 +20,7 @@ table 50507 "PDC Transaction"
             CalcFormula = Lookup(Customer.Name WHERE("No." = FIELD("Tenant Id"))); // Displays Customer Name
         }
 
-        field(50504; "Cheque Number"; Text[20])
+        field(50504; "Cheque Number"; Text[100])
         {
             DataClassification = CustomerContent;
 

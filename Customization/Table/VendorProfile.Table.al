@@ -8,16 +8,14 @@ table 50926 "Vendor Profile"
         {
             DataClassification = ToBeClassified;
             Caption = 'Vendor ID';
-            // TableRelation = Vendor."No.";
             TableRelation = Vendor."No." WHERE("Vendor Category" = FILTER('Property Management System' | 'Brokers and Commission Agent'),
              "No." = FILTER('PM_V_*'));
-
             trigger OnValidate()
             var
                 vendor: Record Vendor;
             begin
                 vendor.SetRange("No.", Rec."Vendor ID");
-                if vendor.FindSet() then begin
+                if vendor.FindFirst() then begin
                     Rec."Vendor ID" := vendor."No.";
                     "Vendor Name" := vendor."Name";
                     "Search Name" := vendor."Search Name";
@@ -36,12 +34,9 @@ table 50926 "Vendor Profile"
                     "Balance Due (LCY)" := Vendor."Balance Due (LCY)";
                     Address := Vendor.Address;
                     "Address 2" := Vendor."Address 2";
-                    // "Country/Region Code" := Vendor."Country/Region Code";
-                    // "City" := Vendor."City";
                     "Country" := Vendor.County;
                     "Emirate" := vendor.Emirate;
                     "Community" := vendor.Community;
-                    // "Post Code" := Vendor."Post Code";
                     "Phone No." := Vendor."Phone No.";
                     "Mobile Phone No." := Vendor."Mobile Phone No.";
                     "E-Mail" := Vendor."E-Mail";
@@ -82,10 +77,7 @@ table 50926 "Vendor Profile"
                     "Balance Due (LCY)" := 0;
                     Address := '';
                     "Address 2" := '';
-                    // "Country/Region Code" := '';
-                    // "City" := '';
                     "Country" := '';
-                    // "Post Code" := '';
                     "Phone No." := '';
                     "Mobile Phone No." := '';
                     "E-Mail" := '';
@@ -106,20 +98,18 @@ table 50926 "Vendor Profile"
                     "Creditor No." := '';
                     "Location Code" := '';
                     "Shipment Method Code" := '';
-                    // "Lead Time Calculation" := DateFormula.FromString('');
                     "Base Calendar Code" := '';
                     "Over-Receipt Code" := '';
                 end;
             end;
         }
-
         field(50101; "Vendor Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Vendor Name';
             Editable = false;
         }
-        field(50102; "Vendor Contact No."; Text[30])
+        field(50102; "Vendor Contact No."; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Vendor Contact No.';
@@ -141,7 +131,6 @@ table 50926 "Vendor Profile"
             Caption = 'Vendor Category';
             TableRelation = "Vendor Category"."Vendor Category Type";
         }
-
         field(50109; "Contract Status"; Option)
         {
             DataClassification = ToBeClassified;
@@ -159,11 +148,6 @@ table 50926 "Vendor Profile"
             Caption = 'Balance (LCY)';
             Editable = false;
         }
-        // field(50113; "Balance Due (LCY) As Customer"; Decimal)
-        // {
-        //     Caption = 'Balance Due (LCY) As Customer';
-        //     Editable = false;
-        // }
         field(50114; "Balance Due (LCY)"; Decimal)
         {
             Caption = 'Balance Due (LCY)';
@@ -179,16 +163,6 @@ table 50926 "Vendor Profile"
             Caption = 'Address 2';
             Editable = false;
         }
-        // field(50117; "Country/Region Code"; Code[10])
-        // {
-        //     Caption = 'Country/Region Code';
-        //     Editable = false;
-        // }
-        // field(50118; City; Text[30])
-        // {
-        //     Caption = 'City';
-        //     Editable = false;
-        // }
         field(50163; Country; Text[30])
         {
             Caption = 'Country';
@@ -199,16 +173,11 @@ table 50926 "Vendor Profile"
             Caption = 'Emirate';
             Editable = false;
         }
-        field(50119; Community; Text[30])
+        field(50119; Community; Text[100])
         {
             Caption = 'Community';
             Editable = false;
         }
-        // field(50120; "Post Code"; Code[80])
-        // {
-        //     Caption = 'Post Code';
-        //     Editable = false;
-        // }
         field(50121; "Phone No."; Text[30])
         {
             Caption = 'Phone No.';
@@ -239,7 +208,6 @@ table 50926 "Vendor Profile"
             Caption = 'Primary Contact Code';
             Editable = false;
         }
-
         field(50128; "VAT Registration No."; Text[20])
         {
             Caption = 'VAT Registration No.';
@@ -255,7 +223,6 @@ table 50926 "Vendor Profile"
             Caption = 'Price Including VAT';
             Editable = false;
         }
-
         field(50131; "Application Method"; Enum "Application Method")
         {
             DataClassification = ToBeClassified;
@@ -335,7 +302,6 @@ table 50926 "Vendor Profile"
             OptionMembers = " ","Purchase Order","Purchase Invoice";
             Editable = false;
         }
-
         field(50147; "Privacy Blocked"; Boolean)
         {
             Caption = 'Privacy Blocked';
@@ -346,13 +312,11 @@ table 50926 "Vendor Profile"
             Caption = 'Last Date Modified';
             Editable = false;
         }
-
         field(50149; "Document Sending Profile"; Code[20])
         {
             Caption = 'Document Sending Profile';
             Editable = false;
         }
-
         field(50150; "Search Name"; Code[100])
         {
             Caption = 'Search Name';
@@ -368,13 +332,11 @@ table 50926 "Vendor Profile"
             Caption = 'Purchaser Code';
             Editable = false;
         }
-
         field(50153; "Responsibility Center"; Code[10])
         {
             Caption = 'Responsibility Center';
             Editable = false;
         }
-
         field(50154; "Disable Search by Name"; Boolean)
         {
             Caption = 'Disable Search by Name';
@@ -385,8 +347,6 @@ table 50926 "Vendor Profile"
             Caption = 'Company Size Code';
             Editable = false;
         }
-
-
         field(50156; "Percentage"; Integer)
         {
             DataClassification = ToBeClassified;
@@ -429,16 +389,12 @@ table 50926 "Vendor Profile"
             Clustered = true;
         }
     }
-
     fieldgroups
     {
         fieldgroup(DropDown; "Vendor ID", "Vendor Name")
         {
-
         }
     }
-
-
     trigger OnDelete()
     var
     begin
@@ -452,9 +408,8 @@ table 50926 "Vendor Profile"
         VendorDoc: Record "Vendor Contract Document";
     begin
         VendorDoc.SetRange("Vendor Id", Rec."Vendor ID");
-        if VendorDoc.FindSet() then begin
+        if VendorDoc.FindSet() then
             VendorDoc.DeleteAll();
-        end
     end;
 
     procedure DeleteVendorDocument()
@@ -462,9 +417,8 @@ table 50926 "Vendor Profile"
         VendorDoc: Record "Vendor Document";
     begin
         VendorDoc.SetRange("Vendor Id", Rec."Vendor ID");
-        if VendorDoc.FindSet() then begin
+        if VendorDoc.FindSet() then
             VendorDoc.DeleteAll();
-        end
     end;
 
     procedure DeleteVendorCalculationDetails()
@@ -472,9 +426,7 @@ table 50926 "Vendor Profile"
         VendorDoc: Record "Vendor Calculation Details";
     begin
         VendorDoc.SetRange("Vendor Id", Rec."Vendor ID");
-        if VendorDoc.FindSet() then begin
+        if VendorDoc.FindSet() then
             VendorDoc.DeleteAll();
-        end
     end;
-
 }

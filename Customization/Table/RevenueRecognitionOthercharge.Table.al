@@ -1,22 +1,19 @@
-table 50932 "Revenue Recognition Subpage"
+table 50959 "RevenueRecognition Othercharge"
 {
     DataClassification = ToBeClassified;
-
     fields
     {
-        // field(50109; "RR Id"; Integer)
-        // {
-        //     DataClassification = ToBeClassified;
-        //     Caption = 'RR Id';
-        // }
-
-        field(50102; "Entry No."; Integer)
+        field(50109; "Entry No."; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
             Caption = 'Entry No.';
         }
-
+        field(50102; "RS Id"; Integer)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'RS Id';
+        }
         field(50100; "Contract ID"; Integer)
         {
             DataClassification = ToBeClassified;
@@ -28,7 +25,7 @@ table 50932 "Revenue Recognition Subpage"
             DataClassification = ToBeClassified;
             Caption = 'Tenant Id';
             TableRelation = "Tenancy Contract"."Tenant ID";
-            Editable = false; // Make it read-only for the user
+            Editable = false;
         }
         field(50103; "Month"; Text[50])
         {
@@ -42,40 +39,33 @@ table 50932 "Revenue Recognition Subpage"
             Caption = 'No. of Days';
             Editable = false;
         }
-
         field(50105; "RR - Method 1 (Day)"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'RR - Method 1 (Day)';
             Editable = false;
         }
-
         field(50106; "RR - Method 2 (Month)"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'RR - Method 2 (Month)';
             Editable = false;
         }
-
         field(50107; "Total Amount(Day)"; Decimal)
         {
-            //DataClassification = ToBeClassified;
             Caption = 'Total Amount(Day)';
             Editable = false;
             FieldClass = FlowField;
-            CalcFormula = sum("Revenue Recognition Subpage"."RR - Method 1 (Day)" where("Contract ID" = field("Contract ID")));
+            CalcFormula = sum("RevenueRecognition Othercharge"."RR - Method 1 (Day)" where("Contract ID" = field("Contract ID")));
         }
-
         field(50108; "Total Amount(Month)"; Decimal)
         {
-            // DataClassification = ToBeClassified;
             Caption = 'Total Amount(Month)';
             Editable = false;
             FieldClass = FlowField;
-            CalcFormula = sum("Revenue Recognition Subpage"."RR - Method 2 (Month)" where("Contract ID" = field("Contract ID")));
+            CalcFormula = sum("RevenueRecognition Othercharge"."RR - Method 2 (Month)" where("Contract ID" = field("Contract ID")));
         }
     }
-
     keys
     {
         key(PK; "Entry No.")

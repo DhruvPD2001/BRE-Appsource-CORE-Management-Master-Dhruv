@@ -2,23 +2,20 @@ table 50953 "Calculation Type"
 {
     DataClassification = ToBeClassified;
     DataCaptionFields = ID;
-
     fields
     {
         field(50100; "ID"; Integer)
         {
             DataClassification = ToBeClassified;
-            AutoIncrement = true; // Automatically increment the ID
-            Editable = false; // Make it read-only for the user
+            AutoIncrement = true;
+            Editable = false;
         }
         field(50101; "Calculation Type"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Calculation Type';
-
         }
     }
-
     keys
     {
         key(PK; "ID", "Calculation Type")
@@ -30,10 +27,6 @@ table 50953 "Calculation Type"
     {
         fieldgroup(DropDown; ID, "Calculation Type")
         {
-
         }
     }
-
-
-
 }

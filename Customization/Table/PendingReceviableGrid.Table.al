@@ -2,7 +2,6 @@ table 50947 "Pending Receviable Grid"
 {
     DataClassification = ToBeClassified;
     Caption = 'Pending Receviable Grid';
-
     fields
     {
         field(50100; RevenueDescription; Text[100])
@@ -70,7 +69,6 @@ table 50947 "Pending Receviable Grid"
         {
             Caption = 'Termination Date';
             DataClassification = ToBeClassified;
-
         }
         field(50114; "Total Refundable"; Decimal)
         {
@@ -141,7 +139,6 @@ table 50947 "Pending Receviable Grid"
             Caption = 'Payment Type';
             DataClassification = ToBeClassified;
         }
-
         field(50126; "Tenant ID"; Code[50])
         {
             DataClassification = ToBeClassified;
@@ -152,10 +149,7 @@ table 50947 "Pending Receviable Grid"
             DataClassification = ToBeClassified;
             Caption = 'Unit Type';
         }
-
-
     }
-
     keys
     {
         key(PK; "Contract ID", "Entry No")
@@ -163,5 +157,4 @@ table 50947 "Pending Receviable Grid"
             Clustered = true;
         }
     }
-
 }

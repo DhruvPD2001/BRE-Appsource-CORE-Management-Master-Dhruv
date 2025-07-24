@@ -2,7 +2,6 @@ table 50949 "Vendor Calculation Details"
 {
     DataClassification = ToBeClassified;
     DataCaptionFields = "Vendor ID";
-
     fields
     {
         field(50100; "Vendor ID"; Code[20])
@@ -17,13 +16,11 @@ table 50949 "Vendor Calculation Details"
             Caption = 'Vendor Name';
             Editable = false;
         }
-
         field(50102; "Percentage"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Percentage';
         }
-
         field(50103; "Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
@@ -35,19 +32,12 @@ table 50949 "Vendor Calculation Details"
             Caption = 'Calculation Method';
             TableRelation = "Calculation Type"."Calculation Type";
         }
-
         field(50105; "Percentage Type"; Option)
         {
             DataClassification = ToBeClassified;
             Caption = 'Percentage Type';
             OptionMembers = " ","Fixed","Variable";
         }
-
-        // field(50106; "Percentage Amount"; Text[100])
-        // {
-        //     DataClassification = ToBeClassified;
-        //     Caption = 'Percentage Amount';
-        // }
         field(50107; "Base Amount"; Option)
         {
             DataClassification = ToBeClassified;
@@ -60,7 +50,6 @@ table 50949 "Vendor Calculation Details"
             Caption = 'Frequency Of Payment';
             OptionMembers = " ","Monthly","Quaterly","Half Yearly","Yearly";
         }
-
         field(50109; "Start Date"; Date)
         {
             DataClassification = ToBeClassified;
@@ -73,22 +62,6 @@ table 50949 "Vendor Calculation Details"
             Caption = 'End Date';
             Editable = false;
         }
-
-        // field(50111; "Contract Status"; Option)
-        // {
-        //     DataClassification = ToBeClassified;
-        //     Caption = 'Contract Status';
-        //     OptionMembers = " ","Active","Terminate";
-        // }
-
-        // field(50112; "Entry No."; Integer)
-        // {
-        //     DataClassification = ToBeClassified;
-        //     Caption = 'Entry No.';
-        //     Editable = false;
-        //     AutoIncrement = true;
-        // }
-
     }
     keys
     {

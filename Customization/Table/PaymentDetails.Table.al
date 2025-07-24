@@ -19,7 +19,6 @@ table 50948 "Payment Details"
             DataClassification = ToBeClassified;
             Caption = 'VAT Amount';
         }
-
         field(50103; "Amount Including VAT"; Decimal)
         {
             DataClassification = ToBeClassified;

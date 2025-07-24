@@ -1,7 +1,6 @@
 table 50956 "Filtered Invoice Detail"
 {
     DataClassification = ToBeClassified;
-
     fields
     {
         field(50100; "ID"; Integer)
@@ -20,7 +19,6 @@ table 50956 "Filtered Invoice Detail"
             DataClassification = ToBeClassified;
             Caption = 'Tenant ID';
         }
-
         field(50103; "Invoice ID"; Text[100])
         {
             DataClassification = ToBeClassified;
@@ -43,11 +41,7 @@ table 50956 "Filtered Invoice Detail"
             AutoIncrement = true;
             Editable = false;
         }
-
-
     }
-
-
     keys
     {
         key(PK; "Entry No.", "ID")
