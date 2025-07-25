@@ -2,7 +2,6 @@ enum 51254 "Item Template Enum"
 {
     Extensible = true;
     Caption = 'Item Template Enum';
-
     value(0; "")
     {
         Caption = '';
@@ -15,5 +14,4 @@ enum 51254 "Item Template Enum"
     {
         Caption = 'Service';
     }
-
 }

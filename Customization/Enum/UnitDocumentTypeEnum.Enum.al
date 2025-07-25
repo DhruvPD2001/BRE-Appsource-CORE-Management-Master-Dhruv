@@ -1,12 +1,10 @@
 enum 50503 "Unit Document Type Enum"
 {
     Extensible = false;
-
     value(0; " ")
     {
         Caption = ' ';
     }
-
     value(1; "Unit Photo/Image")
     {
         Caption = 'Unit Photo/Image';
@@ -19,7 +17,6 @@ enum 50503 "Unit Document Type Enum"
     {
         Caption = 'DEWA Number';
     }
-
     value(4; "Empower Number")
     {
         Caption = 'Empower Number';

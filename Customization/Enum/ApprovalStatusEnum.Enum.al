@@ -1,7 +1,6 @@
 enum 50506 "Approval Status Enum"
 {
     Extensible = true;
-
     value(0; "Pending")
     {
         Caption = 'Pending';

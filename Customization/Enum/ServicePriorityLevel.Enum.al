@@ -1,7 +1,6 @@
 enum 51253 "Service Priority Level"
 {
     Extensible = true;
-
     value(0; Low)
     {
         Caption = 'Low';

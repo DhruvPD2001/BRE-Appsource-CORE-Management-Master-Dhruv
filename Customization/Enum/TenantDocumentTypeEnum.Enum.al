@@ -1,7 +1,6 @@
 enum 50502 "Tenant Document Type Enum"
 {
     Extensible = false;
-
     value(0; " ")
     {
         Caption = ' ';
@@ -30,7 +29,6 @@ enum 50502 "Tenant Document Type Enum"
     {
         Caption = 'Tenant''s Spouse Passport';
     }
-
     value(7; "Trade License")
     {
         Caption = 'Trade License';
