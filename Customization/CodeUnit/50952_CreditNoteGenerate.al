@@ -163,7 +163,6 @@ codeunit 50952 "Credit Memo Generate"
         FieldRef1: FieldRef;
         FieldRef2: FieldRef;
         OutStream: OutStream;
-        documentattachment: Codeunit UploadAttachment;
         SalesHeader1: Record "Sales Header";
         customercard: Record Customer;
         azureBlobUploader: Codeunit "Azure AD Blob Storage";

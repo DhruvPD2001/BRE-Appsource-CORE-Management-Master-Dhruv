@@ -2,16 +2,14 @@ codeunit 50301 "Send PaymentMode Email"
 {
     procedure SendEmail(Rec: Record "Payment Mode2"): Text;
     var
+        CompanyInfo: Record "Company Information";
         Email: Codeunit "Email";
         EmailMessage: Codeunit "Email Message";
-        CompanyInfo: Record "Company Information";
     begin
-        if Rec."Payment Status" = Rec."Payment Status"::Received then begin
-            // Ensure that the correct record is passed and exists
+        if Rec."Payment Status" = Rec."Payment Status"::Received then
             if CompanyInfo.Get() then begin
-                // Create the email message
                 EmailMessage.Create(
-                    Rec."Tenant Email", // The recipient's email address
+                    Rec."Tenant Email",
                     'Payment Mode Details - ' + Format(Rec."Contract ID"),
                     '<html><body>' +
                     '<p>Dear ' + Rec."Tenant Name" + ',</p>' +
@@ -28,28 +26,23 @@ codeunit 50301 "Send PaymentMode Email"
                     '</body></html>',
                     true
                 );
-
-                // Send the email
                 if Email.Send(EmailMessage) then
                     Message('Email sent successfully for Payment Mode: %1', Rec."Tenant Email")
                 else
                     Error('Failed to send email. Please verify SMTP settings and email addresses.');
             end;
-        end;
     end;
 
     procedure SendEmailCancelled(Rec: Record "Payment Mode2"): Text;
     var
+        CompanyInfo: Record "Company Information";
         Email: Codeunit "Email";
         EmailMessage: Codeunit "Email Message";
-        CompanyInfo: Record "Company Information";
     begin
-        // Similar structure for cancelled status
-        if Rec."Payment Status" = Rec."Payment Status"::Cancelled then begin
+        if Rec."Payment Status" = Rec."Payment Status"::Cancelled then
             if CompanyInfo.Get() then begin
-                // Create the email message
                 EmailMessage.Create(
-                    Rec."Tenant Email", // The recipient's email address
+                    Rec."Tenant Email",
                     'Payment Mode Details - ' + Format(Rec."Contract ID"),
                     '<html><body>' +
                     '<p>Dear ' + Rec."Tenant Name" + ',</p>' +
@@ -61,33 +54,27 @@ codeunit 50301 "Send PaymentMode Email"
                     '<b>Due Date:</b> ' + Format(Rec."Due Date", 0, '<Day,2>-<Month,2>-<Year4>') + '<br/>' +
                     '<b>Payment Mode:</b> ' + Rec."Payment Mode" + '<br/>' +
                     '<b>Payment Status:</b> ' + Format(Rec."Payment Status") + '</p>' +
-
                     '<p>Best regards,<br/>' + CompanyInfo.Name + '</p>' +
                     '</body></html>',
                     true
                 );
-
-                // Send the email
                 if Email.Send(EmailMessage) then
                     Message('Email sent successfully for Payment Mode: %1', Rec."Tenant Email")
                 else
                     Error('Failed to send email. Please verify SMTP settings and email addresses.');
             end;
-        end;
     end;
 
     procedure SendEmailOverdue(Rec: Record "Payment Mode2"): Text;
     var
+        CompanyInfo: Record "Company Information";
         Email: Codeunit "Email";
         EmailMessage: Codeunit "Email Message";
-        CompanyInfo: Record "Company Information";
     begin
-        // Similar structure for overdue status
-        if Rec."Payment Status" = Rec."Payment Status"::Overdue then begin
+        if Rec."Payment Status" = Rec."Payment Status"::Overdue then
             if CompanyInfo.Get() then begin
-                // Create the email message
                 EmailMessage.Create(
-                    Rec."Tenant Email", // The recipient's email address
+                    Rec."Tenant Email",
                     'Payment Mode Details - ' + Format(Rec."Contract ID"),
                     '<html><body>' +
                     '<p>Dear ' + Rec."Tenant Name" + ',</p>' +
@@ -103,14 +90,10 @@ codeunit 50301 "Send PaymentMode Email"
                     '</body></html>',
                     true
                 );
-
-                // Send the email
                 if Email.Send(EmailMessage) then
                     Message('Email sent successfully for Payment Mode: %1', Rec."Tenant Email")
                 else
                     Error('Failed to send email. Please verify SMTP settings and email addresses.');
             end;
-        end;
     end;
-
 }
