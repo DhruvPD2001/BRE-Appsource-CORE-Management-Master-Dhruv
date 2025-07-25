@@ -16,32 +16,33 @@ page 50712 "testpagelist"
                 field("Company ID"; Rec."Company ID")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Your Company ID';
                 }
 
                 field("Company Name"; Rec."Company Name")
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Your Company Name';
                 }
 
                 field("Company Logo"; Rec."Company Logo")
                 {
                     ApplicationArea = All;
                     Editable = true;
-                    trigger OnValidate()
-                    begin
-                        // Add custom logic for logo upload if needed
-                    end;
+                    ToolTip = 'Your Company logo';
                 }
                 field("Tenant id"; Rec."Tenant id")
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Tenant ID';
                 }
                 field("Environment Name"; Rec."Environment Name")
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Environment Name';
                 }
             }
         }
@@ -53,10 +54,11 @@ page 50712 "testpagelist"
         {
             action(UploadLogo)
             {
+                ToolTip = 'When you can click on the button then logo will be uploaded';
+                Image = Apply;
                 ApplicationArea = All;
                 trigger OnAction()
                 begin
-                    // Implement logic for uploading logo
                     MESSAGE('Logo uploaded successfully.');
                 end;
             }

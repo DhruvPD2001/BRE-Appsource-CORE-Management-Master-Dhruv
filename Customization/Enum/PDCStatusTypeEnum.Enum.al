@@ -1,7 +1,6 @@
 enum 50505 "PDC Status Type Enum"
 {
     Extensible = true;
-
     value(0; " ")
     {
     }
@@ -25,7 +24,6 @@ enum 50505 "PDC Status Type Enum"
     {
         Caption = 'Retrieved';
     }
-
     value(6; "Returned")
     {
         Caption = 'Returned';
@@ -34,7 +32,6 @@ enum 50505 "PDC Status Type Enum"
     {
         Caption = 'Replaced & Received';
     }
-
     value(8; "Deferred")
     {
         Caption = 'Deferred';

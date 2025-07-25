@@ -1,11 +1,9 @@
 enum 50507 "Payment Status"
 {
     Extensible = true;
-
     value(0; " ")
     {
     }
-
     value(1; "Scheduled")
     {
         Caption = 'Scheduled';
