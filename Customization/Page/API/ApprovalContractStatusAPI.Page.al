@@ -17,7 +17,7 @@ page 50319 "Approval Contract Status API"
     {
         area(content)
         {
-            field("systemId"; Rec.SystemId) // System ID field for unique identification in API calls
+            field("systemId"; Rec.SystemId)
             {
                 Caption = 'System Identifier';
             }
