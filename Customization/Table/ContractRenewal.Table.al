@@ -353,7 +353,7 @@ table 50318 "Contract Renewal"
             DataClassification = ToBeClassified;
         }
 
-        field(50139; "Created By"; Text[100])
+        field(50139; "Created By"; Text[50])
         {
             DataClassification = ToBeClassified;
             Caption = 'Created By';

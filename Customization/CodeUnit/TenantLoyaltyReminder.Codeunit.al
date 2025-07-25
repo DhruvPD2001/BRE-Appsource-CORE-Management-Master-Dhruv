@@ -1,7 +1,6 @@
 codeunit 50305 "Tenant Loyalty Reminder"
 {
     Subtype = Normal;
-
     trigger OnRun()
     begin
         ProcessLoyaltyReminders();
@@ -11,33 +10,26 @@ codeunit 50305 "Tenant Loyalty Reminder"
     var
         TenantContract: Record "Tenancy Contract";
         ContractEndApproval: Record ContractEndProcessApproval;
+        UserPersonalizationRec: Record "User Personalization";
+        CompanyInfo: Record "Company Information";
+        UserRec: Record User;
         EmailMessage: Codeunit "Email Message";
         Email: Codeunit "Email";
         ReminderDays: Integer;
         ReminderTargetDate: Date;
         Today: Date;
         EmailBody: Text;
-        UserPersonalizationRec: Record "User Personalization";
-        UserRec: Record User;
         EmailList: List of [Text];
         LeaseManagerName: Text;
-        CompanyInfo: Record "Company Information";
     begin
         Today := Today();
-
         if TenantContract.FindSet() then
             repeat
                 ReminderDays := TenantContract."Tenant Loyalty Check Reminder";
-
                 if (ReminderDays > 0) and (TenantContract."Contract End Date" <> 0D) then begin
                     ReminderTargetDate := TenantContract."Contract End Date" - ReminderDays;
-
-
-
-                    if Today = ReminderTargetDate then begin
+                    if Today = ReminderTargetDate then
                         if TenantContract."Tenant Contract Status" = TenantContract."Tenant Contract Status"::Active then begin
-
-                            // Insert record
                             ContractEndApproval.Init();
                             ContractEndApproval."Contract ID" := TenantContract."Contract ID";
                             ContractEndApproval."Tenant Id" := TenantContract."Tenant ID";
@@ -48,15 +40,9 @@ codeunit 50305 "Tenant Loyalty Reminder"
                             ContractEndApproval."End Date" := TenantContract."Contract End Date";
                             ContractEndApproval."Tenant Email" := TenantContract."Email Address";
                             ContractEndApproval."Renewal Notification to Tenant" := TenantContract."Renewal Notification to Tenant";
-                            // ContractEndApproval.Value := 'True';
-
                             ContractEndApproval.Insert();
                             Clear(ContractEndApproval);
-
-                            // Get Lease Manager Emails
-                            // EmailList.Clear();
                             LeaseManagerName := '';
-
                             UserPersonalizationRec.SetRange("Profile ID", 'LEASE_MANAGER');
                             if UserPersonalizationRec.FindSet() then
                                 repeat
@@ -69,11 +55,8 @@ codeunit 50305 "Tenant Loyalty Reminder"
                                                 LeaseManagerName += ', ' + UserRec."User Name";
                                         end;
                                 until UserPersonalizationRec.Next() = 0;
-
                             if EmailList.Count = 0 then
                                 Error('No valid email addresses found for LEASE_MANAGER.');
-
-                            // Create and Send Email
                             if CompanyInfo.Get() then begin
                                 EmailBody :=
                                       '<html><body>' +
@@ -88,19 +71,16 @@ codeunit 50305 "Tenant Loyalty Reminder"
                                       '<b>Status:</b> Active<br/><br/>' +
                                       '<p>Best regards,<br/>' + CompanyInfo.Name +
                                        '</body></html>';
-
                                 EmailMessage.Create(
-                                    EmailList, // Recipients
+                                    EmailList,
                                     'Reminder: Tenant Contract Ending Soon',
                                     EmailBody,
-                                    true // IsHtml
+                                    true
                                 );
-
                                 if not Email.Send(EmailMessage) then
                                     Error('Email failed to send. Please check SMTP settings.');
                             end;
                         end;
-                    end;
                 end;
             until TenantContract.Next() = 0;
     end;

@@ -6,7 +6,6 @@ codeunit 50105 CalculateNumberOfInstallments
         revenuestructuresubpage: Record "Revenue Structure Subpage";
         getinstallments: Integer;
         Totalinstallments: Integer;
-
     begin
         Totalinstallments := 0;
         revenuestructure.SetRange("RS ID", prevenuestructuresubpage."RS ID");
@@ -14,14 +13,10 @@ codeunit 50105 CalculateNumberOfInstallments
         if revenuestructure.FindSet() then begin
             getinstallments := prevenuestructuresubpage."Yearly No. of Installment";
             Totalinstallments += getinstallments;
-
             revenuestructuresubpage.SetRange("RS ID", revenuestructure."RS ID");
             if revenuestructuresubpage.FindSet() then
                 repeat
                     if revenuestructuresubpage."Entry No." <> prevenuestructuresubpage."Entry No." then begin
-
-
-
                         getinstallments := revenuestructuresubpage."Yearly No. of Installment";
                         Totalinstallments += getinstallments;
                     end;
@@ -31,7 +26,7 @@ codeunit 50105 CalculateNumberOfInstallments
         end;
     end;
 
-     procedure BeforeDeleteCalculateInstallments(var prevenuestructuresubpage: Record "Revenue Structure Subpage")
+    procedure BeforeDeleteCalculateInstallments(var prevenuestructuresubpage: Record "Revenue Structure Subpage")
     var
         revenuestructure: Record "Revenue Structure";
         revenuestructuresubpage: Record "Revenue Structure Subpage";
@@ -53,9 +48,5 @@ codeunit 50105 CalculateNumberOfInstallments
             revenuestructure."Number of Installments" := Totalinstallments;
             revenuestructure.Modify();
         end;
-
     end;
-
 }
-
-   

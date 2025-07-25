@@ -1,7 +1,6 @@
 codeunit 50304 "Payment Reminder Processor"
 {
     Subtype = Normal;
-
     trigger OnRun()
     begin
         ProcessPaymentReminders();
@@ -14,23 +13,18 @@ codeunit 50304 "Payment Reminder Processor"
         ReminderDate: Date;
         ReminderDays: Integer;
     begin
-        TodayDate := Today; // Use built-in Today variable
-
+        TodayDate := Today;
         PaymentRec.Reset();
-        PaymentRec.SetFilter("Due Date", '<>%1', 0D); // Only with due dates
-        PaymentRec.SetFilter("Payment Reminder", '>0'); // Only if reminder days > 0
-
+        PaymentRec.SetFilter("Due Date", '<>%1', 0D);
+        PaymentRec.SetFilter("Payment Reminder", '>0');
         if PaymentRec.FindSet() then
             repeat
                 ReminderDays := PaymentRec."Payment Reminder";
                 ReminderDate := PaymentRec."Due Date" - ReminderDays;
-
-                // Debug message
                 Message(
                     'Checking Reminder: Due Date = %1 | Reminder Days = %2 | Reminder Date = %3 | Today = %4',
                     PaymentRec."Due Date", ReminderDays, ReminderDate, TodayDate
                 );
-
                 if ReminderDate = TodayDate then
                     SendReminderEmail(PaymentRec);
             until PaymentRec.Next() = 0;
@@ -38,48 +32,39 @@ codeunit 50304 "Payment Reminder Processor"
 
     local procedure SendReminderEmail(PaymentRec: Record "Payment Mode2")
     var
+        CompanyInfo: Record "Company Information";
         Email: Codeunit "Email";
         EmailMessage: Codeunit "Email Message";
-        CompanyInfo: Record "Company Information";
         RecipientEmail: Text;
         EmailBody: Text;
     begin
         RecipientEmail := PaymentRec."Tenant Email";
-
-        // Check for empty or blank email
         if DelChr(RecipientEmail, '=', ' ') = '' then begin
             Message('Skipped: No email for tenant %1.', PaymentRec."Tenant Name");
             exit;
         end;
-
         if not CompanyInfo.Get() then
             Error('Company information not found.');
-
         EmailBody :=
      '<html><body>' +
      '<p>Dear ' + PaymentRec."Tenant Name" + ',</p>' +
      '<p>I hope this message finds you well. This is a kind reminder that your payment for <b>(Rent/Charges)</b> is due on <b>' +
      Format(PaymentRec."Due Date", 0, '<Day>/<Month>/<Year4>') + '</b>, which is <b>' + Format(PaymentRec."Payment Reminder") + ' days</b> from now.</p>' +
-
      '<p><b>Details of the Payment:</b><br/>' +
      'Contract ID: ' + Format(PaymentRec."Contract ID") + '<br/>' +
      'Amount Due: ' + Format(PaymentRec.Amount) + '<br/>' +
      'Due Date: ' + Format(PaymentRec."Due Date", 0, '<Day>/<Month>/<Year4>') + '<br/>' +
      'Payment Mode: ' + Format(PaymentRec."Payment Mode") + '<br/>' +
      'Payment ID: ' + Format(PaymentRec."Payment Series") + '</p>' +
-
      '<p>If you have any questions or require assistance, feel free to reach out to us.</p>' +
      '<p><i>This is a system-generated email.</i></p>' +
-     //  '<p>Best regards,<br/><b>The BlueRidge Real-Estate Solution Team</b></p>' +
      '</body></html>';
-
         EmailMessage.Create(
             RecipientEmail,
             'Reminder: Upcoming Payment Due',
             EmailBody,
             true
         );
-
         if Email.Send(EmailMessage) then
             Message('✅ Payment reminder email sent to %1.', RecipientEmail)
         else

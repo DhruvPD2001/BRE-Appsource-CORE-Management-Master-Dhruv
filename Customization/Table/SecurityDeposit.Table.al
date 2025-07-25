@@ -130,7 +130,7 @@ table 50319 "Security Deposit"
             DataClassification = ToBeClassified;
             Caption = 'Security Deposit Amount Received';
         }
-        field(50179; "Property Classification"; Text[100])
+        field(50179; "Property Classification"; Text[30])
         {
             DataClassification = ToBeClassified;
             Caption = 'Property Classification';

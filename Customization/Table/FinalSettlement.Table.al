@@ -146,7 +146,7 @@ table 50922 "FinalSettlement"
             DataClassification = ToBeClassified;
             Caption = 'Payment Receipt Document URL';
         }
-        field(50117; "Tenant ID"; Code[50])
+        field(50117; "Tenant ID"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Receivable Tenant ID';

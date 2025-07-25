@@ -122,7 +122,7 @@ table 50902 "Additional Charges Sub"
             Caption = 'Invoiced';
             DataClassification = ToBeClassified;
         }
-        field(50117; "Invoiced ID"; Code[50])
+        field(50117; "Invoiced ID"; Code[20])
         {
             Caption = 'Invoice ID';
             DataClassification = ToBeClassified;
@@ -132,7 +132,7 @@ table 50902 "Additional Charges Sub"
             Caption = 'Unit Type';
             DataClassification = ToBeClassified;
         }
-        field(50119; "Posted Invoice ID"; Code[50])
+        field(50119; "Posted Invoice ID"; Code[20])
         {
             Caption = 'Invoice ID';
             DataClassification = ToBeClassified;

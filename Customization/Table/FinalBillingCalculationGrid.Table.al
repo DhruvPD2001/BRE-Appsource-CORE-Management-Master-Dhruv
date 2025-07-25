@@ -157,12 +157,12 @@ table 50946 "Final Billing Calculation Grid"
             Caption = 'Tenant ID';
             DataClassification = ToBeClassified;
         }
-        field(50129; "Invoice ID"; Text[100])
+        field(50129; "Invoice ID"; Text[20])
         {
             Caption = 'Invoice ID';
             DataClassification = ToBeClassified;
         }
-        field(50130; "Posted Invoice ID"; Code[50])
+        field(50130; "Posted Invoice ID"; Code[20])
         {
             Caption = 'Posted Invoice ID';
             DataClassification = ToBeClassified;
