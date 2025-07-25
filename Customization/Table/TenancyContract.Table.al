@@ -2,7 +2,6 @@ table 50307 "Tenancy Contract"
 {
     DataClassification = ToBeClassified;
     DataCaptionFields = "Contract ID";
-
     fields
     {
         field(50100; "Owner's Name"; Text[100])
@@ -31,32 +30,26 @@ table 50307 "Tenancy Contract"
             DataClassification = ToBeClassified;
             Caption = 'Lessor Name';
         }
-
         field(50102; "Lessor's Emirates ID"; Code[15])
         {
             DataClassification = ToBeClassified;
             Caption = 'Lessor Emirates ID';
         }
-
         field(50103; "License No."; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'License No.';
-
         }
-
         field(50104; "Licensing Authority"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Licensing Authority';
         }
-
         field(50105; "Lessor's Email"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Lessor Email';
         }
-
         field(50106; "Lessor's Phone"; Text[20])
         {
             DataClassification = ToBeClassified;
@@ -68,13 +61,11 @@ table 50307 "Tenancy Contract"
             Caption = 'Contract ID';
             AutoIncrement = true;
         }
-
         field(50108; "Proposal ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Proposal ID';
             TableRelation = "Lease Proposal Details"."Proposal ID" WHERE("Proposal Status" = CONST(Approved));
-
             trigger OnValidate()
             var
                 LeaseProposalRec: Record "Lease Proposal Details";
@@ -82,10 +73,8 @@ table 50307 "Tenancy Contract"
             begin
                 TenantContractRec.Reset();
                 TenantContractRec.SetRange("Proposal ID", "Proposal ID");
-
                 if TenantContractRec.FindFirst() and (TenantContractRec."Contract ID" <> "Contract ID") then
                     Error('The selected Proposal ID is already used for another tenant contract.');
-
                 LeaseProposalRec.SetRange("Proposal ID", "Proposal ID");
                 if LeaseProposalRec.FindFirst() then begin
                     "Tenant ID" := LeaseProposalRec."Tenant ID";
@@ -129,7 +118,6 @@ table 50307 "Tenancy Contract"
                     "Single Unit Name" := LeaseProposalRec."Single Unit Name";
                     "Market Rate per Sq. Ft." := LeaseProposalRec."Market Rate per Sq. Ft.";
                     "Facilities/Amenities" := LeaseProposalRec."Facilities/Amenities";
-
                     "Unit Number" := LeaseProposalRec."Unit Number";
                     "Single Rent Calculation" := LeaseProposalRec."Single Rent Calculation";
                     "Merge Rent Calculation" := LeaseProposalRec."Merge Rent Calculation";
@@ -158,32 +146,27 @@ table 50307 "Tenancy Contract"
                 end;
             end;
         }
-
         field(50109; "Property Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Property Name';
         }
-
         field(50110; "Customer Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant Name';
             TableRelation = Customer.Name;
         }
-
         field(50111; "Unit Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Unit Name';
         }
-
         field(50112; "Ejari Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Ejari Name';
         }
-
         field(50113; "Property Classification"; Text[100])
         {
             DataClassification = ToBeClassified;
@@ -191,7 +174,6 @@ table 50307 "Tenancy Contract"
             TableRelation = "Primary Classification"."Classification Name";
             NotBlank = true;
         }
-
         field(50114; "Property Type"; Text[100])
         {
             DataClassification = ToBeClassified;
@@ -199,40 +181,32 @@ table 50307 "Tenancy Contract"
             TableRelation = "Secondary Classification"."Property Type"
                 where("Classification Name" = field("Property Classification"));
         }
-
         field(50115; "Annual Rent Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract Amount ';
         }
-
         field(50116; "Contract Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract Date';
-            // NotBlank = true;
             trigger OnValidate()
             var
             begin
                 TenancyContractSubpage();
                 TenancyContractSubpage2();
-
             end;
         }
-
         field(50117; "Contract Start Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract Start Date';
         }
-
         field(50118; "Contract End Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract End Date';
-
         }
-
         field(50119; "Contract Tenor"; Text[50])
         {
             DataClassification = ToBeClassified;
@@ -242,21 +216,17 @@ table 50307 "Tenancy Contract"
         {
             DataClassification = ToBeClassified;
             Caption = 'Base Unit of Measure';
-
         }
-
         field(50121; "Unit Sq. Feet"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Unit Size';
         }
-
         field(50122; "Grace Period"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Grace Period (Days)';
         }
-
         field(50123; "Grace Start Date"; Date)
         {
             DataClassification = ToBeClassified;
@@ -266,7 +236,6 @@ table 50307 "Tenancy Contract"
                 CalculateGracePeriod();
             end;
         }
-
         field(50124; "Grace End Date"; Date)
         {
             DataClassification = ToBeClassified;
@@ -276,21 +245,18 @@ table 50307 "Tenancy Contract"
                 CalculateGracePeriod();
             end;
         }
-
         field(50125; "Tenant ID"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant ID';
             TableRelation = Customer."No.";
         }
-
         field(50126; "Property ID"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Property ID';
             TableRelation = "Property Registration"."Property ID";
         }
-
         field(50127; "Unit ID"; Code[100])
         {
             DataClassification = ToBeClassified;
@@ -298,13 +264,11 @@ table 50307 "Tenancy Contract"
             TableRelation = "Item"."No."
                 where("Property ID" = field("Property ID"));
         }
-
         field(50128; "Emirates ID"; Code[25])
         {
             DataClassification = ToBeClassified;
             Caption = 'Emirates ID';
         }
-
         field(50129; "Contact Number"; Text[30])
         {
             DataClassification = ToBeClassified;
@@ -315,7 +279,6 @@ table 50307 "Tenancy Contract"
             DataClassification = ToBeClassified;
             Caption = 'Email Address';
         }
-
         field(50131; "Payment Frequency"; Option)
         {
             OptionMembers = " ",Monthly,Quarterly,"Half-Yearly",Yearly;
@@ -323,17 +286,13 @@ table 50307 "Tenancy Contract"
         }
         field(50132; "Payment Method"; Text[100])
         {
-
             DataClassification = ToBeClassified;
         }
-
         field(50133; "Update Contract Status"; Option)
         {
             DataClassification = ToBeClassified;
             Caption = 'Update Contract Status';
             OptionMembers = " ","Initiate Activation Process","Initiate Suspension Process","Initiate Termination Process","Initiate Under Suspension-Unit Released";
-
-
         }
         field(50134; "Tenant Contract Status"; Option)
         {
@@ -341,29 +300,24 @@ table 50307 "Tenancy Contract"
             DataClassification = ToBeClassified;
             Caption = 'Tenant Contract Status';
             OptionMembers = " ",Active,Terminated,Suspended,Inactive,"Under Suspension-Unit Released","Active-Contract Renewed","Contract Renewed";
-
             trigger OnValidate()
             var
                 ItemRec: Record Item;
                 MergeUnitRec: Record "Merged Units";
                 emailrec: Codeunit "Send Contract Email";
-
             begin
-                // Handle logic for Unit ID
                 if "Unit ID" <> '' then
                     if ItemRec.Get("Unit ID") then begin
                         case "Tenant Contract Status" of
                             "Tenant Contract Status"::Active,
                             "Tenant Contract Status"::Suspended:
                                 ItemRec."Unit Status" := ItemRec."Unit Status"::Occupied;
-
                             "Tenant Contract Status"::Terminated,
                             "Tenant Contract Status"::"Under Suspension-Unit Released":
                                 ItemRec."Unit Status" := ItemRec."Unit Status"::Free;
                         end;
                         ItemRec.Modify();
                     end;
-
                 if "Merge Unit ID" <> '' then
                     if MergeUnitRec.Get("Merge Unit ID") then begin
                         case "Tenant Contract Status" of
@@ -375,10 +329,7 @@ table 50307 "Tenancy Contract"
                                 MergeUnitRec."Status" := MergeUnitRec."Status"::Occupied;
                             "Tenant Contract Status"::Suspended:
                                 MergeUnitRec."Status" := MergeUnitRec."Status"::Occupied;
-
                         end;
-
-                        // Additional logic for Spliting Status in Merge Units table
                         case "Tenant Contract Status" of
                             "Tenant Contract Status"::Active:
                                 MergeUnitRec."Spliting Status" := MergeUnitRec."Spliting Status"::Merge;
@@ -388,12 +339,8 @@ table 50307 "Tenancy Contract"
                                 MergeUnitRec."Spliting Status" := MergeUnitRec."Spliting Status"::Merge;
                             "Tenant Contract Status"::"Under Suspension-Unit Released":
                                 MergeUnitRec."Spliting Status" := MergeUnitRec."Spliting Status"::Merge;
-
                         end;
-
                         MergeUnitRec.Modify();
-
-                        // Update all associated Unit IDs in the Item table
                         if MergeUnitRec."Unit ID" <> '' then begin
                             ItemRec.SetRange("Merged Unit ID", MergeUnitRec."Merged Unit ID");
                             if ItemRec.FindSet() then
@@ -402,34 +349,23 @@ table 50307 "Tenancy Contract"
                                         "Tenant Contract Status"::Active,
                                           "Tenant Contract Status"::Suspended:
                                             ItemRec."Unit Status" := ItemRec."Unit Status"::Occupied;
-
                                         "Tenant Contract Status"::Terminated,
                                             "Tenant Contract Status"::"Under Suspension-Unit Released":
                                             ItemRec."Unit Status" := ItemRec."Unit Status"::Free;
                                     end;
-
                                     ItemRec.Modify();
                                 until ItemRec.Next() = 0;
                         end;
                     end;
-
-
                 if Rec."Tenant Contract Status" = Rec."Tenant Contract Status"::Active then
                     emailrec.SendEmail(Rec);
-
-
-
-
             end;
         }
-
         field(50135; "UnitID"; code[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Uniq Unit ID';
-
         }
-
         field(50136; "Created By"; Text[50])
         {
             DataClassification = ToBeClassified;
@@ -440,50 +376,41 @@ table 50307 "Tenancy Contract"
             DataClassification = ToBeClassified;
             Caption = 'Handover is Completed';
         }
-
         field(50152; "Handover of PDC"; Boolean)
         {
             DataClassification = ToBeClassified;
             Caption = 'Handover of PDC';
         }
-
         field(50153; "Signed TC Document"; Boolean)
         {
             DataClassification = ToBeClassified;
             Caption = 'Signed TC Document';
         }
-
         field(50154; "Handover Unit"; Boolean)
         {
             DataClassification = ToBeClassified;
             Caption = 'Handover Unit';
         }
-
         field(50138; "Merge Unit ID"; Code[10])
         {
             DataClassification = ToBeClassified;
             Caption = 'Merge Unit ID';
         }
-
         field(50139; "Rent Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Annual Rent Amount ';
         }
-
-
         field(50140; "Tenant_License No."; Code[20])
         {
             Caption = 'Tenant Trade License No.';
             DataClassification = ToBeClassified;
         }
-
         field(50141; "Tenant_Licensing Authority"; Text[100])
         {
             Caption = 'Tenant_Licensing Authority';
             DataClassification = ToBeClassified;
         }
-
         field(50142; "Security Deposit Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
@@ -495,12 +422,10 @@ table 50307 "Tenancy Contract"
         field(50144; "Makani Number"; Text[50])
         {
             DataClassification = ToBeClassified;
-
         }
         field(50145; "Emirate"; Enum Emirates)
         {
             DataClassification = ToBeClassified;
-
         }
         field(50146; "Community"; Text[100])
         {
@@ -516,25 +441,21 @@ table 50307 "Tenancy Contract"
             DataClassification = ToBeClassified;
             Caption = 'Property Size';
         }
-
         field(50149; "ID"; Integer)
         {
             Caption = 'Suspended Reason ID';
             DataClassification = ToBeClassified;
-
         }
         field(50150; "Suspended Reason list"; Text[250])
         {
             Caption = 'Suspended Reason list';
             DataClassification = ToBeClassified;
-
         }
         field(50151; "No of Installments"; Integer)
         {
             Caption = 'No of Installments';
             Editable = false;
         }
-
         field(50155; "Upload Document"; Text[250])
         {
             DataClassification = ToBeClassified;
@@ -545,40 +466,32 @@ table 50307 "Tenancy Contract"
             DataClassification = ToBeClassified;
             Caption = 'view Document';
         }
-
         field(50157; "document URL"; Text[250])
         {
             DataClassification = ToBeClassified;
             Caption = 'Logo URL';
         }
-
         field(50158; "Renewal Contract Status"; Option)
         {
             DataClassification = ToBeClassified;
             Caption = 'Renewal Contract Status';
             OptionMembers = "N/A","Notify Tenant For Renewal";
         }
-
         field(50159; "Contract Type"; Option)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract Type';
             OptionMembers = " ","New Contract","Renewal Contract";
-
             trigger OnValidate()
             begin
                 rec.Insert();
             end;
         }
-
-
-
         field(50160; "Renewal Proposal ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Renewal Proposal ID';
             TableRelation = "Contract Renewal".Id WHERE("Final Status" = CONST(Approved));
-
             trigger OnValidate()
             var
                 LeaseProposalRec: Record "Contract Renewal";
@@ -586,7 +499,6 @@ table 50307 "Tenancy Contract"
             begin
                 TenantContractRec.Reset();
                 TenantContractRec.SetRange("Proposal ID", "Proposal ID");
-
                 LeaseProposalRec.SetRange(ID, "Renewal Proposal ID");
                 if LeaseProposalRec.FindFirst() then begin
                     "Tenant ID" := LeaseProposalRec."Tenant ID";
@@ -622,16 +534,13 @@ table 50307 "Tenancy Contract"
                     "DEWA Number" := LeaseProposalRec."DEWA Number";
                     "Property Size" := LeaseProposalRec."Property Size";
                     "No of Installments" := LeaseProposalRec."No of Installments";
-
                     "Single Rent Calculation" := LeaseProposalRec."Single Rent Calculation";
                     "Merge Rent Calculation" := LeaseProposalRec."Merge Rent Calculation";
                     "Praposal Type Selected" := LeaseProposalRec."Praposal Type Selected";
-
                     TenancyContractSubpage2();
                     rentdatafetched();
                     renewalbrokerdata();
                 end else begin
-                    // Clear fields if no record is found
                     "Tenant ID" := '';
                     "Customer Name" := '';
                     "Property ID" := '';
@@ -650,51 +559,41 @@ table 50307 "Tenancy Contract"
                 end;
             end;
         }
-
         field(50161; "Yes/No"; Boolean)
         {
             DataClassification = ToBeClassified;
             Caption = 'Yes/No';
         }
-
         field(50162; "Praposal Type Selected"; Option)
         {
             OptionMembers = " ","Single Unit","Merge Unit";
             DataClassification = ToBeClassified;
-
         }
         field(50163; "Unit Address"; Text[100])
         {
             DataClassification = ToBeClassified;
-
         }
-
         field(50164; "Usage Type"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Usage Type';
-
             NotBlank = true;
         }
-
         field(50165; "Unit Type"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Unit Type';
         }
-
         field(50166; "Single Unit Name"; Text[500])
         {
             DataClassification = ToBeClassified;
             Caption = 'Single Unit Names';
         }
-
         field(50167; "Market Rate per Sq. Ft."; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Market Rate per Sq. Ft. ';
         }
-
         field(50168; "Facilities/Amenities"; Text[250])
         {
             DataClassification = ToBeClassified;
@@ -703,74 +602,57 @@ table 50307 "Tenancy Contract"
         {
             DataClassification = ToBeClassified;
         }
-
         field(50170; "Single Rent Calculation"; Option)
         {
             DataClassification = ToBeClassified;
             Caption = 'Single Unit Rent Calculation Type';
             Editable = false;
             OptionMembers = " ","Single Unit with square feet rate","Single Unit with lumpsum square feet rate";
-
         }
-
-
-
         field(50171; "Merge Rent Calculation"; Option)
         {
             DataClassification = ToBeClassified;
             Caption = 'Merge Unit Rent Calculation Type';
             OptionMembers = " ","Merged Unit with same square feet","Merged Unit with differential square feet rate","Merged Unit with lumpsum annual amount";
         }
-
         field(50172; "Update Data"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Rent Calculation';
             InitValue = 'Update Data';
-
         }
-
         field(50178; "Final Calculation"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Final Calculation';
             InitValue = 'Final Calculation';
             Editable = false;
-
-
         }
-
         field(50173; "Contract VAT %"; Option)
         {
             OptionMembers = "0%","5%";
             Editable = false;
-
         }
-
         field(50174; "Contract VAT Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Editable = false;
         }
-
         field(50175; "Contract Amount Including VAT"; Decimal)
         {
             DataClassification = ToBeClassified;
             Editable = false;
         }
-
         field(50176; "Security Amount Received"; Decimal)
         {
             DataClassification = ToBeClassified;
             Editable = false;
         }
-
         field(50177; "Security Balanced Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Editable = false;
         }
-
         field(50179; "Termination Of Contract"; Option)
         {
             OptionMembers = " ","Regular Termination","Early Termination","Suspension to Termination";
@@ -784,103 +666,83 @@ table 50307 "Tenancy Contract"
         {
             DataClassification = ToBeClassified;
         }
-
         field(50182; "Penalty Charges"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-
         field(50183; "Damage Charges"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-
         field(50184; "Service Charges Due"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-
         field(50185; "Final Refundable Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-
         field(50186; "Approval Required"; Boolean)
         {
             DataClassification = ToBeClassified;
         }
-
         field(50187; "Approval Stauts"; Enum "Approval Status Enum")
         {
             DataClassification = ToBeClassified;
-            // OptionMembers = " ","Pending","Approved","Rejected";
         }
         field(50188; "Approved By"; Text[100])
         {
             DataClassification = ToBeClassified;
-
         }
-
         field(50189; "Final Settlement Date"; Date)
         {
             DataClassification = ToBeClassified;
         }
-
         field(50191; "Rent Calculation Link"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Rent Calculation Link';
             Editable = false;
         }
-
         field(50192; "Link"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Final Calculation Link';
             Editable = false;
-
         }
-
         field(50193; "Renewal Notification to Tenant"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Renewal Notification to Tenant';
             Editable = true;
-
         }
         field(50194; "Tenant Loyalty Check Reminder"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant Loyalty Check Reminder';
             Editable = true;
-
         }
         field(50195; "Payment Reminder"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Payment Reminder';
             Editable = false;
-
         }
         field(50196; "Previous Status"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Previous Status';
             Editable = true;
-
         }
-
         field(50197; "Vendor ID"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Vendor ID';
-            // Editable = false;
         }
         field(50198; "Vendor Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Vendor Name';
-            //  Editable = false;
         }
         field(50199; "Percentage"; Integer)
         {
@@ -898,7 +760,6 @@ table 50307 "Tenancy Contract"
             Caption = 'Calculation Method';
             TableRelation = "Calculation Type"."Calculation Type";
         }
-
         field(50203; "Percentage Type"; Option)
         {
             DataClassification = ToBeClassified;
@@ -917,7 +778,6 @@ table 50307 "Tenancy Contract"
             Caption = 'Frequency Of Payment';
             OptionMembers = " ","Monthly","Quaterly","Half Yearly","Yearly";
         }
-
         field(50206; "Start Date"; Date)
         {
             DataClassification = ToBeClassified;
@@ -927,7 +787,6 @@ table 50307 "Tenancy Contract"
         {
             DataClassification = ToBeClassified;
             Caption = 'End Date';
-
         }
         field(50208; "Contract Status"; Option)
         {
@@ -953,48 +812,34 @@ table 50307 "Tenancy Contract"
             Caption = 'Address';
         }
     }
-
     keys
     {
         key(PK; "Contract ID")
         {
             Clustered = false;
         }
-
         key(PK1; SystemId)
         {
             Clustered = false;
         }
-
         key(PK2; "Proposal ID", "Renewal Proposal ID")
         {
             Clustered = true;
         }
-
     }
-
     fieldgroups
     {
         fieldgroup(DropDown; "Contract ID", "Proposal ID", "Renewal Proposal ID")
         {
-
         }
     }
-
-
-
-
     procedure TenancyContractSubpage()
     var
         RevenueSubpage: Record "Revenue Item Subpage";
         TenancyContractGrid: Record "Tenancy Contract Subpage";
-
     begin
         if Rec."Contract Type" = Rec."Contract Type"::"New Contract"
         then begin
-
-
-
             TenancyContractGrid.SetRange(ContractID, Rec."Contract ID");
             if TenancyContractGrid.FindSet() then
                 TenancyContractGrid.DeleteAll();
@@ -1013,11 +858,9 @@ table 50307 "Tenancy Contract"
                     TenancyContractGrid."Start Date" := RevenueSubpage."Start Date";
                     TenancyContractGrid."End Date" := RevenueSubpage."End Date";
                     TenancyContractGrid."Payment Type" := RevenueSubpage."Payment Type";
-
                     TenancyContractGrid.Insert();
                     Clear(TenancyContractGrid);
                 until RevenueSubpage.Next() = 0;
-
         end;
     end;
 
@@ -1025,11 +868,8 @@ table 50307 "Tenancy Contract"
     var
         RevenueSubpage2: Record "Contract Renewal Subpage";
         TenancyContractGrid1: Record "Tenancy Contract Subpage";
-
     begin
         if Rec."Contract Type" = Rec."Contract Type"::"Renewal Contract" then begin
-
-
             TenancyContractGrid1.SetRange(ContractID, Rec."Contract ID");
             if TenancyContractGrid1.FindSet() then
                 TenancyContractGrid1.DeleteAll();
@@ -1052,9 +892,7 @@ table 50307 "Tenancy Contract"
                     Clear(TenancyContractGrid1);
                 until RevenueSubpage2.Next() = 0;
         end;
-
     end;
-
 
     procedure rentdatafetch()
     var
@@ -1072,10 +910,7 @@ table 50307 "Tenancy Contract"
         CRPerDayRevenewUnitRate: Record "Per Day Rent for Revenue";
         LineNoCounter: Integer;
     begin
-
         if "Single Rent Calculation" = "Single Rent Calculation"::"Single Unit with square feet rate" then begin
-
-            // ✅ **Delete Existing Records Before Insert**
             TCSingleUnitRent.Reset();
             TCSingleUnitRent.SetRange("ID", "Proposal ID");
             if TCSingleUnitRent.FindSet() then
@@ -1102,11 +937,8 @@ table 50307 "Tenancy Contract"
                     TCSingleUnitRent."Final Annual Amount" := CRSingleUnitRent."Final Annual Amount";
                     TCSingleUnitRent."Per Day Rent" := CRSingleUnitRent."Per Day Rent";
                     TCSingleUnitRent.Insert();
-
-                    LineNoCounter += 1; // Increment line number
+                    LineNoCounter += 1;
                 until CRSingleUnitRent.Next() = 0;
-                // end else begin
-                //     Message('No existing records found for Proposal ID: %1 in Single Unit Rent SubPage.', "Proposal ID");
             end;
         end
         else
@@ -1121,10 +953,9 @@ table 50307 "Tenancy Contract"
                     LineNoCounter := 1;
                     repeat
                         TCLumpsumUnitRate.Init();
-
                         TCLumpsumUnitRate."ID" := CRLumpsumUnitRent."Proposal ID";
                         TCLumpsumUnitRate."Contract Id" := Rec."Contract ID";
-                        TCLumpsumUnitRate."SL_Line No." := LineNoCounter; // Ensure unique line number
+                        TCLumpsumUnitRate."SL_Line No." := LineNoCounter;
                         TCLumpsumUnitRate."SL_Unit ID" := CRLumpsumUnitRent."SL_Unit ID";
                         TCLumpsumUnitRate.SL_Year := CRLumpsumUnitRent.SL_Year;
                         TCLumpsumUnitRate."SL_Start Date" := CRLumpsumUnitRent."SL_Start Date";
@@ -1146,14 +977,12 @@ table 50307 "Tenancy Contract"
                     until CRLumpsumUnitRent.Next() = 0;
                 end;
             end
-
             else
                 if "Merge Rent Calculation" = "Merge Rent Calculation"::"Merged Unit with same square feet" then begin
                     TCMergeUnitRate.Reset();
                     TCMergeUnitRate.SetRange("ID", "Proposal ID");
                     if TCMergeUnitRate.FindSet() then
                         TCMergeUnitRate.DeleteAll();
-
                     CRMergeUnitRent.Reset();
                     CRMergeUnitRent.SetRange("Proposal ID", "Proposal ID");
                     if CRMergeUnitRent.FindSet() then begin
@@ -1162,7 +991,7 @@ table 50307 "Tenancy Contract"
                             TCMergeUnitRate.Init();
                             TCMergeUnitRate."ID" := CRMergeUnitRent."Proposal ID";
                             TCMergeUnitRate."Contract Id" := Rec."Contract ID";
-                            TCMergeUnitRate."MS_Line No." := LineNoCounter; // Ensure unique line number
+                            TCMergeUnitRate."MS_Line No." := LineNoCounter;
                             TCMergeUnitRate."MS_Merged Unit ID" := CRMergeUnitRent."MS_Merged Unit ID";
                             TCMergeUnitRate.MS_Year := CRMergeUnitRent.MS_Year;
                             TCMergeUnitRate."MS_Start Date" := CRMergeUnitRent."MS_Start Date";
@@ -1198,7 +1027,7 @@ table 50307 "Tenancy Contract"
                                 TCMergediffUnitRate.Init();
                                 TCMergediffUnitRate."ID" := CRMergediffUnitRent."Proposal ID";
                                 TCMergediffUnitRate."Contract Id" := Rec."Contract ID";
-                                TCMergediffUnitRate."MD_Line No." := LineNoCounter; // Ensure unique line number
+                                TCMergediffUnitRate."MD_Line No." := LineNoCounter;
                                 TCMergediffUnitRate."MD_Merged Unit ID" := CRMergediffUnitRent."MD_Merged Unit ID";
                                 TCMergediffUnitRate."MD_Unit ID" := CRMergediffUnitRent."MD_Unit ID";
                                 TCMergediffUnitRate.MD_Year := CRMergediffUnitRent.MD_Year;
@@ -1221,25 +1050,21 @@ table 50307 "Tenancy Contract"
                             until CRMergediffUnitRent.Next() = 0;
                         end;
                     end
-
                     else
                         if "Merge Rent Calculation" = "Merge Rent Calculation"::"Merged Unit with lumpsum annual amount" then begin
                             TCMergeLumpsumUnitRate.Reset();
                             TCMergeLumpsumUnitRate.SetRange("ID", "Proposal ID");
-
                             if TCMergeLumpsumUnitRate.FindSet() then
                                 TCMergeLumpsumUnitRate.DeleteAll();
-
                             CRMergeLumpsumUnitRent.Reset();
                             CRMergeLumpsumUnitRent.SetRange("Proposal ID", "Proposal ID");
-
                             if CRMergeLumpsumUnitRent.FindSet() then begin
                                 LineNoCounter := 1;
                                 repeat
                                     TCMergeLumpsumUnitRate.Init();
                                     TCMergeLumpsumUnitRate."ID" := CRMergeLumpsumUnitRent."Proposal ID";
                                     TCMergeLumpsumUnitRate."Contract Id" := Rec."Contract ID";
-                                    TCMergeLumpsumUnitRate."ML_Line No." := LineNoCounter; // Ensure unique line number
+                                    TCMergeLumpsumUnitRate."ML_Line No." := LineNoCounter;
                                     TCMergeLumpsumUnitRate."ML_Merged Unit ID" := CRMergeLumpsumUnitRent."ML_Merged Unit ID";
                                     TCMergeLumpsumUnitRate.ML_Year := CRMergeLumpsumUnitRent.ML_Year;
                                     TCMergeLumpsumUnitRate."ML_Start Date" := CRMergeLumpsumUnitRent."ML_Start Date";
@@ -1263,12 +1088,10 @@ table 50307 "Tenancy Contract"
                         end;
         TCPerDayRevenewUnitRate.Reset();
         TCPerDayRevenewUnitRate.SetRange("Proposal Id", "Proposal ID");
-
         if TCPerDayRevenewUnitRate.FindSet() then
             TCPerDayRevenewUnitRate.DeleteAll();
         CRPerDayRevenewUnitRate.Reset();
         CRPerDayRevenewUnitRate.SetRange("Proposal Id", "Proposal ID");
-
         if CRPerDayRevenewUnitRate.FindSet() then begin
             LineNoCounter := 1;
             repeat
@@ -1279,7 +1102,6 @@ table 50307 "Tenancy Contract"
                 TCPerDayRevenewUnitRate."Unit ID" := CRPerDayRevenewUnitRate."Unit ID";
                 TCPerDayRevenewUnitRate."Sq.Ft" := CRPerDayRevenewUnitRate."Sq.Ft";
                 TCPerDayRevenewUnitRate."Per Day Rent Per Unit" := CRPerDayRevenewUnitRate."Per Day Rent Per Unit";
-
                 TCPerDayRevenewUnitRate.Insert();
                 Clear(TCPerDayRevenewUnitRate);
                 LineNoCounter += 1;
@@ -1310,7 +1132,6 @@ table 50307 "Tenancy Contract"
                 TCSingleUnitRent.DeleteAll();
             CRSingleUnitRent.Reset();
             CRSingleUnitRent.SetRange("ID", "Renewal Proposal ID");
-
             if CRSingleUnitRent.FindSet() then begin
                 LineNoCounter := 1;
                 repeat
@@ -1335,17 +1156,12 @@ table 50307 "Tenancy Contract"
                     TCSingleUnitRent.TotalRoundOff := CRSingleUnitRent.TotalRoundOff;
                     TCSingleUnitRent.TotalFirstAnnualAmount := CRSingleUnitRent.TotalFirstAnnualAmount;
                     TCSingleUnitRent.Insert();
-
-
                     LineNoCounter += 1;
                 until CRSingleUnitRent.Next() = 0;
             end;
-
         end
-
         else
             if "Single Rent Calculation" = "Single Rent Calculation"::"Single Unit with lumpsum square feet rate" then begin
-                // ✅ Delete Existing Records Before Insert in TC Single LumAnnualAmnt SP
                 TCLumpsumUnitRate.Reset();
                 TCLumpsumUnitRate.SetRange("ID", "Renewal Proposal ID");
                 if TCLumpsumUnitRate.FindSet() then
@@ -1353,13 +1169,12 @@ table 50307 "Tenancy Contract"
                 CRLumpsumUnitRent.Reset();
                 CRLumpsumUnitRent.SetRange("ID", "Renewal Proposal ID");
                 if CRLumpsumUnitRent.FindSet() then begin
-                    LineNoCounter := 1; // Start line numbering from 1
+                    LineNoCounter := 1;
                     repeat
                         TCLumpsumUnitRate.Init();
-
                         TCLumpsumUnitRate."ID" := CRLumpsumUnitRent."ID";
                         TCLumpsumUnitRate."Contract Id" := Rec."Contract Id";
-                        TCLumpsumUnitRate."SL_Line No." := LineNoCounter; // Ensure unique line number
+                        TCLumpsumUnitRate."SL_Line No." := LineNoCounter;
                         TCLumpsumUnitRate."SL_Unit ID" := CRLumpsumUnitRent."SL_Unit ID";
                         TCLumpsumUnitRate.SL_Year := CRLumpsumUnitRent.SL_Year;
                         TCLumpsumUnitRate."SL_Start Date" := CRLumpsumUnitRent."SL_Start Date";
@@ -1376,24 +1191,17 @@ table 50307 "Tenancy Contract"
                         TCLumpsumUnitRate.TotalAnnualAmount := CRSingleUnitRent.TotalAnnualAmount;
                         TCLumpsumUnitRate.TotalRoundOff := CRSingleUnitRent.TotalRoundOff;
                         TCLumpsumUnitRate.TotalFirstAnnualAmount := CRSingleUnitRent.TotalFirstAnnualAmount;
-
-
                         TCLumpsumUnitRate.Insert();
-
-                        LineNoCounter += 1; // Increment line number
+                        LineNoCounter += 1;
                     until CRLumpsumUnitRent.Next() = 0;
-                    // end else begin
-                    //     Message('No existing records found for ID: %1 in CR Single LumAnnualAmnt SP.', "Renewal Proposal ID");
                 end;
             end
-
             else
                 if "Merge Rent Calculation" = "Merge Rent Calculation"::"Merged Unit with same square feet" then begin
                     TCMergeUnitRate.Reset();
                     TCMergeUnitRate.SetRange("ID", "Renewal Proposal ID");
                     if TCMergeUnitRate.FindSet() then
                         TCMergeUnitRate.DeleteAll();
-
                     CRMergeUnitRent.Reset();
                     CRMergeUnitRent.SetRange("ID", "Renewal Proposal ID");
                     if CRMergeUnitRent.FindSet() then begin
@@ -1402,7 +1210,7 @@ table 50307 "Tenancy Contract"
                             TCMergeUnitRate.Init();
                             TCMergeUnitRate."ID" := CRMergeUnitRent."ID";
                             TCMergeUnitRate."Contract Id" := Rec."Contract Id";
-                            TCMergeUnitRate."MS_Line No." := LineNoCounter; // Ensure unique line number
+                            TCMergeUnitRate."MS_Line No." := LineNoCounter;
                             TCMergeUnitRate."MS_Merged Unit ID" := CRMergeUnitRent."MS_Merged Unit ID";
                             TCMergeUnitRate.MS_Year := CRMergeUnitRent.MS_Year;
                             TCMergeUnitRate."MS_Start Date" := CRMergeUnitRent."MS_Start Date";
@@ -1438,7 +1246,7 @@ table 50307 "Tenancy Contract"
                                 TCMergediffUnitRate.Init();
                                 TCMergediffUnitRate."ID" := CRMergediffUnitRent."ID";
                                 TCMergediffUnitRate."Contract Id" := Rec."Contract ID";
-                                TCMergediffUnitRate."MD_Line No." := LineNoCounter; // Ensure unique line number
+                                TCMergediffUnitRate."MD_Line No." := LineNoCounter;
                                 TCMergediffUnitRate."MD_Merged Unit ID" := CRMergediffUnitRent."MD_Merged Unit ID";
                                 TCMergediffUnitRate.MD_Year := CRMergediffUnitRent.MD_Year;
                                 TCMergediffUnitRate."MD_Start Date" := CRMergediffUnitRent."MD_Start Date";
@@ -1466,7 +1274,6 @@ table 50307 "Tenancy Contract"
                             TCMergeLumpsumUnitRate.SetRange("ID", "Renewal Proposal ID");
                             if TCMergeLumpsumUnitRate.FindSet() then
                                 TCMergeLumpsumUnitRate.DeleteAll();
-
                             LineNoCounter := 1;
                             CRMergeLumpsumUnitRent.Reset();
                             CRMergeLumpsumUnitRent.SetRange("ID", "Renewal Proposal ID");
@@ -1475,7 +1282,7 @@ table 50307 "Tenancy Contract"
                                     TCMergeLumpsumUnitRate.Init();
                                     TCMergeLumpsumUnitRate."ID" := CRMergeLumpsumUnitRent."ID";
                                     TCMergeLumpsumUnitRate."Contract Id" := Rec."Contract ID";
-                                    TCMergeLumpsumUnitRate."ML_Line No." := LineNoCounter; // Ensure unique line number
+                                    TCMergeLumpsumUnitRate."ML_Line No." := LineNoCounter;
                                     TCMergeLumpsumUnitRate."ML_Merged Unit ID" := CRMergeLumpsumUnitRent."ML_Merged Unit ID";
                                     TCMergeLumpsumUnitRate.ML_Year := CRMergeLumpsumUnitRent.ML_Year;
                                     TCMergeLumpsumUnitRate."ML_Start Date" := CRMergeLumpsumUnitRent."ML_Start Date";
@@ -1543,19 +1350,16 @@ table 50307 "Tenancy Contract"
                     paymentschedule2.Modify();
                 until paymentschedule2.Next() = 0;
         end;
-
         if Rec."Tenant Contract Status" = Rec."Tenant Contract Status"::Suspended then
             if paymentscheule1.Get(Rec."Contract ID") then begin
                 paymentscheule1."Contract Status" := Format(Rec."Tenant Contract Status");
                 paymentscheule1.Modify();
             end;
-
         if Rec."Tenant Contract Status" = Rec."Tenant Contract Status"::Terminated then begin
             if paymentscheulecard.Get(Rec."Contract ID") then begin
                 paymentscheulecard."Contract Status" := Format(Rec."Tenant Contract Status");
                 paymentscheulecard.Modify();
             end;
-
             paymentschedule3grid.SetRange("Contract ID", Rec."Contract ID");
             if paymentschedule3grid.FindSet() then
                 repeat
@@ -1577,13 +1381,11 @@ table 50307 "Tenancy Contract"
     begin
         StartDate := "Grace Start Date";
         EndDate := "Grace End Date";
-
         if (StartDate <> 0D) and (EndDate <> 0D) then begin
             if EndDate >= StartDate then
                 DaysBetween := EndDate - StartDate
             else
                 DaysBetween := 0;
-
             "Grace Period" := DaysBetween;
         end else
             "Grace Period" := 0;
@@ -1609,7 +1411,6 @@ table 50307 "Tenancy Contract"
         if otherpayments.FindSet()
         then
             otherpayments.DeleteAll();
-
     end;
 
     procedure brokerdata()
@@ -1617,13 +1418,10 @@ table 50307 "Tenancy Contract"
         leaseproposal: Record "Lease Proposal Details";
     begin
         leaseproposal.SetRange("Proposal ID", Rec."Proposal ID");
-
         if leaseproposal.FindFirst() then begin
-            // Exit if Vendor ID is blank (i.e., not available)
             if leaseproposal."Vendor ID" = '' then
                 exit;
             if leaseproposal.FindFirst() then begin
-                // Fill fields from Lease Proposal
                 Rec."Vendor ID" := leaseproposal."Vendor ID";
                 Rec."Vendor Name" := leaseproposal."Vendor Name";
                 Rec."Start Date" := leaseproposal."Start Date";
@@ -1656,14 +1454,11 @@ table 50307 "Tenancy Contract"
         end;
     end;
 
-
-
     procedure renewalbrokerdata()
     var
         contractrenewal: Record "Contract Renewal";
     begin
         contractrenewal.SetRange("Proposal ID", Rec."Proposal ID");
-
         if contractrenewal.FindFirst() then begin
             if contractrenewal."Vendor ID" = '' then
                 exit;
@@ -1699,14 +1494,12 @@ table 50307 "Tenancy Contract"
         end;
     end;
 
-
     procedure ManagementFeeMasterDetailsFetch()
     var
         managementfee: Record "Brokerage Master Data";
         contractLine: Record "Tenancy Contract";
     begin
         contractLine.SetRange("Proposal ID", Rec."Proposal ID");
-
         if contractLine.FindFirst() then begin
             if contractLine."Vendor ID" = '' then
                 exit;
@@ -1714,7 +1507,6 @@ table 50307 "Tenancy Contract"
                 managementfee.Reset();
             managementfee.SetRange("Vendor ID", contractLine."Vendor ID");
             managementfee.SetRange("Contract ID", contractLine."Contract ID");
-
             if managementfee.FindFirst() then begin
                 managementfee."Vendor ID" := contractLine."Vendor ID";
                 managementfee."Contract ID" := contractLine."Contract ID";
@@ -1739,7 +1531,6 @@ table 50307 "Tenancy Contract"
                 managementfee."Tenant Name" := contractLine."Customer Name";
                 managementfee.Modify();
             end else begin
-                // Insert new
                 managementfee.Init();
                 managementfee."Vendor ID" := contractLine."Vendor ID";
                 managementfee."Contract ID" := contractLine."Contract ID";

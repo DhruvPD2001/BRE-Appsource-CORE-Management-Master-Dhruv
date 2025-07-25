@@ -1,7 +1,6 @@
 table 50323 "CR Single Unit Rent SubPage"
 {
     DataClassification = ToBeClassified;
-
     fields
     {
         field(50100; "Id"; Integer)
@@ -14,9 +13,7 @@ table 50323 "CR Single Unit Rent SubPage"
         }
         field(50102; "Unit ID"; Code[100])
         {
-
             DataClassification = ToBeClassified;
-
             trigger OnValidate()
             var
                 LeaseProposal: Record "Contract Renewal";
@@ -33,7 +30,6 @@ table 50323 "CR Single Unit Rent SubPage"
                     Error('No matching Lease Proposal found for the selected Unit ID.');
             end;
         }
-
         field(50103; "Year"; Integer)
         {
             DataClassification = ToBeClassified;
@@ -104,15 +100,12 @@ table 50323 "CR Single Unit Rent SubPage"
             FieldClass = FlowField;
             CalcFormula = sum("CR Single Unit Rent SubPage"."Round off" where("Id" = field("Id")));
         }
-
         field(50119; "TotalFirstAnnualAmount"; Decimal)
         {
             FieldClass = FlowField;
             CalcFormula = sum("CR Single Unit Rent SubPage"."Final Annual Amount" where("Id" = field("Id"), Year = const(1)));
         }
-
     }
-
     keys
     {
         key(PK; "Id", "Line No.")

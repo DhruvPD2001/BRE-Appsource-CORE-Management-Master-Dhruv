@@ -1,7 +1,6 @@
 table 50503 "AzureConfiguration"
 {
     DataClassification = ToBeClassified;
-
     fields
     {
         field(50501; Id; Integer)
@@ -32,7 +31,6 @@ table 50503 "AzureConfiguration"
             DataClassification = CustomerContent;
             Caption = 'Client Secret';
             Editable = true;
-            // In production, this should be encrypted
         }
         field(50506; "Tenant ID"; Text[50])
         {
@@ -47,7 +45,6 @@ table 50503 "AzureConfiguration"
             Editable = true;
         }
     }
-
     keys
     {
         key(Key1; Id)
@@ -59,9 +56,7 @@ table 50503 "AzureConfiguration"
     var
         AzureConfig: Record AzureConfiguration;
     begin
-        // Check if there is already a record in the table
-        if AzureConfig.FindFirst() then
+        if not AzureConfig.IsEmpty() then
             Error('Only one record is allowed in this table.');
     end;
-
 }

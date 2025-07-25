@@ -3,29 +3,23 @@ table 50914 "Revenue Structure Subpage"
     DataClassification = ToBeClassified;
     fields
     {
-
         field(50100; "Year"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Year';
             Editable = false;
-
         }
-
         field(50101; "Period Start Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Start Date';
             Editable = false;
-
-
         }
         field(50102; "Period End Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'End Date';
             Editable = false;
-
         }
         field(50103; "Number of Days"; Integer)
         {
@@ -33,7 +27,6 @@ table 50914 "Revenue Structure Subpage"
             Caption = 'Number of Days';
             Editable = false;
         }
-
         field(50104; "Final Annual Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
@@ -45,7 +38,6 @@ table 50914 "Revenue Structure Subpage"
             DataClassification = ToBeClassified;
             Caption = 'Yearly No. of Instalment';
             Editable = true;
-
         }
         field(50106; "Entry No."; Integer)
         {
@@ -56,14 +48,11 @@ table 50914 "Revenue Structure Subpage"
         {
             DataClassification = ToBeClassified;
             Caption = 'RS ID';
-
         }
-
         field(50109; "Tenant Id"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant ID';
-
         }
         field(50110; "Total Amount"; Decimal)
         {
@@ -72,7 +61,6 @@ table 50914 "Revenue Structure Subpage"
             FieldClass = FlowField;
             CalcFormula = sum("Revenue Structure Subpage"."Final Annual Amount" where("Contract ID" = field("Contract Id"), "RS ID" = field("RS ID")));
         }
-
         field(50111; "Link"; Text[50])
         {
             DataClassification = ToBeClassified;
@@ -83,21 +71,17 @@ table 50914 "Revenue Structure Subpage"
         {
             DataClassification = ToBeClassified;
             Caption = 'VAT Amount';
-
         }
         field(50114; "Amount Including VAT"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Amount Including VAT';
-
         }
-
         field(50115; "Secondary Item Type"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Secondary Item Type';
         }
-
         field(50116; "VAT %"; Option)
         {
             OptionMembers = "0","5";
@@ -108,10 +92,8 @@ table 50914 "Revenue Structure Subpage"
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract ID';
-
         }
     }
-
     keys
     {
         key(Key1; "Entry No.", "RS ID")
@@ -120,7 +102,6 @@ table 50914 "Revenue Structure Subpage"
         }
     }
 }
-
 tableextension 50105 RevenueStructureSubpageExt extends "Revenue Structure Subpage"
 {
     trigger OnDelete()
@@ -130,8 +111,3 @@ tableextension 50105 RevenueStructureSubpageExt extends "Revenue Structure Subpa
         calculateinstallmentstotal.BeforeDeleteCalculateInstallments(Rec);
     end;
 }
-
-
-
-
-

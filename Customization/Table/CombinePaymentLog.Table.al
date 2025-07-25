@@ -2,7 +2,6 @@ table 50917 "CombinePaymentLog"
 {
     DataClassification = ToBeClassified;
     DataCaptionFields = "ID";
-
     fields
     {
         field(50100; "ID"; Integer)
@@ -35,7 +34,6 @@ table 50917 "CombinePaymentLog"
             Caption = 'Contract ID';
             Editable = false;
         }
-
         field(50105; "New Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
@@ -48,14 +46,12 @@ table 50917 "CombinePaymentLog"
             Caption = 'New Vat Amount';
             Editable = false;
         }
-
         field(50107; "Change Amount Including VAT"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'New Amount Including VAT';
             Editable = false;
         }
-
         field(50108; "Payment mode"; Text[300])
         {
             DataClassification = ToBeClassified;
@@ -75,7 +71,6 @@ table 50917 "CombinePaymentLog"
             Caption = 'Payment Series';
             Editable = false;
         }
-
         field(50111; "Entry No."; Integer)
         {
             DataClassification = ToBeClassified;
@@ -83,7 +78,6 @@ table 50917 "CombinePaymentLog"
             Editable = false;
         }
     }
-
     keys
     {
         key(Key1; "Entry No.", "ID")
@@ -91,7 +85,4 @@ table 50917 "CombinePaymentLog"
             Clustered = true;
         }
     }
-
-
 }
-

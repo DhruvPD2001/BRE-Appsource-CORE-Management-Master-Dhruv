@@ -1,7 +1,6 @@
 table 50107 "Merge Lum_AnnualAmount SubPage"
 {
     DataClassification = ToBeClassified;
-
     fields
     {
         field(50100; "Proposal ID"; Integer)
@@ -13,19 +12,16 @@ table 50107 "Merge Lum_AnnualAmount SubPage"
             DataClassification = ToBeClassified;
             trigger OnValidate()
             var
-                LeaseProposal: Record "Lease Proposal Details"; // Replace with the actual table name
+                LeaseProposal: Record "Lease Proposal Details";
             begin
-                // Fetch the corresponding Lease Proposal Details record
                 if LeaseProposal.Get("Proposal ID", "ML_Merged Unit ID") then begin
                     Rec."ML_Start Date" := LeaseProposal."Lease Start Date";
                     Rec."ML_End Date" := LeaseProposal."Lease End Date";
                     Rec."ML_Unit Sq Ft" := LeaseProposal."Unit Size";
                     Rec."ML_Rate per Sq.Ft" := LeaseProposal."Rent Amount";
-                    Rec."ML_Merged Unit ID" := LeaseProposal."Unit Name"; // Replace with actual field name in Lease Proposal table
-                    // Calculate additional fields like Number of Days
+                    Rec."ML_Merged Unit ID" := LeaseProposal."Unit Name";
                     Rec."ML_Number of Days" := Rec."ML_End Date" - Rec."ML_Start Date";
-
-                    Modify(true); // Save the updated record
+                    Modify(true);
                 end else
                     Error('No matching Lease Proposal found for the selected Unit ID.');
             end;
@@ -89,37 +85,27 @@ table 50107 "Merge Lum_AnnualAmount SubPage"
             DataClassification = ToBeClassified;
             AutoIncrement = true;
         }
-
-
         field(50116; "TotalFinalAmount"; Decimal)
         {
             FieldClass = FlowField;
             CalcFormula = sum("Merge Lum_AnnualAmount SubPage"."ML_Final Annual Amount" where("Proposal Id" = field("Proposal Id")));
-
-
         }
         field(50117; "TotalAnnualAmount"; Decimal)
         {
-
             FieldClass = FlowField;
             CalcFormula = sum("Merge Lum_AnnualAmount SubPage"."ML_Annual Amount" where("Proposal Id" = field("Proposal Id")));
-
         }
         field(50118; "TotalRoundOff"; Decimal)
         {
             FieldClass = FlowField;
             CalcFormula = sum("Merge Lum_AnnualAmount SubPage"."ML_Round off" where("Proposal Id" = field("Proposal Id")));
-
         }
-
         field(50119; "TotalFirstAnnualAmount"; Decimal)
         {
             FieldClass = FlowField;
             CalcFormula = sum("Merge Lum_AnnualAmount SubPage"."ML_Final Annual Amount" where("Proposal Id" = field("Proposal Id"), ML_Year = const(1)));
         }
-
     }
-
     keys
     {
         key(PK; "Proposal ID", "ML_Line No.")
