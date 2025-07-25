@@ -1,36 +1,27 @@
 table 50105 "Merge SameSqure SubPage"
 {
     DataClassification = ToBeClassified;
-
     fields
     {
-
-
-
-
         field(50100; "Proposal ID"; Integer)
         {
             DataClassification = ToBeClassified;
         }
-
         field(50101; "MS_Merged Unit ID"; Code[100])
         {
             DataClassification = ToBeClassified;
             trigger OnValidate()
             var
-                LeaseProposal: Record "Lease Proposal Details"; // Replace with the actual table name
+                LeaseProposal: Record "Lease Proposal Details";
             begin
-                // Fetch the corresponding Lease Proposal Details record
                 if LeaseProposal.Get("Proposal ID", "MS_Merged Unit ID") then begin
-                    Rec."MS_Merged Unit ID" := LeaseProposal."Unit Name"; // Replace with actual field name in Lease Proposal table
+                    Rec."MS_Merged Unit ID" := LeaseProposal."Unit Name";
                     Rec."MS_Start Date" := LeaseProposal."Lease Start Date";
                     Rec."MS_End Date" := LeaseProposal."Lease End Date";
                     Rec."MS_Unit Sq Ft" := LeaseProposal."Unit Size";
                     Rec."MS_Rate per Sq.Ft" := LeaseProposal."Rent Amount";
-                    // Calculate additional fields like Number of Days
                     Rec."MS_Number of Days" := Rec."MS_End Date" - Rec."MS_Start Date";
-
-                    Modify(true); // Save the updated record
+                    Modify(true);
                 end else
                     Error('No matching Lease Proposal found for the selected Unit ID.');
             end;
@@ -94,12 +85,11 @@ table 50105 "Merge SameSqure SubPage"
             DataClassification = ToBeClassified;
             AutoIncrement = true;
         }
-        field(50116; "PDR Revenue Allocation Link"; Code[20]) // Or another suitable data type
+        field(50116; "PDR Revenue Allocation Link"; Code[20])
         {
             Caption = 'PDR Revenue Allocation Link';
             DataClassification = ToBeClassified;
         }
-
         field(50117; "TotalFinalAmount"; Decimal)
         {
             FieldClass = FlowField;
@@ -107,31 +97,20 @@ table 50105 "Merge SameSqure SubPage"
         }
         field(50118; "TotalAnnualAmount"; Decimal)
         {
-
             FieldClass = FlowField;
             CalcFormula = sum("Merge SameSqure SubPage"."MS_Annual Amount" where("Proposal Id" = field("Proposal Id")));
-
         }
         field(50119; "TotalRoundOff"; Decimal)
         {
-
             FieldClass = FlowField;
             CalcFormula = sum("Merge SameSqure SubPage"."MS_Round off" where("Proposal Id" = field("Proposal Id")));
-
         }
-
-
         field(50120; "TotalFirstAnnualAmount"; Decimal)
         {
-
             FieldClass = FlowField;
             CalcFormula = sum("Merge SameSqure SubPage"."MS_Final Annual Amount" where("Proposal Id" = field("Proposal Id"), MS_Year = const(1)));
-
         }
-
-
     }
-
     keys
     {
         key(PK; "Proposal ID", "MS_Line No.")

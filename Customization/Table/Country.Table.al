@@ -2,7 +2,6 @@ table 50102 "Country"
 {
     DataClassification = ToBeClassified;
     DataCaptionFields = ID;
-
     fields
     {
         field(50100; "ID"; Integer)
@@ -29,7 +28,6 @@ table 50102 "Country"
             Caption = 'Country Name';
         }
     }
-
     keys
     {
         key(PK; "ID", "Country Code", "Country Name")
@@ -41,41 +39,28 @@ table 50102 "Country"
     {
         fieldgroup(DropDown; "Sl No.", ID, "Country Name", "Country Code")
         {
-
         }
     }
-
-    //-------------Record Delete--------------//
     trigger OnDelete()
     var
         CountryRec: Record "Country";
     begin
-        CountryRec.SetRange("Sl No.", "Sl No." + 1, 2147483647); // Set filter to find records with 'Sl No.' greater than the current record
-
-        // Process each of those records and adjust 'Sl No.'
-        if CountryRec.FindSet() then begin
+        CountryRec.SetRange("Sl No.", "Sl No." + 1, 2147483647);
+        if CountryRec.FindSet() then
             repeat
                 CountryRec."Sl No." := CountryRec."Sl No." - 1;
-                CountryRec.Modify;
-            until CountryRec.Next = 0;
-        end;
+                CountryRec.Modify();
+            until CountryRec.Next() = 0;
     end;
-
-    //-------------Record Delete--------------//
-
-    //-------------Record Insert--------------//
 
     trigger OnInsert()
     var
         CountryRec: Record "Country";
     begin
-        // Check if 'Sl No.' is 0 (indicating it's a new record)
-        if "Sl No." = 0 then begin
-            // If there are existing records, find the last one and increment
-            if CountryRec.FindLast then
+        if "Sl No." = 0 then
+            if CountryRec.FindLast() then
                 "Sl No." := CountryRec."Sl No." + 1
             else
                 "Sl No." := 1;
-        end;
     end;
 }

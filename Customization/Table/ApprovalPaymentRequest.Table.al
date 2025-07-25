@@ -2,7 +2,6 @@ table 50702 "Approval Payment Request"
 {
     DataClassification = ToBeClassified;
     DataCaptionFields = SystemId, "ID";
-
     fields
     {
         field(50101; "ID"; Integer)
@@ -12,7 +11,6 @@ table 50702 "Approval Payment Request"
             Editable = false;
             AutoIncrement = true;
         }
-
         field(50100; "Manual/Auto Status"; Text[100])
         {
             DataClassification = ToBeClassified;
@@ -28,7 +26,6 @@ table 50702 "Approval Payment Request"
             DataClassification = ToBeClassified;
             Caption = 'Request Type';
         }
-
         field(50107; "Tenant ID"; Text[50])
         {
             DataClassification = ToBeClassified;
@@ -39,7 +36,6 @@ table 50702 "Approval Payment Request"
             DataClassification = ToBeClassified;
             Caption = 'Proposal ID';
         }
-
         field(50104; "Contract ID"; Integer)
         {
             DataClassification = ToBeClassified;
@@ -75,7 +71,6 @@ table 50702 "Approval Payment Request"
             DataClassification = ToBeClassified;
             Caption = 'New Vat Amount';
         }
-
         field(50117; "Due Date"; Date)
         {
             DataClassification = ToBeClassified;
@@ -87,14 +82,12 @@ table 50702 "Approval Payment Request"
             Caption = 'Description';
             Editable = true;
         }
-
         field(50118; "Items"; Text[500])
         {
             DataClassification = ToBeClassified;
             Caption = 'Items';
         }
     }
-
     keys
     {
         key(PrimaryKey; "ID")
@@ -106,8 +99,4 @@ table 50702 "Approval Payment Request"
             Clustered = true;
         }
     }
-
-
-
 }
-

@@ -269,7 +269,6 @@ permissionset 50100 TablePermission
         codeunit SendInvoiceToTenant = X,
         codeunit SendRejectionToLeaseTeam = X,
         codeunit SendTenantMail = X,
-        codeunit UploadAttachment = X,
         tabledata "Revenue Allocation Approval" = RIMD,
         table "Revenue Allocation Approval" = X,
         codeunit "Azure AD Blob Storage" = X,

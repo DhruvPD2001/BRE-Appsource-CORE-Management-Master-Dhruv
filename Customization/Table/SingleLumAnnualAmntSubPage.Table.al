@@ -1,7 +1,6 @@
 table 50316 "Single Lum_AnnualAmnt SubPage"
 {
     DataClassification = ToBeClassified;
-
     fields
     {
         field(50100; "Proposal ID"; Integer)
@@ -13,7 +12,7 @@ table 50316 "Single Lum_AnnualAmnt SubPage"
             DataClassification = ToBeClassified;
             trigger OnValidate()
             var
-                LeaseProposal: Record "Lease Proposal Details"; // Replace with the actual table name
+                LeaseProposal: Record "Lease Proposal Details";
             begin
                 if LeaseProposal.Get("Proposal ID", "SL_Merged Unit ID") then begin
                     Rec."SL_Start Date" := LeaseProposal."Lease Start Date";
@@ -87,7 +86,6 @@ table 50316 "Single Lum_AnnualAmnt SubPage"
         }
         field(50116; "TotalFinalAmount"; Decimal)
         {
-
             FieldClass = FlowField;
             CalcFormula = sum("Single Lum_AnnualAmnt SubPage"."SL_Final Annual Amount" where("Proposal Id" = field("Proposal Id")));
         }
@@ -107,7 +105,6 @@ table 50316 "Single Lum_AnnualAmnt SubPage"
             CalcFormula = sum("Single Lum_AnnualAmnt SubPage"."SL_Final Annual Amount" where("Proposal Id" = field("Proposal Id"), SL_Year = const(1)));
         }
     }
-
     keys
     {
         key(PK; "Proposal ID", "SL_Line No.")

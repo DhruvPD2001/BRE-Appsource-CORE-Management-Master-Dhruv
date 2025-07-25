@@ -1,32 +1,27 @@
 table 50327 "TC Merge SameSqure SubPage"
 {
     DataClassification = ToBeClassified;
-
     fields
     {
         field(50100; "ID"; Integer)
         {
             DataClassification = ToBeClassified;
         }
-
         field(50101; "MS_Merged Unit ID"; Code[100])
         {
             DataClassification = ToBeClassified;
             trigger OnValidate()
             var
-                LeaseProposal: Record "Contract Renewal"; // Replace with the actual table name
+                LeaseProposal: Record "Contract Renewal";
             begin
-                // Fetch the corresponding Lease Proposal Details record
                 if LeaseProposal.Get("ID", "MS_Merged Unit ID") then begin
-                    Rec."MS_Merged Unit ID" := LeaseProposal."Unit Name"; // Replace with actual field name in Lease Proposal table
+                    Rec."MS_Merged Unit ID" := LeaseProposal."Unit Name";
                     Rec."MS_Start Date" := LeaseProposal."Contract Start Date";
                     Rec."MS_End Date" := LeaseProposal."Contract End Date";
                     Rec."MS_Unit Sq Ft" := LeaseProposal."Unit Sq. Feet";
                     Rec."MS_Rate per Sq.Ft" := LeaseProposal."Rent Amount";
-                    // Calculate additional fields like Number of Days
                     Rec."MS_Number of Days" := Rec."MS_End Date" - Rec."MS_Start Date";
-
-                    Modify(true); // Save the updated record
+                    Modify(true);
                 end else
                     Error('No matching Lease Proposal found for the selected Unit ID.');
             end;
@@ -90,12 +85,11 @@ table 50327 "TC Merge SameSqure SubPage"
             DataClassification = ToBeClassified;
             AutoIncrement = true;
         }
-        field(50116; "PDR Revenue Allocation Link"; Code[20]) // Or another suitable data type
+        field(50116; "PDR Revenue Allocation Link"; Code[20])
         {
             Caption = 'PDR Revenue Allocation Link';
             DataClassification = ToBeClassified;
         }
-
         field(50117; "TotalFinalAmount"; Decimal)
         {
             FieldClass = FlowField;
@@ -111,8 +105,6 @@ table 50327 "TC Merge SameSqure SubPage"
             FieldClass = FlowField;
             CalcFormula = sum("TC Merge SameSqure SubPage"."MS_Round off" where("Id" = field("Id")));
         }
-
-
         field(50120; "TotalFirstAnnualAmount"; Decimal)
         {
             FieldClass = FlowField;
@@ -122,9 +114,7 @@ table 50327 "TC Merge SameSqure SubPage"
         {
             DataClassification = ToBeClassified;
         }
-
     }
-
     keys
     {
         key(PK; "ID", "MS_Line No.")

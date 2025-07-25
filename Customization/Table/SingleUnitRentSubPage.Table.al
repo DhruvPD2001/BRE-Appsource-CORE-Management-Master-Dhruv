@@ -3,7 +3,6 @@ table 50313 "Single Unit Rent SubPage"
     DataClassification = ToBeClassified;
     fields
     {
-
         field(50100; "Proposal ID"; Integer)
         {
             DataClassification = ToBeClassified;
@@ -14,21 +13,19 @@ table 50313 "Single Unit Rent SubPage"
         }
         field(50102; "Unit ID"; Code[100])
         {
-
             DataClassification = ToBeClassified;
-
             trigger OnValidate()
             var
-                LeaseProposal: Record "Lease Proposal Details"; // Replace with the actual table name
+                LeaseProposal: Record "Lease Proposal Details";
             begin
                 if LeaseProposal.Get("Proposal ID", "Unit ID") then begin
-                    Rec."Unit ID" := LeaseProposal."Unit Name"; // Replace with actual field name in Lease Proposal table
+                    Rec."Unit ID" := LeaseProposal."Unit Name";
                     Rec."Start Date" := LeaseProposal."Lease Start Date";
                     Rec."End Date" := LeaseProposal."Lease End Date";
                     Rec."Unit Sq Ft" := LeaseProposal."Unit Size";
                     Rec."Rate per Sq.Ft" := LeaseProposal."Rent Amount";
                     Rec."Number of Days" := Rec."End Date" - Rec."Start Date";
-                    Modify(true); // Save the updated record
+                    Modify(true);
                 end else
                     Error('No matching Lease Proposal found for the selected Unit ID.');
             end;
@@ -64,7 +61,7 @@ table 50313 "Single Unit Rent SubPage"
         field(50110; "Annual Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
-            DecimalPlaces = 2 : 2; // Display up to 2 decimal places
+            DecimalPlaces = 2 : 2;
         }
         field(50111; "Round off"; Decimal)
         {
@@ -78,33 +75,25 @@ table 50313 "Single Unit Rent SubPage"
         {
             DataClassification = ToBeClassified;
         }
-
         field(50114; "Single Unit Rent1"; Code[100])
         {
             DataClassification = ToBeClassified;
             InitValue = 'Click Here For Get Data.';
             Caption = 'Click Here For Get Data.';
-
-
         }
-
         field(50115; "Line No."; Integer)
         {
             DataClassification = ToBeClassified;
         }
         field(50116; "TotalFinalAmount"; Decimal)
         {
-
             FieldClass = FlowField;
             CalcFormula = sum("Single Unit Rent SubPage"."Final Annual Amount" where("Proposal Id" = field("Proposal Id")));
         }
         field(50117; "TotalAnnualAmount"; Decimal)
         {
-
             FieldClass = FlowField;
             CalcFormula = sum("Single Unit Rent SubPage"."Annual Amount" where("Proposal Id" = field("Proposal Id")));
-
-
         }
         field(50118; "TotalRoundOff"; Decimal)
         {
@@ -115,9 +104,7 @@ table 50313 "Single Unit Rent SubPage"
         {
             FieldClass = FlowField;
             CalcFormula = sum("Single Unit Rent SubPage"."Final Annual Amount" where("Proposal Id" = field("Proposal Id"), Year = const(1)));
-
         }
-
     }
     keys
     {

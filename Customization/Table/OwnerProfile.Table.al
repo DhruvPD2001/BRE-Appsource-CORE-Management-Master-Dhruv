@@ -9,7 +9,7 @@ table 50100 "Owner Profile"
             DataClassification = ToBeClassified;
             Caption = 'Owner ID';
             AutoIncrement = true;
-            BlankZero = true; // Hide zero value
+            BlankZero = true;
             Editable = false;
         }
 

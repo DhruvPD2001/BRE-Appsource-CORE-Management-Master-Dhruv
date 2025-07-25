@@ -389,7 +389,7 @@ table 50925 "Payment Mode2"
         {
             Caption = 'Tenant Name';
         }
-        field(50130; "Tenant Email"; Text[80])
+        field(50130; "Tenant Email"; Text[100])
         {
             Caption = 'Tenant Email';
         }
