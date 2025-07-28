@@ -181,7 +181,7 @@ table 50110 "Revenue Allocation SubGrid"
             Caption = 'Single Unit Name';
             Editable = false;
         }
-        field(50129; "Description"; Text[100])
+        field(50129; "Description"; Text[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Description';

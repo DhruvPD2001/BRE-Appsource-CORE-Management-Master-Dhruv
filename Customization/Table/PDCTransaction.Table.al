@@ -8,7 +8,7 @@ table 50507 "PDC Transaction"
         {
             DataClassification = ToBeClassified;
         }
-        field(50502; "Tenant Id"; Text[100])
+        field(50502; "Tenant Id"; Text[20])
         {
             DataClassification = CustomerContent;
             TableRelation = Customer."No.";

@@ -113,7 +113,7 @@ table 50962 "Revenue Recognition Details"
             Caption = 'Posting Year';
             Editable = false;
         }
-        field(50117; "Posting Period"; Text[50])
+        field(50117; "Posting Period"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Posting Period';
@@ -186,7 +186,7 @@ table 50962 "Revenue Recognition Details"
             Editable = false;
         }
 
-        field(50131; "Description"; Text[100])
+        field(50131; "Description"; Text[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Description';
