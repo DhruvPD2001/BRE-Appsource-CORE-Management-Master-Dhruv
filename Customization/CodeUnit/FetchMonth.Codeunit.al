@@ -28,7 +28,7 @@ codeunit 53751 "Fetch Month"
             12:
                 exit('December');
             else
-                exit(Format(MonthNo)); // Fallback to number if invalid
+                exit(Format(MonthNo));
         end;
     end;
 
@@ -60,7 +60,7 @@ codeunit 53751 "Fetch Month"
             'December':
                 exit(12);
             else
-                exit(0); // Fallback to number if invalid
+                exit(0);
         end;
     end;
 }
