@@ -96,6 +96,11 @@ table 50967 "Request Credit Note"
             DataClassification = ToBeClassified;
             Caption = 'Property Classification';
         }
+        field(50977; "Adjust with Invoice"; Option)
+        {
+            DataClassification = ToBeClassified;
+            OptionMembers = Pending,Adjusted;
+        }
     }
     trigger OnInsert()
     var
@@ -116,10 +121,7 @@ table 50967 "Request Credit Note"
     var
         RequestCreditNoteGrid: Record "Request Credit Note Grid";
     begin
-
         RequestCreditNoteGrid.SetRange("Request No.", Rec."Request No.");
-        ;
-
         if RequestCreditNoteGrid.FindSet() then
             repeat
                 RequestCreditNoteGrid.DeleteAll();

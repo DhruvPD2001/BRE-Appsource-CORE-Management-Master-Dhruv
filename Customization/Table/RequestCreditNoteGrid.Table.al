@@ -69,6 +69,22 @@ table 50968 "Request Credit Note Grid"
         {
             DataClassification = ToBeClassified;
             Caption = 'Credit Memo Generated';
+            trigger OnValidate()
+            var
+                requestCreditNote: Record "Request Credit Note";
+                requestCreditNoteGrid: Record "Request Credit Note Grid";
+            begin
+                if Rec."Credit Memo Generated" then begin
+                    requestCreditNoteGrid.SetRange("Request No.", Rec."Request No.");
+                    requestCreditNoteGrid.SetRange("Credit Memo Generated", false);
+                    requestCreditNoteGrid.SetFilter("Line No.", '<>%1', Rec."Line No.");
+                    if requestCreditNoteGrid.IsEmpty() then
+                        if requestCreditNote.Get(Rec."Request No.") then begin
+                            requestCreditNote."Adjust with Invoice" := requestCreditNote."Adjust with Invoice"::Adjusted;
+                            requestCreditNote.Modify();
+                        end;
+                end;
+            end;
         }
         field(50970; "Secondary Item Type"; Text[50])
         {
@@ -79,6 +95,14 @@ table 50968 "Request Credit Note Grid"
         {
             DataClassification = ToBeClassified;
             Caption = 'Charges';
+        }
+        field(50973; Invoiced; Boolean)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(50975; "Invoice ID"; Code[50])
+        {
+            DataClassification = ToBeClassified;
         }
     }
     keys

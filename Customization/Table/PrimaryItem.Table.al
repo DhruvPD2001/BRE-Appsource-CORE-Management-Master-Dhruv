@@ -2,7 +2,6 @@ table 50900 "Primary Item"
 {
     DataClassification = ToBeClassified;
     DataCaptionFields = ID;
-
     fields
     {
         field(50100; "ID"; Integer)
@@ -15,10 +14,8 @@ table 50900 "Primary Item"
         {
             DataClassification = ToBeClassified;
             Caption = 'Primary Item Type';
-
         }
     }
-
     keys
     {
         key(PK; "ID", "Primary Item Type")
@@ -30,10 +27,6 @@ table 50900 "Primary Item"
     {
         fieldgroup(DropDown; ID, "Primary Item Type")
         {
-
         }
     }
-
-
-
 }

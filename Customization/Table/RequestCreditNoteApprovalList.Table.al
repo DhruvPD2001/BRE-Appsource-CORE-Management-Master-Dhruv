@@ -50,6 +50,5 @@ table 50969 "RequestCreditNoteApprovalList"
             Caption = 'ID';
             AutoIncrement = true;
         }
-
     }
 }
