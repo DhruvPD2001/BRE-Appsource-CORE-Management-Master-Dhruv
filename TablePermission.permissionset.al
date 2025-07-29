@@ -113,7 +113,7 @@ permissionset 50100 TablePermission
         tabledata "Tenancy Contract Subpage" = RIMD,
         tabledata "Tenant Document Details" = RIMD,
         tabledata "Termination Charges Sub" = RIMD,
-        tabledata testData = RIMD,
+        tabledata "Company Data" = RIMD,
         tabledata "Unit Document Details" = RIMD,
         tabledata "Vendor Calculation Details" = RIMD,
         tabledata "Vendor Category" = RIMD,
@@ -234,7 +234,7 @@ permissionset 50100 TablePermission
         table "Tenancy Contract Subpage" = X,
         table "Tenant Document Details" = X,
         table "Termination Charges Sub" = X,
-        table testData = X,
+        table "Company Data" = X,
         table "Unit Document Details" = X,
         table "Vendor Calculation Details" = X,
         table "Vendor Category" = X,
@@ -338,5 +338,14 @@ permissionset 50100 TablePermission
         codeunit "Contract End Status Updater" = X,
         codeunit "Fetch Month" = X,
         page "COA Setup" = X,
-        page "COA Setup List" = X;
+        page "COA Setup List" = X,
+        tabledata "Request Credit Note" = RIMD,
+        tabledata "Request Credit Note Grid" = RIMD,
+        tabledata RequestCreditNoteApprovalList = RIMD,
+        table "Request Credit Note" = X,
+        table "Request Credit Note Grid" = X,
+        table RequestCreditNoteApprovalList = X,
+        codeunit "Approval Request Crdit note " = X,
+        codeunit "Credit Memo Generate" = X,
+        codeunit "Revenue Allocation Posting" = X;
 }

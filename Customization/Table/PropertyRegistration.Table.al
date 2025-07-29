@@ -13,7 +13,7 @@ table 50303 "Property Registration"
         {
             DataClassification = ToBeClassified;
             Caption = 'Company ID';
-            TableRelation = "testData"."Company ID";
+            TableRelation = "Company Data"."Company ID";
         }
         field(50101; "Description"; Text[100])
         {
@@ -358,7 +358,7 @@ table 50303 "Property Registration"
     }
     trigger OnInsert()
     var
-        CompanyRec: Record "testData";
+        CompanyRec: Record "Company Data";
         NoSeriesMgt: Codeunit "No. Series";
     begin
         if "Property ID" = '' then

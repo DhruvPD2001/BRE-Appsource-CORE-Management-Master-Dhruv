@@ -1,4 +1,4 @@
-table 50701 "testData"
+table 50701 "Company Data"
 {
     DataClassification = ToBeClassified;
     DataCaptionFields = "Company ID";
@@ -85,7 +85,7 @@ table 50701 "testData"
     trigger OnInsert()
     var
         CompanyInfo: Record "Company Information";
-        Msg: Label 'Tenant Id is ''%1''.\Tenant Guid is ''%2''.';
+        Msg: Label 'Tenant Id is ''%1''.\Tenant Guid is ''%2''.', Comment = '%1=Tenant Id, %2=Tenant Guid';
         BCURLList: List of [Text];
         TenantIdTxt: Text;
         TenantGuidTxt: Text;
@@ -95,21 +95,14 @@ table 50701 "testData"
         if CompanyInfo.Get() then
             "Company Name" := CompanyInfo.Name;
 
-        // // Assign the Tenant ID to the "Tenant id" field
-        // "Tenant id" := Database.TenantId();
         TenantIdTxt := TenantId();
         BCURLList := GetUrl(ClientType::Web).Split('/');
         TenantGuidTxt := BCURLList.Get(4);
         EnvironmentNameTxt := BCURLList.Get(5);
 
-        // Store the Tenant GUID in the "Tenant id" field
-        "Tenant id" := TenantGuidTxt;
-        "Environment Name" := EnvironmentNameTxt;
+        "Tenant id" := CopyStr(TenantGuidTxt, 1, StrLen(TenantGuidTxt));
+        "Environment Name" := CopyStr(EnvironmentNameTxt, 1, StrLen(EnvironmentNameTxt));
 
-        Message(Msg, TenantIdTxt, TenantGuidTxt, EnvironmentNameTxt);
+        Message(Msg, TenantIdTxt, TenantGuidTxt);
     end;
-
-
-
-    //--------------Record Insertion-----------------//
 }

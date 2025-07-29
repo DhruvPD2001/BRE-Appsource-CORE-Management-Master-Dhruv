@@ -7,7 +7,7 @@ table 50912 "Workflow Frequency PR"
         {
             DataClassification = ToBeClassified;
             Caption = 'Company ID';
-            TableRelation = "testData"."Company ID";
+            TableRelation = "Company Data"."Company ID";
         }
         field(50101; "Entry No."; Integer)
         {

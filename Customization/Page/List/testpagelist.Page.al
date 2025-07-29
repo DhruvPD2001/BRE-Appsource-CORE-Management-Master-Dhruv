@@ -1,7 +1,7 @@
 page 50712 "testpagelist"
 {
     PageType = List;
-    SourceTable = testData;
+    SourceTable = "Company Data";
     ApplicationArea = All;
     Caption = 'Company Data';
     CardPageId = 50701;
