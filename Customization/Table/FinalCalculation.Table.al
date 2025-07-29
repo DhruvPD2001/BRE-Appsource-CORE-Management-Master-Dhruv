@@ -1,60 +1,78 @@
 table 50901 "Final Calculation"
 {
     DataClassification = ToBeClassified;
+
     fields
     {
         field(50112; "Contract ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract ID';
+
+
         }
         field(50113; "ContractYear(Termination Date)"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract Year On Termination Date';
+
         }
+
         field(50101; "FC ID"; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
         }
+
         field(50104; "Contract Start Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract Start Date';
+
         }
+
         field(50105; "Contract End Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract End Date';
+
         }
+
         field(50102; "Unit Type"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Unit Type';
+
         }
+
         field(50103; "Contract Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract Amount';
+
         }
+
         field(50109; "Tenant ID"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant ID';
+
             TableRelation = "Lease Proposal Details"."Tenant ID";
         }
         field(50106; "Intimation Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Intimation Date';
+
         }
         field(50107; "Termination Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Termination Date';
+
             trigger OnValidate()
             var
+
             begin
                 if ("Contract End Date" = "Termination Date") then
                     "Termination Status" := "Termination Status"::"Regular Termination"
@@ -64,37 +82,50 @@ table 50901 "Final Calculation"
                     else
                         Error('Termination Date cannot be greater than Contract End Date.');
             end;
+
         }
+
         field(50110; "Original Contract Tenure"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Original Contract Tenure';
+
         }
+
         field(50111; "Actual Contract Tenure"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Actual Contract Tenure';
+
         }
+
         field(50114; "Total No. Of Days"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Total No. Of Days(Termination Year)';
+
         }
+
+
         field(50115; "Per Day Rent"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Per Day Rent(Termination Year)';
+
         }
+
         field(50116; "Annual Rent Amount TermiYear"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Annual Rent Amount of Termination Year';
         }
+
         field(50117; Status; Option)
         {
             DataClassification = ToBeClassified;
             OptionMembers = Pending,Approved;
         }
+
         field(50118; "Security Deposit"; Decimal)
         {
             DataClassification = ToBeClassified;
@@ -120,11 +151,13 @@ table 50901 "Final Calculation"
             DataClassification = ToBeClassified;
             Caption = 'Other Deposit';
         }
+
         field(50123; "Termination Status"; Option)
         {
             OptionMembers = " ","Regular Termination","Early Termination","Suspension to Termination";
             Editable = false;
         }
+
         field(50124; "Total Refundable Deposit"; Decimal)
         {
             DataClassification = ToBeClassified;
@@ -159,12 +192,14 @@ table 50901 "Final Calculation"
             DataClassification = ToBeClassified;
             Caption = 'Total Receive';
         }
+
         field(50130; "Final Calculation Document"; Text[500])
         {
             DataClassification = ToBeClassified;
             Caption = 'Final Calculation Document';
             InitValue = 'Final Calculation Document';
         }
+
         field(50131; "Total Adjustment"; Decimal)
         {
             DataClassification = ToBeClassified;
@@ -180,7 +215,7 @@ table 50901 "Final Calculation"
             DataClassification = ToBeClassified;
             Caption = 'Tenant Email';
         }
-        field(50134; "Tenant Name"; Text[250])
+        field(50134; "Tenant Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant Name';
@@ -197,7 +232,12 @@ table 50901 "Final Calculation"
             Caption = 'Credit Note View';
             InitValue = 'Credit Note View';
         }
+
+
     }
+
+
+
     keys
     {
         key(PK; "FC ID")
@@ -205,10 +245,12 @@ table 50901 "Final Calculation"
             Clustered = true;
         }
     }
+
     fieldgroups
     {
         fieldgroup(DropDown; "Contract ID", "FC ID")
         {
+
         }
     }
     trigger OnDelete()
@@ -223,15 +265,18 @@ table 50901 "Final Calculation"
         RevenueStructureyearlyBrokdownGrid();
         finalsettlement();
         finalsettlementrefund();
+
     end;
 
     procedure deletefinalrevenuecalculation()
     var
         finalrevenuecalculation: Record "Final Revenue Calculation Grid";
+
     begin
         finalrevenuecalculation.SetRange("Contract Id", Rec."Contract ID");
         if finalrevenuecalculation.FindSet() then
             finalrevenuecalculation.DeleteAll();
+
     end;
 
     procedure deletebillingcaculation()
@@ -288,6 +333,7 @@ table 50901 "Final Calculation"
             RevenueStructure.DeleteAll();
     end;
 
+
     procedure Deletepaymentdetails()
     var
         paymentdetails: Record "Payment Details";
@@ -300,6 +346,7 @@ table 50901 "Final Calculation"
     procedure finalsettlement()
     var
         finalsettlementRec: Record FinalSettlement;
+
     begin
         finalsettlementRec.SetRange("FC Id", Rec."FC ID");
         if finalsettlementRec.FindSet() then
@@ -309,9 +356,16 @@ table 50901 "Final Calculation"
     procedure finalsettlementrefund()
     var
         finalsettlementrefundRec: Record FinalSettlementRefund;
+
     begin
         finalsettlementrefundRec.SetRange("FC Id", Rec."FC ID");
         if finalsettlementrefundRec.FindSet() then
             finalsettlementrefundRec.DeleteAll();
     end;
+
 }
+
+
+
+
+
