@@ -338,5 +338,14 @@ permissionset 50100 TablePermission
         codeunit "Contract End Status Updater" = X,
         codeunit "Fetch Month" = X,
         page "COA Setup" = X,
-        page "COA Setup List" = X;
+        page "COA Setup List" = X,
+        tabledata "Request Credit Note" = RIMD,
+        tabledata "Request Credit Note Grid" = RIMD,
+        tabledata RequestCreditNoteApprovalList = RIMD,
+        table "Request Credit Note" = X,
+        table "Request Credit Note Grid" = X,
+        table RequestCreditNoteApprovalList = X,
+        codeunit "Approval Request Crdit note " = X,
+        codeunit "Credit Memo Generate" = X,
+        codeunit "Revenue Allocation Posting" = X;
 }
