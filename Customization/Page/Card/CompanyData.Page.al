@@ -1,7 +1,7 @@
 page 50701 "Company Data"
 {
     PageType = Card;
-    SourceTable = "testData";
+    SourceTable = "Company Data";
     ApplicationArea = All;
     Caption = 'Company Data';
     UsageCategory = Administration;

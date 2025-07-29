@@ -792,158 +792,163 @@ table 50308 "Lease Proposal Details"
                 YearCounter: Integer;
                 LineNoCounter: Integer;
             begin
-                if "Merge Rent Calculation" = "Merge Rent Calculation"::"Merged Unit with same square feet" then begin
-                    MergeSameSquare.SetRange("Proposal ID", Rec."Proposal ID");
-                    if MergeSameSquare.FindSet() then
-                        repeat
-                            MergeSameSquare.Delete();
-                        until MergeSameSquare.Next() = 0;
-                    PeriodStartDate := Rec."Lease Start Date";
-                    LeaseEndDate := Rec."Lease End Date";
-                    YearCounter := 1;
-                    LineNoCounter := 1;
-                    while PeriodStartDate <= LeaseEndDate do begin
-                        MergeSameSquare.Init();
-                        MergeSameSquare."Proposal ID" := Rec."Proposal ID";
-                        MergeSameSquare."MS_Line No." := LineNoCounter;
-                        MergeSameSquare.MS_Year := YearCounter;
-                        MergeSameSquare."MS_Start Date" := PeriodStartDate;
-                        DaysToAdd := 365; // Default to 365 days
-                        LeapDays := 0;
-                        for CurrentYear := Date2DMY(PeriodStartDate, 3) to Date2DMY(PeriodStartDate + 364, 3) do
-                            if IsLeapYear(CurrentYear) then
-                                if (DMY2Date(29, 2, CurrentYear) >= PeriodStartDate) and
-                             (DMY2Date(29, 2, CurrentYear) <= PeriodStartDate + DaysToAdd - 1) then
-                                    LeapDays += 1;
-                        DaysToAdd := DaysToAdd + LeapDays;
-                        PeriodEndDate := PeriodStartDate + DaysToAdd - 1;
-                        if PeriodEndDate > LeaseEndDate then
-                            PeriodEndDate := LeaseEndDate;
-                        MergeSameSquare."MS_End Date" := PeriodEndDate;
-                        TotalDays := PeriodEndDate - PeriodStartDate + 1;
-                        MergeSameSquare."MS_Number of Days" := TotalDays;
-                        MergeSameSquare."MS_Merged Unit ID" := Rec."Unit Name";
-                        MergeSameSquare."MS_Unit Sq Ft" := Rec."Unit Size";
-                        MergeSameSquare."MS_Rate per Sq.Ft" := 0; // Initialize as 0; users will manually enter this
-                        MergeSameSquare."MS_Annual Amount" := 0; // Calculated after manual input
-                        MergeSameSquare."MS_Final Annual Amount" := MergeSameSquare."MS_Annual Amount";
-                        MergeSameSquare."MS_Per Day Rent" := 0; // Will be calculated after manual input
-                        MergeSameSquare.Insert();
-                        PeriodStartDate := PeriodEndDate + 1;
-                        YearCounter += 1;
-                        LineNoCounter += 1;
-                    end;
-                end
-                else
-                    if "Merge Rent Calculation" = "Merge Rent Calculation"::"Merged Unit with lumpsum annual amount" then begin
-                        if Rec."Proposal ID" = 0 then
-                            Error('Proposal ID is missing or not assigned.');
-                        LeaseProposal.Reset();
-                        LeaseProposal.SetRange("Proposal ID", Rec."Proposal ID");
-                        if not LeaseProposal.FindFirst() then
-                            Error('No record found for Proposal ID %1.', Rec."Proposal ID");
-                        MergeLumSquare.SetRange("Proposal ID", LeaseProposal."Proposal ID");
-                        if MergeLumSquare.FindSet() then
-                            repeat
-                                MergeLumSquare.Delete();
-                            until MergeLumSquare.Next() = 0;
-                        PeriodStartDate := LeaseProposal."Lease Start Date";
-                        YearCounter := 1;
-                        LineNoCounter := 1;
-                        while PeriodStartDate <= LeaseProposal."Lease End Date" do begin
-                            MergeLumSquare.Init();
-                            MergeLumSquare."Proposal ID" := LeaseProposal."Proposal ID";
-                            MergeLumSquare."ML_Line No." := LineNoCounter;
-                            MergeLumSquare.ML_Year := YearCounter;
-                            MergeLumSquare."ML_Start Date" := PeriodStartDate;
-                            DaysToAdd := 365; // Default to 365 days
-                            LeapDays := 0;
-                            for CurrentYear := Date2DMY(PeriodStartDate, 3) to Date2DMY(PeriodStartDate + 364, 3) do begin
-                                if IsLeapYear(CurrentYear) then begin
-                                    // Ensure the leap day (Feb 29) falls within the range
-                                    if (DMY2Date(29, 2, CurrentYear) >= PeriodStartDate) and
-                                       (DMY2Date(29, 2, CurrentYear) <= PeriodStartDate + DaysToAdd - 1) then
-                                        LeapDays += 1;
-                                end;
+                case
+                    "Merge Rent Calculation" of
+                    "Merge Rent Calculation"::"Merged Unit with same square feet":
+                        begin
+                            MergeSameSquare.SetRange("Proposal ID", Rec."Proposal ID");
+                            if MergeSameSquare.FindSet() then
+                                repeat
+                                    MergeSameSquare.Delete();
+                                until MergeSameSquare.Next() = 0;
+                            PeriodStartDate := Rec."Lease Start Date";
+                            LeaseEndDate := Rec."Lease End Date";
+                            YearCounter := 1;
+                            LineNoCounter := 1;
+                            while PeriodStartDate <= LeaseEndDate do begin
+                                MergeSameSquare.Init();
+                                MergeSameSquare."Proposal ID" := Rec."Proposal ID";
+                                MergeSameSquare."MS_Line No." := LineNoCounter;
+                                MergeSameSquare.MS_Year := YearCounter;
+                                MergeSameSquare."MS_Start Date" := PeriodStartDate;
+                                DaysToAdd := 365; // Default to 365 days
+                                LeapDays := 0;
+                                for CurrentYear := Date2DMY(PeriodStartDate, 3) to Date2DMY(PeriodStartDate + 364, 3) do
+                                    if IsLeapYear(CurrentYear) then
+                                        if (DMY2Date(29, 2, CurrentYear) >= PeriodStartDate) and
+                                     (DMY2Date(29, 2, CurrentYear) <= PeriodStartDate + DaysToAdd - 1) then
+                                            LeapDays += 1;
+                                DaysToAdd := DaysToAdd + LeapDays;
+                                PeriodEndDate := PeriodStartDate + DaysToAdd - 1;
+                                if PeriodEndDate > LeaseEndDate then
+                                    PeriodEndDate := LeaseEndDate;
+                                MergeSameSquare."MS_End Date" := PeriodEndDate;
+                                TotalDays := PeriodEndDate - PeriodStartDate + 1;
+                                MergeSameSquare."MS_Number of Days" := TotalDays;
+                                MergeSameSquare."MS_Merged Unit ID" := Rec."Unit Name";
+                                MergeSameSquare."MS_Unit Sq Ft" := Rec."Unit Size";
+                                MergeSameSquare."MS_Rate per Sq.Ft" := 0; // Initialize as 0; users will manually enter this
+                                MergeSameSquare."MS_Annual Amount" := 0; // Calculated after manual input
+                                MergeSameSquare."MS_Final Annual Amount" := MergeSameSquare."MS_Annual Amount";
+                                MergeSameSquare."MS_Per Day Rent" := 0; // Will be calculated after manual input
+                                MergeSameSquare.Insert();
+                                PeriodStartDate := PeriodEndDate + 1;
+                                YearCounter += 1;
+                                LineNoCounter += 1;
                             end;
-                            DaysToAdd := DaysToAdd + LeapDays;
-                            PeriodEndDate := PeriodStartDate + DaysToAdd - 1;
-                            if PeriodEndDate > LeaseProposal."Lease End Date" then
-                                PeriodEndDate := LeaseProposal."Lease End Date";
-                            MergeLumSquare."ML_End Date" := PeriodEndDate;
-                            TotalDays := PeriodEndDate - PeriodStartDate + 1;
-                            MergeLumSquare."ML_Number of Days" := TotalDays;
-                            MergeLumSquare."ML_Merged Unit ID" := LeaseProposal."Unit Name";
-                            MergeLumSquare."ML_Unit Sq Ft" := LeaseProposal."Unit Size";
-                            if YearCounter = 1 then begin
-                                MergeLumSquare."ML_Annual Amount" := 0; // User will enter manually
-                                MergeLumSquare."ML_Final Annual Amount" := 0;
-                            end;
-                            if TotalDays > 0 then
-                                MergeLumSquare."ML_Per Day Rent" := MergeLumSquare."ML_Final Annual Amount" / TotalDays
-                            else
-                                MergeLumSquare."ML_Per Day Rent" := 0;
-                            MergeLumSquare.Insert();
-                            PeriodStartDate := PeriodEndDate + 1;
-                            YearCounter += 1;
-                            LineNoCounter += 1;
                         end;
-                    end
-                    else if "Merge Rent Calculation" = "Merge Rent Calculation"::"Merged Unit with differential square feet rate" then begin
-                        MergeDiffSquare.SetRange("Proposal ID", Rec."Proposal ID");
-                        if MergeDiffSquare.FindSet() then
-                            repeat
-                                MergeDiffSquare.Delete();
-                            until MergeDiffSquare.Next() = 0;
-                        PeriodStartDate := Rec."Lease Start Date";
-                        LeaseEndDate := Rec."Lease End Date";
-                        YearCounter := 1;
-                        LineNoCounter := 1;
-                        SubLeaseMergeRec.SetRange("Proposal ID", Rec."Proposal ID");
-                        if SubLeaseMergeRec.FindSet() then begin
-                            repeat
-                                YearCounter := 1;
-                                PeriodStartDate := Rec."Lease Start Date";
-                                LeaseEndDate := Rec."Lease End Date";
-                                while PeriodStartDate <= LeaseEndDate do begin
-                                    MergeDiffSquare.Init();
-                                    MergeDiffSquare."Proposal ID" := Rec."Proposal ID";
-                                    MergeDiffSquare."MD_Line No." := LineNoCounter;
-                                    MergeDiffSquare.MD_Year := YearCounter;
-                                    MergeDiffSquare."MD_Start Date" := PeriodStartDate;
-                                    DaysToAdd := 365;
-                                    LeapDays := 0;
-                                    for CurrentYear := Date2DMY(PeriodStartDate, 3) to Date2DMY(PeriodStartDate + 364, 3) do begin
-                                        if IsLeapYear(CurrentYear) then begin
-                                            if (DMY2Date(29, 2, CurrentYear) >= PeriodStartDate) and
-          (DMY2Date(29, 2, CurrentYear) <= PeriodStartDate + DaysToAdd - 1) then
-                                                LeapDays += 1;
-                                        end;
-                                    end;
-                                    DaysToAdd := DaysToAdd + LeapDays;
-                                    PeriodEndDate := PeriodStartDate + DaysToAdd - 1;
-                                    if PeriodEndDate > LeaseEndDate then
-                                        PeriodEndDate := LeaseEndDate;
-                                    MergeDiffSquare."MD_End Date" := PeriodEndDate;
-                                    TotalDays := PeriodEndDate - PeriodStartDate + 1;
-                                    MergeDiffSquare."MD_Number of Days" := TotalDays;
-                                    MergeDiffSquare."MD_Merged Unit ID" := Rec."Unit Name";
-                                    MergeDiffSquare."MD_Unit Sq Ft" := SubLeaseMergeRec."Unit Size"; // From Sub Lease Merged Units
-                                    MergeDiffSquare."MD_Unit ID" := SubLeaseMergeRec."Single Unit Name"; // From Sub Lease Merged Units
-                                    MergeDiffSquare."MD_Rate per Sq.Ft" := 0; // Initialize as 0; users will manually enter this
-                                    MergeDiffSquare."MD_Annual Amount" := 0; // Calculated after manual input
-                                    MergeDiffSquare."MD_Final Annual Amount" := MergeSameSquare."MS_Annual Amount";
-                                    MergeDiffSquare."MD_Per Day Rent" := 0;
-                                    MergeDiffSquare.Insert();
-                                    PeriodStartDate := PeriodEndDate + 1;
-                                    YearCounter += 1;
-                                    LineNoCounter += 1;
+                    "Merge Rent Calculation"::"Merged Unit with lumpsum annual amount":
+                        begin
+                            if Rec."Proposal ID" = 0 then
+                                Error('Proposal ID is missing or not assigned.');
+                            LeaseProposal.Reset();
+                            LeaseProposal.SetRange("Proposal ID", Rec."Proposal ID");
+                            if not LeaseProposal.FindFirst() then
+                                Error('No record found for Proposal ID %1.', Rec."Proposal ID");
+                            MergeLumSquare.SetRange("Proposal ID", LeaseProposal."Proposal ID");
+                            if MergeLumSquare.FindSet() then
+                                repeat
+                                    MergeLumSquare.Delete();
+                                until MergeLumSquare.Next() = 0;
+                            PeriodStartDate := LeaseProposal."Lease Start Date";
+                            YearCounter := 1;
+                            LineNoCounter := 1;
+                            while PeriodStartDate <= LeaseProposal."Lease End Date" do begin
+                                MergeLumSquare.Init();
+                                MergeLumSquare."Proposal ID" := LeaseProposal."Proposal ID";
+                                MergeLumSquare."ML_Line No." := LineNoCounter;
+                                MergeLumSquare.ML_Year := YearCounter;
+                                MergeLumSquare."ML_Start Date" := PeriodStartDate;
+                                DaysToAdd := 365; // Default to 365 days
+                                LeapDays := 0;
+
+                                for CurrentYear := Date2DMY(PeriodStartDate, 3) to Date2DMY(PeriodStartDate + 364, 3) do
+                                    if IsLeapYear(CurrentYear) then
+                                        // Ensure the leap day (Feb 29) falls within the range
+                                        if (DMY2Date(29, 2, CurrentYear) >= PeriodStartDate) and (DMY2Date(29, 2, CurrentYear) <= PeriodStartDate + DaysToAdd - 1) then
+                                            LeapDays += 1;
+
+                                DaysToAdd := DaysToAdd + LeapDays;
+                                PeriodEndDate := PeriodStartDate + DaysToAdd - 1;
+                                if PeriodEndDate > LeaseProposal."Lease End Date" then
+                                    PeriodEndDate := LeaseProposal."Lease End Date";
+                                MergeLumSquare."ML_End Date" := PeriodEndDate;
+                                TotalDays := PeriodEndDate - PeriodStartDate + 1;
+                                MergeLumSquare."ML_Number of Days" := TotalDays;
+                                MergeLumSquare."ML_Merged Unit ID" := LeaseProposal."Unit Name";
+                                MergeLumSquare."ML_Unit Sq Ft" := LeaseProposal."Unit Size";
+                                if YearCounter = 1 then begin
+                                    MergeLumSquare."ML_Annual Amount" := 0; // User will enter manually
+                                    MergeLumSquare."ML_Final Annual Amount" := 0;
                                 end;
-                            until SubLeaseMergeRec.Next() = 0;
-                        end
-                        else
-                            Error('No matching records found in Sub Lease Merged Units for the given Proposal ID.');
-                    end;
+                                if TotalDays > 0 then
+                                    MergeLumSquare."ML_Per Day Rent" := MergeLumSquare."ML_Final Annual Amount" / TotalDays
+                                else
+                                    MergeLumSquare."ML_Per Day Rent" := 0;
+                                MergeLumSquare.Insert();
+                                PeriodStartDate := PeriodEndDate + 1;
+                                YearCounter += 1;
+                                LineNoCounter += 1;
+                            end;
+                        end;
+                    "Merge Rent Calculation"::"Merged Unit with differential square feet rate":
+                        begin
+                            MergeDiffSquare.SetRange("Proposal ID", Rec."Proposal ID");
+                            if MergeDiffSquare.FindSet() then
+                                repeat
+                                    MergeDiffSquare.Delete();
+                                until MergeDiffSquare.Next() = 0;
+                            PeriodStartDate := Rec."Lease Start Date";
+                            LeaseEndDate := Rec."Lease End Date";
+                            YearCounter := 1;
+                            LineNoCounter := 1;
+                            SubLeaseMergeRec.SetRange("Proposal ID", Rec."Proposal ID");
+                            if SubLeaseMergeRec.FindSet() then
+                                repeat
+                                    YearCounter := 1;
+                                    PeriodStartDate := Rec."Lease Start Date";
+                                    LeaseEndDate := Rec."Lease End Date";
+                                    while PeriodStartDate <= LeaseEndDate do begin
+                                        MergeDiffSquare.Init();
+                                        MergeDiffSquare."Proposal ID" := Rec."Proposal ID";
+                                        MergeDiffSquare."MD_Line No." := LineNoCounter;
+                                        MergeDiffSquare.MD_Year := YearCounter;
+                                        MergeDiffSquare."MD_Start Date" := PeriodStartDate;
+                                        DaysToAdd := 365;
+                                        LeapDays := 0;
+
+                                        for CurrentYear := Date2DMY(PeriodStartDate, 3) to Date2DMY(PeriodStartDate + 364, 3) do
+                                            if IsLeapYear(CurrentYear) then
+                                                if (DMY2Date(29, 2, CurrentYear) >= PeriodStartDate) and (DMY2Date(29, 2, CurrentYear) <= PeriodStartDate + DaysToAdd - 1) then
+                                                    LeapDays += 1;
+
+                                        DaysToAdd := DaysToAdd + LeapDays;
+                                        PeriodEndDate := PeriodStartDate + DaysToAdd - 1;
+
+                                        if PeriodEndDate > LeaseEndDate then
+                                            PeriodEndDate := LeaseEndDate;
+
+                                        MergeDiffSquare."MD_End Date" := PeriodEndDate;
+                                        TotalDays := PeriodEndDate - PeriodStartDate + 1;
+                                        MergeDiffSquare."MD_Number of Days" := TotalDays;
+                                        MergeDiffSquare."MD_Merged Unit ID" := Rec."Unit Name";
+                                        MergeDiffSquare."MD_Unit Sq Ft" := SubLeaseMergeRec."Unit Size"; // From Sub Lease Merged Units
+                                        MergeDiffSquare."MD_Unit ID" := CopyStr(SubLeaseMergeRec."Single Unit Name", 1, StrLen(SubLeaseMergeRec."Single Unit Name")); // From Sub Lease Merged Units
+                                        MergeDiffSquare."MD_Rate per Sq.Ft" := 0; // Initialize as 0; users will manually enter this
+                                        MergeDiffSquare."MD_Annual Amount" := 0; // Calculated after manual input
+                                        MergeDiffSquare."MD_Final Annual Amount" := MergeSameSquare."MS_Annual Amount";
+                                        MergeDiffSquare."MD_Per Day Rent" := 0;
+                                        MergeDiffSquare.Insert();
+                                        PeriodStartDate := PeriodEndDate + 1;
+                                        YearCounter += 1;
+                                        LineNoCounter += 1;
+                                    end;
+                                until SubLeaseMergeRec.Next() = 0
+                            else
+                                Error('No matching records found in Sub Lease Merged Units for the given Proposal ID.');
+                        end;
+
+                end;
             end;
         }
         field(50164; "Market Rate per Sq. Ft."; Decimal)

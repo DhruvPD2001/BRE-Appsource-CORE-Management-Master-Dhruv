@@ -70,7 +70,7 @@ table 50922 "FinalSettlement"
                 azureBlobUploader: Codeunit "Azure AD Blob Storage";
                 RecRef: RecordRef;
                 fileName: Text[250];
-                uploadResult: Text[250];
+                uploadResult: Text;
                 folderName: Text[250];
                 inStream: InStream;
                 ReportID: Integer;
@@ -95,7 +95,7 @@ table 50922 "FinalSettlement"
                     uploadResult := azureBlobUploader.UploadDocumentToBlob(inStream, fileName, folderName);
                     if fileName <> '' then begin
                         Rec."Payment Receipt" := fileName;
-                        Rec."View Reciept document URL" := uploadResult;
+                        Rec."View Reciept document URL" := CopyStr(uploadResult, 1, StrLen(uploadResult));
                         Rec.Modify();
                         Message('File uploaded successfully: %1', fileName);
                     end;

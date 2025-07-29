@@ -8,7 +8,7 @@ table 50909 "Workflow Frequency"
         {
             DataClassification = ToBeClassified;
             Caption = 'Company ID';
-            TableRelation = "testData"."Company ID";
+            TableRelation = "Company Data"."Company ID";
 
         }
 

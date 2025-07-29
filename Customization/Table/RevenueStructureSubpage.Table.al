@@ -101,9 +101,7 @@ table 50914 "Revenue Structure Subpage"
             Clustered = true;
         }
     }
-}
-tableextension 50105 RevenueStructureSubpageExt extends "Revenue Structure Subpage"
-{
+
     trigger OnDelete()
     var
         calculateinstallmentstotal: Codeunit CalculateNumberOfInstallments;

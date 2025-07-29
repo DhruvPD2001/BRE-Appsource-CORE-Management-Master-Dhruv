@@ -11,7 +11,7 @@ page 50706 CompanyData
     EntityName = 'companyData';
     EntitySetName = 'companyDatas';
     PageType = API;
-    SourceTable = testData;
+    SourceTable = "Company Data";
     ODataKeyFields = SystemId;
 
     layout
