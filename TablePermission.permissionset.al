@@ -246,7 +246,6 @@ permissionset 50100 TablePermission
         codeunit CalculateNumberOfInstallments = X,
         codeunit "Cash Receipt Journal Entry" = X,
         codeunit "Create Sales Credit Memo" = X,
-        codeunit "Extension Setup Handler" = X,
         codeunit "Final Settlement Posting Mgt." = X,
         codeunit "FS_Receivable Payment Receipt" = X,
         codeunit GenerateConsolidatedInvoices = X,
