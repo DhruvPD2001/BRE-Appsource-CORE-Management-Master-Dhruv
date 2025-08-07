@@ -20,12 +20,14 @@ page 50983 "RevenueAllocationApproval List"
                     ApplicationArea = All;
                     Caption = 'Status';
                     Editable = false;
+                    ToolTip = 'Specifies the current status of the revenue allocation approval.';
                 }
                 field("RA_ID"; Rec."RA_ID")
                 {
                     ApplicationArea = All;
                     Caption = 'RA_ID';
                     Editable = false;
+                    ToolTip = 'Specifies the unique identifier for the revenue allocation approval.';
                 }
                 field("ID"; Rec."ID")
                 {
@@ -33,6 +35,7 @@ page 50983 "RevenueAllocationApproval List"
                     Caption = 'ID';
                     Editable = false;
                     DrillDown = true;
+                    ToolTip = 'Specifies the unique identifier for the revenue allocation approval record.';
 
                     trigger OnDrillDown()
                     var
@@ -50,12 +53,14 @@ page 50983 "RevenueAllocationApproval List"
                     ApplicationArea = All;
                     Caption = 'Financial Year';
                     Editable = false;
+                    ToolTip = 'Specifies the financial year for which the revenue allocation approval is applicable.';
                 }
                 field("Month"; Rec."Month")
                 {
                     ApplicationArea = All;
                     Caption = 'Month';
                     Editable = false;
+                    ToolTip = 'Specifies the month for which the revenue allocation approval is applicable.';
                 }
 
             }
@@ -66,7 +71,9 @@ page 50983 "RevenueAllocationApproval List"
     {
         area(Processing)
         {
+#pragma warning disable AW0011
             action(Approve)
+#pragma warning restore AW0011
             {
                 ApplicationArea = All;
                 Caption = 'Approve';
@@ -75,13 +82,15 @@ page 50983 "RevenueAllocationApproval List"
                 PromotedCategory = Process;
                 PromotedIsBig = true;
                 Visible = IsFinanceManager;
+                ToolTip = 'Approve the selected revenue allocation entry.';
+
+
 
 
                 trigger OnAction()
                 var
                     revenueallocation: Record "Revenue Allocation Details";
                     RevenueAllocationPosting: Codeunit "Revenue Allocation Posting";
-                    approvalRevenuerequest: Codeunit "Approval Revenue Allocation";
                 begin
                     if Rec.Status = Rec.Status::Approved then
                         Error('This entry is already approved');
@@ -93,7 +102,6 @@ page 50983 "RevenueAllocationApproval List"
 
                         if revenueallocation.Get(Rec."ID") then begin
                             revenueallocation.Status := revenueallocation.Status::Approve;
-                            approvalRevenuerequest.ApprovalRevenuerequest(Rec);
                             revenueallocation.Modify();
 
                             RevenueAllocationPosting.PostRevenueAllocation(revenueallocation);
@@ -103,7 +111,9 @@ page 50983 "RevenueAllocationApproval List"
                     end;
                 end;
             }
+#pragma warning disable AW0011
             action(Reject)
+#pragma warning restore AW0011
             {
                 ApplicationArea = All;
                 Caption = 'Reject';
@@ -112,23 +122,22 @@ page 50983 "RevenueAllocationApproval List"
                 PromotedCategory = Process;
                 PromotedIsBig = true;
                 Visible = IsFinanceManager;
+                ToolTip = 'Reject the selected revenue allocation entry.';
+
 
                 trigger OnAction()
                 var
                     revenueallocation: Record "Revenue Allocation Details";
-                    approvalRevenuerequest: Codeunit "Approval Revenue Allocation";
                 begin
                     if Rec.Status = Rec.Status::Reject then
                         Error('This entry is already rejected');
                     // Update current record
                     Rec.Status := Rec.Status::Reject;
-                    // Rec."Reason for Rejection" := ReasonForRejection;
                     Rec.Modify();
 
                     // Update Credit Note record
                     if revenueallocation.Get(Rec."ID") then begin
                         revenueallocation.Status := revenueallocation.Status::Reject;
-                        approvalRevenuerequest.RejectRevenuerequest(Rec);
                         revenueallocation.Modify();
                     end;
 
@@ -146,7 +155,6 @@ page 50983 "RevenueAllocationApproval List"
 
     begin
         // Check if the current user has the 'LEASE_MANAGER' permission set
-
         IsFinanceManager := VisibleApproveAction();
     end;
 
@@ -155,8 +163,7 @@ page 50983 "RevenueAllocationApproval List"
         UserPersonalization: Record "User Personalization";
     begin
 
-        if UserPersonalization.Get(UserSecurityId()) then begin
-
+        if UserPersonalization.Get(UserSecurityId()) then
             case UserPersonalization."Profile ID" of
                 'PROPERTY MANAGER':
                     exit(false);
@@ -165,12 +172,12 @@ page 50983 "RevenueAllocationApproval List"
                 'finance manager':
                     exit(true);
             end;
-        end;
+
 
         exit(false);
     end;
 
     var
         IsFinanceManager: Boolean;
-        IsFieldEditable: Boolean;
+
 }
