@@ -23,11 +23,6 @@ table 50961 "Revenue Recognition Item"
                     "Item Type" := SecondaryItemRec.Description;
             end;
         }
-        field(50102; "Link"; Integer)
-        {
-            DataClassification = ToBeClassified;
-            Caption = 'Link';
-        }
         field(50103; "Entry No."; Integer)
         {
             DataClassification = ToBeClassified;

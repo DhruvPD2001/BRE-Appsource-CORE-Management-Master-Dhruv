@@ -22,7 +22,6 @@ table 50970 "Other Charges UnearnedRevenue"
             var
                 SecondaryItemRec: Record Item;
             begin
-                // Check if a record with the selected Secondary Item Type exists
                 SecondaryItemRec.SetRange("No.", Rec."Item Type");
                 if SecondaryItemRec.FindFirst() then
                     "Item Type" := SecondaryItemRec.Description;

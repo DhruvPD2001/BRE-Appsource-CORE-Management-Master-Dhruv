@@ -22,14 +22,28 @@ table 50924 "Payment Mode"
                 if Tenancycontract.FindFirst() then begin
                     "Tenant Name" := Tenancycontract."Customer Name";
                     "Tenant Email" := Tenancycontract."Email Address";
+                    "Contract Start date" := Tenancycontract."Contract Start Date";
+                    "Contract End date" := Tenancycontract."Contract End Date";
                     "Payment Reminder" := Tenancycontract."Payment Reminder";
                 end else begin
                     "Tenant Name" := '';
                     "Tenant Email" := '';
+                    "Contract Start date" := 0D;
+                    "Contract End date" := 0D;
                 end;
                 EvaluatePaymentSchedule();
                 GetNextSequenceNo();
             end;
+        }
+        field(50916; "Contract Start date"; Date)
+        {
+            Caption = 'Contract Start date';
+            DataClassification = ToBeClassified;
+        }
+        field(50911; "Contract End date"; Date)
+        {
+            Caption = 'Contract End date';
+            DataClassification = ToBeClassified;
         }
         field(50101; "Tenant Id"; Code[20])
         {

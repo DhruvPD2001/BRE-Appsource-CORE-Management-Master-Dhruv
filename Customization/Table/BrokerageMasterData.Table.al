@@ -104,43 +104,36 @@ table 50951 "Brokerage Master Data"
             Caption = 'Owner Name';
             Editable = false;
         }
-        field(50118; "Unit ID"; Code[100])
-        {
-            DataClassification = ToBeClassified;
-            Caption = 'Unit ID';
-            Editable = false;
-        }
-
-        field(50119; "Unit Number"; Text[100])
+        field(50118; "Unit Number"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Unit Number';
             Editable = false;
         }
-        field(50120; "Unit Name"; Text[100])
+        field(50119; "Unit Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Unit Name';
             Editable = false;
         }
-        field(50121; "Contract ID"; Integer)
+        field(50120; "Contract ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract ID';
             Editable = false;
         }
-        field(50122; "Tenant Name"; Text[100])
+        field(50121; "Tenant Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant Name';
         }
 
-        field(50123; "Base Amount"; Decimal)
+        field(50122; "Base Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Base Amount';
         }
-        field(50124; "Proposal ID"; Integer)
+        field(50123; "Proposal ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Proposal ID';

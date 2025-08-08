@@ -14,17 +14,20 @@ page 50984 "OtherCharges-UnearnedRevenue"
                 field("No."; Rec."No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Unique identifier for the other charges unearned revenue.';
                     Visible = false;
                 }
                 field("Item Type"; Rec."Item Type")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Type of item associated with the other charges unearned revenue.';
                     Caption = 'Item Type';
                 }
                 field("Entry No."; Rec."Entry No.")
                 {
                     ApplicationArea = All;
                     Caption = 'Entry No.';
+                    ToolTip = 'Unique entry number for the other charges unearned revenue.';
                     Editable = false;
                     Visible = false;
                 }

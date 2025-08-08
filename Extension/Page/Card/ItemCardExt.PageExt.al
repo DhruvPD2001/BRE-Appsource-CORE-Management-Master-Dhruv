@@ -209,7 +209,7 @@ pageextension 50101 "Item Card Ext" extends "Item Card"
                     end;
 
                 }
-                field(Emirate; Rec.Emirate)
+                field(Emirate; Rec."Emirate Name")
                 {
                     ApplicationArea = All;
                     Caption = 'Emirate';
@@ -376,7 +376,7 @@ pageextension 50101 "Item Card Ext" extends "Item Card"
     begin
         PropertyCode := FormatName(TargetItem."Property Name");
         lCountry := Format(TargetItem.Country);
-        Emirates := Format(TargetItem.Emirate);
+        Emirates := Format(TargetItem."Emirate Name");
         lCommunity := Format(TargetItem."Community");
         Unitnumber := Format(TargetItem."Unit Number");
         CountryCode := FormatName(lCountry);
@@ -523,7 +523,6 @@ pageextension 50101 "Item Card Ext" extends "Item Card"
         hideshowfields := hidefields();
         editablefalsefieldNonInventoryType := editablefalseNonInventory();
         ShowFinancialFields := not IsUserInProfile('FINANCE MANAGER');
-
     end;
 
     var
@@ -541,7 +540,4 @@ pageextension 50101 "Item Card Ext" extends "Item Card"
         AccessControl.SetRange("Profile ID", ProfileID);
         exit(not AccessControl.IsEmpty());
     end;
-
-
-
 }

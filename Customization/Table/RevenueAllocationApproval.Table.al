@@ -39,4 +39,11 @@ table 50966 "Revenue Allocation Approval"
             Clustered = false;
         }
     }
+
+    trigger OnInsert()
+    var
+        approvalRevenuerequest: Codeunit "Approval Revenue Allocation";
+    begin
+        approvalRevenuerequest.SendRevenueApprovalrequest(Rec);
+    end;
 }
