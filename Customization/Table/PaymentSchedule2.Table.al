@@ -1,12 +1,14 @@
 table 50934 "Payment Schedule2"
 {
     DataClassification = ToBeClassified;
+
     fields
     {
         field(50100; "Secondary Item Type"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Secondary Item Type';
+
             trigger OnValidate()
             begin
                 if "Secondary Item Type" = 'Security Deposit Amount' then
@@ -17,71 +19,112 @@ table 50934 "Payment Schedule2"
         {
             DataClassification = ToBeClassified;
             Caption = 'Amount';
+
         }
+
+
         field(50102; "VAT Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'VAT Amount';
+
         }
+
+
+
         field(50103; "Amount Including VAT"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Amount Including VAT';
+
             trigger OnValidate()
+
             begin
+                // Check if the payment status is 'Received'
+
+                // Call the procedure to update the balance amount
                 UpdateBalanceAmountOnPaymentReceived();
             end;
+
+
+
         }
+
         field(50104; "Installment Start Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Installment Start Date';
+
         }
+
         field(50105; "Installment End Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Installment End Date';
+
         }
+
+
+
         field(50106; "Due Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Due Date';
+
         }
+
         field(50107; "Installment No."; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Installment No.';
+
         }
+
+
+
         field(50116; "Payment Series"; Text[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Payment Series';
+
         }
+
         field(50108; "Entry No."; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
         }
+
+
         field(50110; "Tenant ID"; Code[20])
         {
+
             Caption = 'Tenant ID';
+
         }
         field(50111; "Tenant Name"; Text[100])
         {
+
             Caption = 'Tenant Name';
+
         }
         field(50915; "Invoiced"; Boolean)
         {
             Caption = 'Invoiced';
         }
+
+
         field(50914; "Contract ID"; Integer)
         {
             Caption = 'Contract ID';
         }
+
         field(50916; "Payment Status"; Text[100])
         {
             Caption = 'Payment Status';
+
             trigger OnValidate()
+
             begin
                 if "Payment Status" = 'Received' then
                     UpdateBalanceAmountOnPaymentReceived();
@@ -112,10 +155,12 @@ table 50934 "Payment Schedule2"
             Caption = 'Payment Recived Date';
             DataClassification = ToBeClassified;
         }
+
         field(50922; "Payment Mode"; Text[100])
         {
             Caption = 'Payment Mode';
         }
+
         field(50923; "Cheque Number"; Text[100])
         {
             Caption = 'Cheque Number';
@@ -129,11 +174,13 @@ table 50934 "Payment Schedule2"
         {
             DataClassification = ToBeClassified;
             Caption = 'Property ID';
+
         }
         field(50926; "No of Days"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'No of Days';
+
         }
         field(50927; "Workflow frequency date"; Date)
         {
@@ -142,21 +189,25 @@ table 50934 "Payment Schedule2"
         }
         field(50928; "VAT%"; Integer)
         {
+            //OptionMembers = "0%","5%";
             DataClassification = ToBeClassified;
             Caption = 'VAT%';
         }
         field(50929; "Credit Note No."; Code[100])
         {
+            //OptionMembers = "0%","5%";
             DataClassification = ToBeClassified;
             Caption = 'Credit Note No.';
         }
         field(50930; "Credit Note Amount"; Decimal)
         {
+            //OptionMembers = "0%","5%";
             DataClassification = ToBeClassified;
             Caption = 'Credit Note Amount';
         }
         field(50931; "Final Rent Amount"; Decimal)
         {
+            //OptionMembers = "0%","5%";
             DataClassification = ToBeClassified;
             Caption = 'Final Rent Amount';
         }
@@ -166,6 +217,7 @@ table 50934 "Payment Schedule2"
             Caption = 'Final Rent Amount Including VAT';
         }
     }
+
     keys
     {
         key(Key1; "Entry No.")
@@ -173,6 +225,7 @@ table 50934 "Payment Schedule2"
             Clustered = true;
         }
     }
+
     fieldgroups
     {
         fieldgroup(DropDown; "Secondary Item Type", "Amount", "VAT Amount", "Amount Including VAT")
@@ -184,19 +237,21 @@ table 50934 "Payment Schedule2"
     var
         TenancyContractRec: Record "Tenancy Contract";
     begin
+
         TenancyContractRec.SetRange("Contract ID", Rec."Contract ID");
         if TenancyContractRec.FindSet() then
             if (Rec."Secondary Item Type" = 'Security Deposit Amount') and
      (Rec."Payment Status" = 'Received') then begin
-                if TenancyContractRec."Balance Amount" <> 0 then begin
-                    TenancyContractRec."Balance Amount" += Rec."Amount Including VAT";
+                if TenancyContractRec."Security Deposit Amt. Received" <> 0 then begin
+                    TenancyContractRec."Security Deposit Amt. Received" += Rec."Amount Including VAT";
                     TenancyContractRec."Security Balanced Amount" += Rec."Amount Including VAT";
                 end
                 else begin
-                    TenancyContractRec."Balance Amount" := Rec."Amount Including VAT";
+                    TenancyContractRec."Security Deposit Amt. Received" := Rec."Amount Including VAT";
                     TenancyContractRec."Security Balanced Amount" := Rec."Amount Including VAT";
                 end;
                 TenancyContractRec.Modify();
             end;
+
     end;
 }

@@ -8,8 +8,7 @@ table 50926 "Vendor Profile"
         {
             DataClassification = ToBeClassified;
             Caption = 'Vendor ID';
-            TableRelation = Vendor."No." WHERE("Vendor Category" = FILTER('Property Management System' | 'Brokers and Commission Agent'),
-             "No." = FILTER('PM_V_*'));
+            TableRelation = Vendor."No." WHERE("Vendor Category" = FILTER('Property Management System' | 'Brokers and Commission Agent'));
             trigger OnValidate()
             var
                 vendor: Record Vendor;
@@ -35,7 +34,7 @@ table 50926 "Vendor Profile"
                     Address := Vendor.Address;
                     "Address 2" := Vendor."Address 2";
                     "Country" := Vendor.County;
-                    "Emirate" := vendor.Emirate;
+                    "Emirate" := vendor."Emirate Name";
                     "Community" := vendor.Community;
                     "Phone No." := Vendor."Phone No.";
                     "Mobile Phone No." := Vendor."Mobile Phone No.";
@@ -59,47 +58,6 @@ table 50926 "Vendor Profile"
                     "Lead Time Calculation" := Vendor."Lead Time Calculation";
                     "Base Calendar Code" := Vendor."Base Calendar Code";
                     "Over-Receipt Code" := Vendor."Over-Receipt Code";
-                end else begin
-                    "Vendor ID" := '';
-                    "Vendor Name" := '';
-                    "Search Name" := '';
-                    "Vendor Contact No." := '';
-                    "Blocked" := "Blocked"::" ";
-                    "Privacy Blocked" := false;
-                    "IC Partner Code" := '';
-                    "Purchaser Code" := '';
-                    "Responsibility Center" := '';
-                    "Disable Search by Name" := false;
-                    "Company Size Code" := '';
-                    "Last Date Modified" := 0D;
-                    "Document Sending Profile" := '';
-                    "Balance (LCY)" := 0;
-                    "Balance Due (LCY)" := 0;
-                    Address := '';
-                    "Address 2" := '';
-                    "Country" := '';
-                    "Phone No." := '';
-                    "Mobile Phone No." := '';
-                    "E-Mail" := '';
-                    "Home Page" := '';
-                    "Our Account No." := '';
-                    "Primary Contact Code" := '';
-                    "VAT Registration No." := '';
-                    "Price Calculation Method" := "Price Calculation Method"::" ";
-                    "Price Including VAT" := false;
-                    "Application Method" := "Application Method"::"Manual";
-                    "Payment Terms Code" := '';
-                    "Payment Method Code" := '';
-                    Priority := 0;
-                    "Block Payment Tolerance" := false;
-                    "Preferred Bank Account Code" := '';
-                    "Partner Type" := "Partner Type"::" ";
-                    "Cash Flow Payment Terms Code" := '';
-                    "Creditor No." := '';
-                    "Location Code" := '';
-                    "Shipment Method Code" := '';
-                    "Base Calendar Code" := '';
-                    "Over-Receipt Code" := '';
                 end;
             end;
         }
@@ -168,7 +126,7 @@ table 50926 "Vendor Profile"
             Caption = 'Country';
             Editable = false;
         }
-        field(50164; Emirate; Enum Emirates)
+        field(50164; Emirate; Text[50])
         {
             Caption = 'Emirate';
             Editable = false;

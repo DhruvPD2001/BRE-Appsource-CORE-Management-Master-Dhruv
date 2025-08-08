@@ -30,11 +30,10 @@ table 50308 "Lease Proposal Details"
                 if PropertyRec.FindFirst() then begin
                     "Property Name" := PropertyRec."Property Name";
                     "Makani Number" := PropertyRec."Makani Number";
-                    Emirate := PropertyRec.Emirate;
+                    Emirate := CopyStr(PropertyRec."Emirate Name", 1, StrLen(PropertyRec."Emirate Name"));
                     Community := PropertyRec.Community;
                     "DEWA Number" := PropertyRec."DEWA Number";
                     "Property Size" := PropertyRec."Property Size";
-
                 end else
                     "Property Name" := '';
             end;
@@ -296,8 +295,8 @@ table 50308 "Lease Proposal Details"
         {
             DataClassification = ToBeClassified;
             Caption = 'Proposal Status';
-            OptionMembers = "    ",ProposalSharedtoTenant,Approved,Declined;
-            OptionCaption = '   ,Proposal Shared to Tenant,  Approved,  Declined';
+            OptionMembers = "    ",ProposalSharedtoTenant,Approved,Declined,Completed;
+            OptionCaption = '   ,Proposal Shared to Tenant, Approved, Declined, Completed';
             trigger OnValidate()
             var
                 ItemRec: Record Item;
@@ -626,7 +625,7 @@ table 50308 "Lease Proposal Details"
             DataClassification = ToBeClassified;
 
         }
-        field(50158; "Emirate"; Enum Emirates)
+        field(50158; "Emirate"; Code[50])
         {
             Caption = 'Emirate';
             DataClassification = ToBeClassified;

@@ -107,7 +107,8 @@ table 50318 "Contract Renewal"
                     "Rent Amount VAT %" := TenancyContractRec."Contract VAT %";
                     "Rent VAT Amount" := TenancyContractRec."Contract VAT Amount";
                     "Rent Amount Including VAT" := TenancyContractRec."Contract Amount Including VAT";
-
+                    "Unit Type" := TenancyContractRec."Unit Type";
+                    "Usage Type" := TenancyContractRec."Usage Type";
                 end else begin
                     // Clear fields if no record is found
                     Clear("Contract Start Date");
@@ -118,9 +119,6 @@ table 50318 "Contract Renewal"
                     Clear("Property ID");
                     Clear("Property Name");
                 end;
-
-
-
             end;
         }
 
@@ -129,12 +127,8 @@ table 50318 "Contract Renewal"
             DataClassification = ToBeClassified;
 
             trigger OnValidate()
-
             begin
-                ;
-
                 CalculateLeaseDuration();
-
             end;
 
         }
@@ -398,7 +392,7 @@ table 50318 "Contract Renewal"
             DataClassification = ToBeClassified;
 
         }
-        field(50145; "Emirate"; Enum Emirates)
+        field(50145; "Emirate"; Text[50])
         {
             DataClassification = ToBeClassified;
 
@@ -959,27 +953,6 @@ table 50318 "Contract Renewal"
             DataClassification = ToBeClassified;
             Caption = 'Legal Jurisdiction (e.g., Dubai Courts)';
         }
-        field(50184; "Vendor ID"; Code[20])
-        {
-            DataClassification = ToBeClassified;
-            Caption = 'Vendor ID';
-        }
-        field(50185; "Vendor Name"; Text[100])
-        {
-            DataClassification = ToBeClassified;
-            Caption = 'Vendor Name';
-            Editable = false;
-        }
-        field(50186; "Percentage"; Integer)
-        {
-            DataClassification = ToBeClassified;
-            Caption = 'Percentage';
-        }
-        field(50187; "Amount"; Decimal)
-        {
-            DataClassification = ToBeClassified;
-            Caption = 'Amount';
-        }
         field(50176; "Calculation Method"; Text[100])
         {
             DataClassification = ToBeClassified;
@@ -1030,6 +1003,38 @@ table 50318 "Contract Renewal"
         {
             DataClassification = ToBeClassified;
             Caption = 'Is any Broker Involved?';
+        }
+
+        field(50184; "Vendor ID"; Code[20])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Vendor ID';
+        }
+        field(50185; "Vendor Name"; Text[100])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Vendor Name';
+            Editable = false;
+        }
+        field(50186; "Percentage"; Integer)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Percentage';
+        }
+        field(50187; "Amount"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Amount';
+        }
+        field(50188; "Unit Type"; Text[100])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Unit Type';
+        }
+        field(50189; "Usage Type"; Text[100])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Usage Type';
         }
     }
     keys

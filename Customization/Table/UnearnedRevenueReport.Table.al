@@ -18,14 +18,12 @@ table 50116 "Unearned Revenue Report"
 
             trigger OnValidate()
             begin
-                // Validate that starting date is always 1st January
                 if (Date2DMY("Starting Date Year", 1) <> 1) or (Date2DMY("Starting Date Year", 2) <> 1) then
                     Error('Starting Date must be 1st January of the year.');
 
-                if ("Starting Date Year" <> 0D) and ("Ending Date Year" <> 0D) then begin
+                if ("Starting Date Year" <> 0D) and ("Ending Date Year" <> 0D) then
                     if "Starting Date Year" > "Ending Date Year" then
                         Error('Starting Date Year cannot be greater than Ending Date Year.');
-                end;
             end;
         }
         field(50103; "Ending Date Year"; Date)
@@ -111,7 +109,6 @@ table 50116 "Unearned Revenue Report"
         unearnedrevenuerentsubgrid.SetRange("Header No.", Rec."No.");
         if unearnedrevenuerentsubgrid.FindSet() then
             unearnedrevenuerentsubgrid.DeleteAll();
-
     end;
 
     procedure Deletesubunearnedrevenuereportitem()
@@ -121,9 +118,7 @@ table 50116 "Unearned Revenue Report"
         unearnedrevenuereportitem.SetRange("No.", Rec."No.");
         if unearnedrevenuereportitem.FindSet() then
             unearnedrevenuereportitem.DeleteAll();
-
     end;
-
 
     procedure Deleteunearnedrevenueotherrevenue()
     var
@@ -132,6 +127,5 @@ table 50116 "Unearned Revenue Report"
         unearnedrevenueothercharges.SetRange("Header No.", Rec."No.");
         if unearnedrevenueothercharges.FindSet() then
             unearnedrevenueothercharges.DeleteAll();
-
     end;
 }

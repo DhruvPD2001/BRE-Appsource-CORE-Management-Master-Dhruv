@@ -108,17 +108,27 @@ tableextension 50102 "Item Ext" extends Item
             TableRelation = Country."Country Code";
             trigger OnValidate()
             begin
-                Emirate := Emirate::" ";
+                "Emirate Name" := '';
                 "Community" := '';
             end;
         }
-        field(50115; "Emirate"; Enum Emirates)
+        field(50115; "Emirate Name"; Text[50])
         {
             DataClassification = ToBeClassified;
             Caption = 'Emirate';
+            TableRelation = Emirate.ID where("Country Code" = field(Country));
             trigger OnValidate()
+            var
+                emirate: Record "Emirate";
+                emirateID: Integer;
             begin
-                "Community" := '';
+                Evaluate(emirateID, "Emirate Name");
+                emirate.SetRange(ID, emirateID);
+                if emirate.FindFirst() then begin
+                    "Emirate Name" := Format(emirate."Emirate Name");
+                    Community := '';
+                end else
+                    Error('Invalid Emirate Name: %1', "Emirate Name");
             end;
         }
         field(50116; "Community"; Text[100])
@@ -126,7 +136,7 @@ tableextension 50102 "Item Ext" extends Item
             DataClassification = ToBeClassified;
             Caption = 'Community';
             TableRelation = Community."Community Name"
-                 where("Emirate Name" = field(Emirate));
+                 where("Emirate Name" = field("Emirate Name"));
         }
         field(50117; "Unit Address"; Code[100])
         {

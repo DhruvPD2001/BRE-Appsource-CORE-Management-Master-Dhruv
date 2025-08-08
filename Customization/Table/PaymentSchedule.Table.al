@@ -30,6 +30,7 @@ table 50920 "Payment Schedule"
                     "Tenant Name" := leaserec."Customer Name";
                     "Contract Status" := Format(leaserec."Tenant Contract Status");
                     "Contract Start date" := leaserec."Contract Start Date";
+                    "Contract End date" := leaserec."Contract End Date";
                     "Property ID" := leaserec."Property ID";
                     "Property Classification" := leaserec."Property Classification";
                 end else begin
@@ -63,7 +64,11 @@ table 50920 "Payment Schedule"
             FieldClass = FlowField;
             CalcFormula = sum("Payment Schedule2".Amount where("Contract ID" = field("Contract ID"), "Tenant ID" = field("Tenant ID")));
         }
-
+        field(50911; "Contract End date"; Date)
+        {
+            Caption = 'Contract End date';
+            DataClassification = ToBeClassified;
+        }
         field(50912; "Total VAT Amount"; Decimal)
         {
             Caption = 'Total VAT Amount';
@@ -179,8 +184,6 @@ table 50920 "Payment Schedule"
             until RentCalculationSubpage.Next() = 0;
 
     end;
-
-
 
     procedure addrevnuestructurpagelinePaymentschedule2()
     var

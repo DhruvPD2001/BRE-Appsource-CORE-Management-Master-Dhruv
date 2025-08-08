@@ -86,13 +86,13 @@ report 50109 "Security Deposit"
                 SecurityDepositTransfer.SetRange("Contract ID", "Contract ID");
                 if SecurityDepositTransfer.FindSet() then
                     repeat
-                        CarriedForwardOutAmount += SecurityDepositTransfer."New_Security Deposit Amount";
+                        CarriedForwardOutAmount += SecurityDepositTransfer."Carry Forward Amount";
                     until SecurityDepositTransfer.Next() = 0;
                 SecurityDepositTransfer.Reset();
                 SecurityDepositTransfer.SetRange("New_Contract ID", "Contract ID");
                 if SecurityDepositTransfer.FindSet() then
                     repeat
-                        CarriedForwardInAmount += SecurityDepositTransfer."New_Security Deposit Amount";
+                        CarriedForwardInAmount += SecurityDepositTransfer."Carry Forward Amount";
                     until SecurityDepositTransfer.Next() = 0;
                 TotalAdditionalCharges := 0;
                 AdditionalCharges.Reset();
