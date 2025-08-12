@@ -334,7 +334,6 @@ page 50139 "Unearned Revenue Report Card"
                         TotalCreditnode += paymentSchedule."Credit Note Amount";
                     until paymentSchedule.Next() = 0;
 
-                // 🔹2. Calculate Invoiced Amount between StartDate and EndDate
                 paymentSchedule.Reset();
                 paymentSchedule.SetRange("Contract ID", tenancyContract."Contract ID");
                 paymentSchedule.SetRange("Secondary Item Type", 'Rent');
@@ -359,26 +358,24 @@ page 50139 "Unearned Revenue Report Card"
 
                 NewLineNo := GetNextLineNo();
 
-                // ✅ Fetch suspended reason from separate table
                 SuspendedDate := 0D;
                 if tenancyContract."Tenant Contract Status" = tenancyContract."Tenant Contract Status"::Suspended then begin
                     SuspendedReasonRec.Reset();
-                    SuspendedReasonRec.SetRange("Contract ID", tenancyContract."Contract ID"); // Assuming this link exists
+                    SuspendedReasonRec.SetRange("Contract ID", tenancyContract."Contract ID");
                     if SuspendedReasonRec.FindLast() then
                         SuspendedDate := SuspendedReasonRec.DateEffective;
                 end;
 
-                // ✅ Fetch termination date from final calculation table
                 TerminationDate := 0D;
                 if tenancyContract."Tenant Contract Status" = tenancyContract."Tenant Contract Status"::Terminated then begin
                     FinalCalculationRec.Reset();
-                    FinalCalculationRec.SetRange("Contract ID", tenancyContract."Contract ID"); // Assuming this link exists
+                    FinalCalculationRec.SetRange("Contract ID", tenancyContract."Contract ID");
                     if FinalCalculationRec.FindLast() then
                         TerminationDate := FinalCalculationRec."Termination Date";
                 end;
 
                 unearnedRevenueBuffer.Init();
-                unearnedRevenueBuffer."Header No." := Rec."No."; // ✅ Set Header No. correctly
+                unearnedRevenueBuffer."Header No." := Rec."No.";
                 unearnedRevenueBuffer."Line No." := NewLineNo;
                 unearnedRevenueBuffer."Contract ID" := tenancyContract."Contract ID";
                 unearnedRevenueBuffer."Start Date" := tenancyContract."Contract Start Date";
@@ -393,8 +390,7 @@ page 50139 "Unearned Revenue Report Card"
                 unearnedRevenueBuffer."Suspension Date" := SuspendedDate;
                 unearnedRevenueBuffer."Termination Date" := TerminationDate;
 
-                if (tenancyContract."Tenant Contract Status" <> tenancyContract."Tenant Contract Status"::Terminated) and
-    (tenancyContract."Tenant Contract Status" <> tenancyContract."Tenant Contract Status"::"Contract Renewed") then begin
+                if (tenancyContract."Tenant Contract Status" <> tenancyContract."Tenant Contract Status"::Terminated) and (tenancyContract."Tenant Contract Status" <> tenancyContract."Tenant Contract Status"::"Contract Renewed") then begin
 
                     TotalNoofDays := unearnedRevenueBuffer."End Date" - unearnedRevenueBuffer."Start Date" + 1;
                     PerDayrent := unearnedRevenueBuffer."Contract Value" / TotalNoofDays;
@@ -412,12 +408,10 @@ page 50139 "Unearned Revenue Report Card"
                         unearnedRevenueBuffer."Unit Name" := '';
                 end;
 
-                // Add more fields as required
                 RevenueAllocation := CalculateRevenueAllocation(tenancyContract."Contract ID", Rec."Starting Date Year");
                 UnearnedRevenueAllocation := CalculateUnearnedRevenueAllocation(tenancyContract."Contract ID");
                 unearnedRevenueBuffer."RevenueAllocated DuringtheYear" := RevenueAllocation;
                 unearnedRevenueBuffer."Unearned Revenue Balance" := UnearnedRevenueAllocation;
-                // Message('Revenue allocation value : ' + Format(RevenueAllocation));
                 unearnedRevenueBuffer."Shortfall/Excess" := unearnedRevenueBuffer."Unearned Revenue Balance" - unearnedRevenueBuffer.CalculatedUnearnedRevBalance;
                 unearnedRevenueBuffer.Insert();
             until tenancyContract.Next() = 0;
@@ -425,7 +419,7 @@ page 50139 "Unearned Revenue Report Card"
 
     local procedure CalculateRevenueAllocation(ContractID: Integer; StartDate: Date): Decimal
     var
-        RevenueAllocationRec: Record "Revenue Allocation SubGrid"; // Replace with your actual table name
+        RevenueAllocationRec: Record "Revenue Allocation SubGrid";
         TotalRevenueAllocated: Decimal;
         StartYear: Integer;
     begin
@@ -446,7 +440,6 @@ page 50139 "Unearned Revenue Report Card"
 
         exit(TotalRevenueAllocated);
     end;
-
 
     local procedure CalculateUnearnedRevenueAllocation(ContractID: Integer): Decimal
     var

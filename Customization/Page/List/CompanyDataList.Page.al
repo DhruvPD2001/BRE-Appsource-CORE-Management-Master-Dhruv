@@ -1,9 +1,9 @@
-page 50712 "testpagelist"
+page 50712 "Company Data List"
 {
     PageType = List;
     SourceTable = "Company Data";
     ApplicationArea = All;
-    Caption = 'Company Data';
+    Caption = 'Company Data List';
     CardPageId = 50701;
     UsageCategory = Administration;
 
@@ -18,14 +18,12 @@ page 50712 "testpagelist"
                     ApplicationArea = All;
                     ToolTip = 'Your Company ID';
                 }
-
                 field("Company Name"; Rec."Company Name")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Your Company Name';
                 }
-
                 field("Company Logo"; Rec."Company Logo")
                 {
                     ApplicationArea = All;
@@ -44,23 +42,6 @@ page 50712 "testpagelist"
                     Editable = false;
                     ToolTip = 'Environment Name';
                 }
-            }
-        }
-    }
-
-    actions
-    {
-        area(processing)
-        {
-            action(UploadLogo)
-            {
-                ToolTip = 'When you can click on the button then logo will be uploaded';
-                Image = Apply;
-                ApplicationArea = All;
-                trigger OnAction()
-                begin
-                    MESSAGE('Logo uploaded successfully.');
-                end;
             }
         }
     }
