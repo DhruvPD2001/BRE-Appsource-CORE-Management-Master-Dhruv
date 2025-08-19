@@ -95,7 +95,7 @@ table 50303 "Property Registration"
             TableRelation = "Property Type"."Property Type"
                  where("Classification Name" = field("Property Classification"));
         }
-        field(50112; "Registration Date"; DateTime)
+        field(50112; "Registration Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Registration Date';
