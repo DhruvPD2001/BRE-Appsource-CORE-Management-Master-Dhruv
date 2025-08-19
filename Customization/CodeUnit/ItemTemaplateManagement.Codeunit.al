@@ -19,7 +19,13 @@ codeunit 51251 "Item Temaplate Management"
         itemCategory: Enum "Item Template Enum";
     begin
         if itemDialogBox.RunModal() = Action::OK then
-            itemCategory := itemDialogBox.GetItemCategory();
+            itemCategory := itemDialogBox.GetItemCategory()
+        else begin
+            IsHandled := true;
+            Result := false;
+            exit;
+        end;
+
         ItemTempl.SetRange(Types, itemCategory);
         if ItemTempl.Count = 1 then begin
             ItemTempl.FindFirst();
