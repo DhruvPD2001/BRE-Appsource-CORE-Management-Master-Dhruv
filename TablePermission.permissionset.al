@@ -373,5 +373,22 @@ permissionset 50100 TablePermission
         page "Sub Unearned Charges" = X,
         page "Sub Unearned Revenue Card" = X,
         page "Unearned Revenue Report Card" = X,
-        page "Unearned Revenue Report List" = X;
+        page "Unearned Revenue Report List" = X,
+        page "Calculation Type List" = X,
+        page "Category List" = X,
+        page "Community List" = X,
+        page "Country List" = X,
+        page "Emirate List" = X,
+        page "Owner Document Subpage" = X,
+        page "Owner Profile Card" = X,
+        page "Owner Profile List" = X,
+        page "Payment Type List" = X,
+        page "Primary Classification List" = X,
+        page "Primary Item List" = X,
+        page "Property Type List" = X,
+        page "Secondary Classification List" = X,
+        page "Vendor Calculation Details Sub" = X,
+        page "Vendor Category List" = X,
+        page "Vendor Document Sub" = X,
+        page "Vendor I/R DocumentSub" = X;
 }
