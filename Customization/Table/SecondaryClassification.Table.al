@@ -19,12 +19,12 @@ table 50302 "Secondary Classification"
         field(50102; "Property Type"; Text[100])
         {
             DataClassification = ToBeClassified;
-            Caption = 'Property Type';
+            Caption = 'Unit Type';
         }
     }
     keys
     {
-        key(PK; "ID", "Property Type", "Classification Name")
+        key(PK; "ID", "Property Type")
         {
             Clustered = true;
         }

@@ -45,7 +45,7 @@ table 50964 "Brokerage Calculation Sub"
             Caption = 'Tenant Name';
             Editable = false;
         }
-        field(50107; "Property Name"; Code[20])
+        field(50107; "Property Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Property Name';

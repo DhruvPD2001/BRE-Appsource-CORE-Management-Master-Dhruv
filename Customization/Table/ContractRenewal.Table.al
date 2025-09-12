@@ -230,8 +230,16 @@ table 50318 "Contract Renewal"
         {
             DataClassification = ToBeClassified;
             Caption = 'Property Type';
-            TableRelation = "Secondary Classification"."Property Type"
+            TableRelation = "Secondary Classification"
                 where("Classification Name" = field("Property Classification"));
+
+            trigger OnValidate()
+            var
+                secondaryClassification: Record "Secondary Classification";
+            begin
+                if secondaryClassification.Get(Rec."Property Type") then
+                    Rec."Property Type" := secondaryClassification."Property Type";
+            end;
         }
         field(50121; "Annual Rent Amount"; Decimal)
         {

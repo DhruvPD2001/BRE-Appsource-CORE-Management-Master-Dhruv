@@ -26,7 +26,7 @@ table 50101 "Property Type"
 
     keys
     {
-        key(PK; "ID", "Property Type", "Classification Name")
+        key(PK; "ID", "Property Type")
         {
             Clustered = true;
         }

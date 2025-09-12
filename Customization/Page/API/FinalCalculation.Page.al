@@ -170,6 +170,14 @@ page 50722 "Final Calculation"
                 {
                     Caption = 'Credit Note URL';
                 }
+                field("updatedPayments"; Rec."Updated Payments")
+                {
+                    Caption = 'Updated Payments';
+                }
+                field("finalPayments"; Rec."Final Payments")
+                {
+                    Caption = 'Final Payments';
+                }
             }
         }
     }

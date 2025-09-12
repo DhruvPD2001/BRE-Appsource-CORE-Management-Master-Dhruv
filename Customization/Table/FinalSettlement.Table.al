@@ -95,7 +95,7 @@ table 50922 "FinalSettlement"
                     uploadResult := azureBlobUploader.UploadDocumentToBlob(inStream, fileName, folderName);
                     if fileName <> '' then begin
                         Rec."Payment Receipt" := fileName;
-                        Rec."View Reciept document URL" := CopyStr(uploadResult, 1, StrLen(uploadResult));
+                        Rec."Payment Receipt document URL" := CopyStr(uploadResult, 1, StrLen(uploadResult));
                         Rec.Modify();
                         Message('File uploaded successfully: %1', fileName);
                     end;

@@ -30,7 +30,7 @@ table 50102 "Country"
     }
     keys
     {
-        key(PK; "ID", "Country Code", "Country Name")
+        key(PK; "ID")
         {
             Clustered = true;
         }

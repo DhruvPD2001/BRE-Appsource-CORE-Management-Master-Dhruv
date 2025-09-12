@@ -5,6 +5,7 @@ page 50904 "Category List"
     ApplicationArea = All;
     Caption = 'Category List';
     UsageCategory = Lists;
+    CardPageId = 50905;
 
     layout
     {

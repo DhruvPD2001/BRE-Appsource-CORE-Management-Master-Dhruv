@@ -167,8 +167,15 @@ table 50307 "Tenancy Contract"
         {
             DataClassification = ToBeClassified;
             Caption = 'Property Type';
-            TableRelation = "Secondary Classification"."Property Type"
-                where("Classification Name" = field("Property Classification"));
+            TableRelation = "Secondary Classification" where("Classification Name" = field("Property Classification"));
+
+            trigger OnValidate()
+            var
+                secondaryClassification: Record "Secondary Classification";
+            begin
+                if secondaryClassification.Get(Rec."Property Type") then
+                    Rec."Property Type" := secondaryClassification."Property Type";
+            end;
         }
         field(50115; "Annual Rent Amount"; Decimal)
         {

@@ -232,6 +232,20 @@ table 50901 "Final Calculation"
             Caption = 'Credit Note View';
             InitValue = 'Credit Note View';
         }
+        field(50138; "Updated Payments"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Updated Payments';
+            Editable = false;
+        }
+
+        field(50139; "Final Payments"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Final Payments';
+            Editable = false;
+        }
+
 
 
     }

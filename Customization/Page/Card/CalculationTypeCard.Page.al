@@ -1,32 +1,38 @@
-page 50960 "Calculation Type List"
+page 50959 "Calculation Type Card"
 {
-    PageType = List;
+    PageType = Card;
     SourceTable = "Calculation Type";
     ApplicationArea = All;
-    Caption = 'Calculation Type List';
-    UsageCategory = Lists;
-    CardPageId = 50959;
+    Caption = 'Calculation Type Card';
+    UsageCategory = None;
 
     layout
     {
         area(content)
         {
-            repeater(Group)
+            group(Group)
             {
+                Caption = 'Calculation Type Details';
                 field("ID"; Rec."ID")
                 {
                     ApplicationArea = All;
-                    Caption = 'ID';
+                    Editable = false;
                     ToolTip = 'Specifies the unique identifier for the calculation type.';
                 }
                 field("Calculation Type"; Rec."Calculation Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Calculation Type';
-                    ToolTip = 'Specifies the name of the calculation type used for various calculations in the system.';
+                    ToolTip = 'Enter the Vendor Categoryname.';
+                    ShowMandatory = true;
+                    NotBlank = true;
                 }
             }
         }
     }
 
+
 }
+
+
+

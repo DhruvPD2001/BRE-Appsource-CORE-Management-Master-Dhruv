@@ -1,32 +1,38 @@
-page 50956 "Vendor Category List"
+page 50955 "Vendor Category Card"
 {
-    PageType = List;
+    PageType = Card;
     SourceTable = "Vendor Category";
     ApplicationArea = All;
-    Caption = 'Vendor Category List';
-    UsageCategory = Lists;
-    CardPageId = 50955;
+    Caption = 'Vendor Category Card';
+    UsageCategory = None;
 
     layout
     {
         area(content)
         {
-            repeater(Group)
+            group(Group)
             {
+                Caption = 'Vendor Category Details';
                 field("ID"; Rec."ID")
                 {
                     ApplicationArea = All;
-                    Caption = 'ID';
+                    Editable = false;
                     ToolTip = 'Specifies the unique identifier for the vendor category.';
                 }
                 field("Vendor Category Type"; Rec."Vendor Category Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Vendor Category Name';
-                    ToolTip = 'Specifies the name of the vendor category, such as Contractor, Supplier, or Service Provider.';
+                    ToolTip = 'Enter the Vendor Categoryname.';
+                    ShowMandatory = true;
+                    NotBlank = true;
                 }
             }
         }
     }
 
+
 }
+
+
+

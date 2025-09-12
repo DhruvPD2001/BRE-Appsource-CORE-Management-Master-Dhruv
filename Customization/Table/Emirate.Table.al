@@ -20,7 +20,15 @@ table 50103 "Emirate"
         {
             DataClassification = ToBeClassified;
             Caption = 'Country Code';
-            TableRelation = Country."Country Code";
+            TableRelation = Country;
+
+            trigger OnValidate()
+            var
+                country: Record Country;
+            begin
+                if country.Get("Country Code") then
+                    "Country Code" := country."Country Code";
+            end;
         }
         field(50103; "Emirate Name"; Enum Emirates)
         {
@@ -30,7 +38,7 @@ table 50103 "Emirate"
     }
     keys
     {
-        key(PK; "ID", "Emirate Name", "Country Code")
+        key(PK; "ID")
         {
             Clustered = true;
         }
