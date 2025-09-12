@@ -390,5 +390,16 @@ permissionset 50100 TablePermission
         page "Vendor Calculation Details Sub" = X,
         page "Vendor Category List" = X,
         page "Vendor Document Sub" = X,
-        page "Vendor I/R DocumentSub" = X;
+        page "Vendor I/R DocumentSub" = X,
+        page "Calculation Type Card" = X,
+        page "Category Card" = X,
+        page "Community Card" = X,
+        page "Country Card" = X,
+        page "Emirate Card" = X,
+        page "Payment Type Card" = X,
+        page "Primary Classification Card" = X,
+        page "Primary Item Card" = X,
+        page "Property Type Card" = X,
+        page "Secondary Classification Card" = X,
+        page "Vendor Category Card" = X;
 }

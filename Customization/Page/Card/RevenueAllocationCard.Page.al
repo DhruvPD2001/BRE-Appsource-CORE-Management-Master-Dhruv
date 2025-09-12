@@ -176,6 +176,7 @@ page 50122 "Revenue Allocation Card"
                 ToolTip = 'Filter Subgrid';
                 Caption = 'Revenue Allocation-Rent';
                 Image = Filter;
+                Enabled = Rec.Status = Rec.Status::Pending;
                 trigger OnAction()
                 var
                     companydata: Record "Company Data";

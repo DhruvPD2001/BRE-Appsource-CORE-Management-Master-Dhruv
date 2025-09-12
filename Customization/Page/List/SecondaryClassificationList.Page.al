@@ -5,6 +5,7 @@ page 50304 "Secondary Classification List"
     ApplicationArea = All;
     Caption = 'Unit Type List';
     UsageCategory = Lists;
+    CardPageId = 51260;
 
     layout
     {

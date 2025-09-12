@@ -5,6 +5,7 @@ page 50112 "Country List"
     ApplicationArea = All;
     Caption = 'Country List';
     UsageCategory = Lists;
+    CardPageId = 51255;
 
     layout
     {
@@ -37,6 +38,30 @@ page 50112 "Country List"
                     ToolTip = 'The name of the country.';
                 }
             }
+        }
+    }
+    actions
+    {
+        area(processing)
+        {
+            action(New)
+            {
+                ApplicationArea = All;
+                Caption = 'New';
+                Image = New;
+                ToolTip = 'Create a new country.';
+                trigger OnAction()
+                begin
+                    Rec.Init();
+                    Rec.Insert(true);
+                    CurrPage.Update();
+                end;
+            }
+        }
+
+        area(Promoted)
+        {
+            actionref(new_; New) { }
         }
     }
 }

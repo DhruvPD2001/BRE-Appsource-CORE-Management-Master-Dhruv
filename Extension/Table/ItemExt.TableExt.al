@@ -53,8 +53,17 @@ tableextension 50102 "Item Ext" extends Item
         {
             DataClassification = ToBeClassified;
             Caption = 'Unit Type';
-            TableRelation = "Secondary Classification"."Property Type"
-                 where("Classification Name" = field("Usage Type"));
+            TableRelation = "Secondary Classification" where("Classification Name" = field("Usage Type"));
+            trigger OnValidate()
+            var
+                secondaryClassification: Record "Secondary Classification";
+                id: Integer;
+            begin
+                Evaluate(id, Rec."Unit Type");
+                secondaryClassification.SetRange(ID, id);
+                if secondaryClassification.FindFirst() then
+                    Rec."Unit Type" := secondaryClassification."Property Type";
+            end;
         }
         field(50108; "Unit Status"; Option)
         {

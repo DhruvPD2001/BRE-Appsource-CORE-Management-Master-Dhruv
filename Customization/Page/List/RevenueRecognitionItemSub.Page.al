@@ -45,6 +45,7 @@ page 50973 "Revenue Recognition Item Sub"
                 Caption = 'Revenue Allocation-Other Charges';
                 ApplicationArea = All;
                 Image = List;
+                Enabled = CanPost;
                 trigger OnAction()
                 var
                     revenueAllocation: Record "Revenue Allocation Details";
@@ -157,6 +158,8 @@ page 50973 "Revenue Recognition Item Sub"
         // Process active contracts directly from Revenue Structure
         if TenancyContract.FindSet() then
             repeat
+                if TenancyContract."Tenant Contract Status" = TenancyContract."Tenant Contract Status"::Terminated then
+                    continue;
                 // NEW: Check if contract should be processed based on status and dates
                 if ShouldProcessContract(TenancyContract, RevenueAllocation.Month, RevenueAllocation."Financial Year") then
                     // Check if contract is active during the selected period
@@ -2435,8 +2438,28 @@ page 50973 "Revenue Recognition Item Sub"
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    procedure UpdateCanPost()
+    var
+        RevenueAllocation: Record "Revenue Allocation Details";
+    begin
+        Clear(CanPost);
+
+        // Link Revenue Allocation with your current record
+        RevenueAllocation.SetRange("No.", Rec."RR_No.");  // adjust if different link field
+        if RevenueAllocation.FindFirst() then
+            CanPost := (RevenueAllocation.Status = RevenueAllocation.Status::Pending)
+        else
+            CanPost := false; // No record found = cannot post
+    end;
+
+    trigger OnAfterGetRecord()
+    begin
+        UpdateCanPost();
+    end;
+
     var
         RRID: Integer;
+        CanPost: Boolean;
 
     procedure SetRIID(pRRID: Integer)
     begin

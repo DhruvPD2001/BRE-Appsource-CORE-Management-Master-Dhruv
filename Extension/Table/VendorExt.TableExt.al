@@ -6,11 +6,13 @@ tableextension 50301 "Vendor Ext" extends Vendor
         {
             DataClassification = ToBeClassified;
             Caption = 'Country';
-            TableRelation = Country."Country Code";
+            TableRelation = Country;
             trigger OnValidate()
+            var
+                country: Record Country;
             begin
-                "Emirate Name" := '';
-                "Community" := '';
+                if country.Get(Rec.Country) then
+                    Rec.Country := country."Country Code";
             end;
         }
         field(50115; "Emirate Name"; Text[50])
@@ -37,8 +39,15 @@ tableextension 50301 "Vendor Ext" extends Vendor
         {
             DataClassification = ToBeClassified;
             Caption = 'Community';
-            TableRelation = Community."Community Name"
-                 where("Emirate Name" = field("Emirate Name"));
+            TableRelation = Community where("Emirate Name" = field("Emirate Name"));
+
+            trigger OnValidate()
+            var
+                communityRec: Record Community;
+            begin
+                if communityRec.Get(Community) then
+                    Community := communityRec."Community Name";
+            end;
         }
         field(50100; "Vendor Category"; Text[100])
         {

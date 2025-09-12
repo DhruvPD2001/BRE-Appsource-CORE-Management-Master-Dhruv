@@ -433,6 +433,11 @@ table 50925 "Payment Mode2"
             DataClassification = ToBeClassified;
             Caption = 'Final Rent Amount Including VAT';
         }
+        field(50938; "PortalSidePaymentProcessing"; Text[100])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Portal Side Payment Processing';
+        }
     }
     keys
     {

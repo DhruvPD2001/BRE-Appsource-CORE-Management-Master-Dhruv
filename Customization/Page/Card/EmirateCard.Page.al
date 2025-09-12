@@ -1,45 +1,53 @@
-page 50114 "Emirate List"
+page 51256 "Emirate Card"
 {
-    PageType = List;
+    PageType = Card;
     SourceTable = Emirate;
     ApplicationArea = All;
-    Caption = 'Emirate List';
-    UsageCategory = Lists;
-    CardPageId = 51256;
+    Caption = 'Emirate Card';
+    UsageCategory = None;
 
     layout
     {
         area(content)
         {
-            repeater(Group)
+            group(Group)
             {
+                Caption = 'Emirate Details';
                 field("ID"; Rec."ID")
                 {
                     ApplicationArea = All;
-                    Caption = 'ID';
                     ToolTip = 'Specifies the unique identifier for the emirate.';
                 }
                 field("Sl No."; Rec."Sl No.")
                 {
                     ApplicationArea = All;
-                    Caption = 'Sl No.';
                     ToolTip = 'Specifies the serial number for the emirate.';
                 }
                 field("Country Code"; Rec."Country Code")
                 {
                     ApplicationArea = All;
-                    Caption = 'Country Code';
-                    TableRelation = Country;
-                    Lookup = true;
                     ToolTip = 'Specifies the country code associated with the emirate.';
+                    ShowMandatory = true;
+                    NotBlank = true;
                 }
                 field("Emirate Name"; Rec."Emirate Name")
                 {
                     ApplicationArea = All;
-                    Caption = 'Emirate Name';
                     ToolTip = 'Specifies the name of the emirate.';
+                    ShowMandatory = true;
+                    NotBlank = true;
+
+                    trigger OnValidate()
+                    begin
+                        CurrPage.SaveRecord();
+                    end;
                 }
             }
         }
     }
+    trigger OnInsertRecord(BelowxRec: Boolean): Boolean
+    begin
+        Rec.TestField("Country Code");
+        Rec.TestField("Emirate Name");
+    end;
 }

@@ -70,8 +70,15 @@ table 50303 "Property Registration"
         {
             DataClassification = ToBeClassified;
             Caption = 'Community';
-            TableRelation = Community."Community Name"
-                 where("Emirate Name" = field("Emirate Name"));
+            TableRelation = Community where("Emirate Name" = field("Emirate Name"));
+
+            trigger OnValidate()
+            var
+                communityRec: Record Community;
+            begin
+                if communityRec.Get(Community) then
+                    Community := communityRec."Community Name";
+            end;
         }
         field(50109; "Number of Units"; Integer)
         {
@@ -92,8 +99,15 @@ table 50303 "Property Registration"
         {
             DataClassification = ToBeClassified;
             Caption = 'Property Type';
-            TableRelation = "Property Type"."Property Type"
-                 where("Classification Name" = field("Property Classification"));
+            TableRelation = "Property Type" where("Classification Name" = field("Property Classification"));
+
+            trigger OnValidate()
+            var
+                propertyType: Record "Property Type";
+            begin
+                if propertyType.Get(Rec."Property Type") then
+                    Rec."Property Type" := propertyType."Property Type";
+            end;
         }
         field(50112; "Registration Date"; Date)
         {

@@ -48,7 +48,7 @@ table 50104 "Community"
     }
     keys
     {
-        key(PK; "ID", "Community Name", "Emirate Name")
+        key(PK; "ID")
         {
             Clustered = true;
         }

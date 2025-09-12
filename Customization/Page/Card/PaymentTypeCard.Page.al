@@ -1,32 +1,38 @@
-page 50937 "Payment Type List"
+page 50936 "Payment Type Card"
 {
-    PageType = List;
+    PageType = Card;
     SourceTable = "Payment Type";
     ApplicationArea = All;
-    Caption = 'Payment Type List';
-    UsageCategory = Lists;
-    CardPageId = 50936;
+    Caption = 'Payment Type Card';
+    UsageCategory = None;
 
     layout
     {
         area(content)
         {
-            repeater(Group)
+            group(Group)
             {
+                Caption = 'Payment Type Details';
                 field("Payment ID"; Rec."Payment ID")
                 {
                     ApplicationArea = All;
-                    Caption = 'Payment ID';
-                    ToolTip = 'Specifies the unique identifier for the payment type.';
+                    Editable = false;
+                    toolTip = 'Specifies the unique identifier for the payment type.';
                 }
                 field("Payment Method"; Rec."Payment Method")
                 {
                     ApplicationArea = All;
                     Caption = 'Payment Method';
-                    ToolTip = 'Specifies the method of payment, such as Cash, Credit Card, or Bank Transfer.';
+                    ToolTip = 'Enter the Payment Method.';
+                    ShowMandatory = true;
+                    NotBlank = true;
                 }
             }
         }
     }
 
+
 }
+
+
+

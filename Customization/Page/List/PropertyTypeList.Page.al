@@ -5,6 +5,7 @@ page 50111 "Property Type List"
     ApplicationArea = All;
     Caption = 'Property Type List';
     UsageCategory = Lists;
+    CardPageId = 51259;
 
     layout
     {
@@ -29,7 +30,7 @@ page 50111 "Property Type List"
                 field("Property Type"; Rec."Property Type")
                 {
                     ApplicationArea = All;
-                    Caption = 'Property Type';
+                    Caption = 'Unit Type';
                     ToolTip = 'The name of the property type.';
                 }
             }
