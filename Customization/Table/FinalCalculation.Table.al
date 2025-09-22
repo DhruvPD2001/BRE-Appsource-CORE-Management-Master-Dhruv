@@ -72,15 +72,25 @@ table 50901 "Final Calculation"
 
             trigger OnValidate()
             var
-
+                FinalCalculation: Record "Final Calculation";
+                TerminateDate: Date;
+                EndDate: Date;
             begin
-                if ("Contract End Date" = "Termination Date") then
-                    "Termination Status" := "Termination Status"::"Regular Termination"
-                else
-                    if ("Contract End Date" > "Termination Date") then
-                        "Termination Status" := "Termination Status"::"Early Termination"
+                FinalCalculation.SetRange("FC ID", Rec."FC ID");
+                FinalCalculation.SetRange("Contract ID", Rec."Contract ID");
+                if not FinalCalculation.IsEmpty() then begin
+                    EndDate := Rec."Contract End Date";
+                    TerminateDate := Rec."Termination Date";
+
+                    if (EndDate = TerminateDate) then
+                        "Termination Status" := "Termination Status"::"Regular Termination"
                     else
-                        Error('Termination Date cannot be greater than Contract End Date.');
+                        if (EndDate > TerminateDate) then
+                            "Termination Status" := "Termination Status"::"Early Termination"
+                        else
+                            Error('Termination Date cannot be greater than Contract End Date.');
+
+                end;
             end;
 
         }
