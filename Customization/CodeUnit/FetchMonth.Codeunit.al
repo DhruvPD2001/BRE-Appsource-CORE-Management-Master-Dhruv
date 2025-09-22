@@ -63,4 +63,25 @@ codeunit 53751 "Fetch Month"
                 exit(0);
         end;
     end;
+
+    procedure GetNoofDaysInMonth(MonthNo: Integer; Year: Integer): Integer
+    var
+        DaysInMonth: array[12] of Integer;
+    begin
+        DaysInMonth[1] := 31;
+        DaysInMonth[2] := 28;
+        DaysInMonth[3] := 31;
+        DaysInMonth[4] := 30;
+        DaysInMonth[5] := 31;
+        DaysInMonth[6] := 30;
+        DaysInMonth[7] := 31;
+        DaysInMonth[8] := 31;
+        DaysInMonth[9] := 30;
+        DaysInMonth[10] := 31;
+        DaysInMonth[11] := 30;
+        DaysInMonth[12] := 31;
+        if (Year mod 4 = 0) and ((Year mod 100 <> 0) or (Year mod 400 = 0)) then
+            DaysInMonth[2] := 29;
+        exit(DaysInMonth[MonthNo]);
+    end;
 }

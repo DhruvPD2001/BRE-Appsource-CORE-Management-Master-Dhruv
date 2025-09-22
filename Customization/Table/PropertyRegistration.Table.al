@@ -51,7 +51,7 @@ table 50303 "Property Registration"
         {
             DataClassification = ToBeClassified;
             Caption = 'Emirate';
-            TableRelation = Emirate.ID;
+            TableRelation = Emirate.ID where("Country Code" = field(Country));
             trigger OnValidate()
             var
                 emirate: Record "Emirate";
@@ -365,6 +365,19 @@ table 50303 "Property Registration"
             DataClassification = ToBeClassified;
             Caption = 'Frequency Of Payment';
             OptionMembers = " ","Monthly","Quaterly","Half Yearly","Yearly";
+        }
+        field(50158; "Country"; Text[100])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Country';
+            TableRelation = Country;
+            trigger OnValidate()
+            var
+                country: Record Country;
+            begin
+                if country.Get(Rec.Country) then
+                    Rec.Country := country."Country Code";
+            end;
         }
     }
     keys
