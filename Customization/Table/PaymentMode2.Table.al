@@ -123,48 +123,57 @@ table 50925 "Payment Mode2"
                 OutStream: OutStream;
                 inStream: InStream;
             begin
-                if Rec."Payment Status" = Rec."Payment Status"::Received then
-                    if Rec."Payment Mode" = 'Cheque' then
-                        Rec."Cheque Status" := Rec."Cheque Status"::Cleared;
-                CashReceiptJournalCodeunit.CreateCashReceiptJournal(Rec);
-                Email.SendEmail(Rec);
-                if Rec."Payment Status" = Rec."Payment Status"::Received then
-                    emailrec.SendEmail(Rec);
-                ReportID := 50112;
-                paymentmode2Grid.Reset();
-                paymentmode2Grid.SetRange("Tenant ID", Rec."Tenant ID");
-                paymentmode2Grid.SetRange("Contract ID", Rec."Contract ID");
-                paymentmode2Grid.SetRange("Payment Series", Rec."Payment Series");
-                if not paymentmode2Grid.FindFirst() then
-                    Error('Not avavilable');
-                RecRef.GetTable(paymentmode2Grid);
-                RecRef.GetTable(Rec);
-                TempBlob.CreateOutStream(OutStream);
-                Report.SaveAs(ReportID, '', ReportFormat::Pdf, OutStream, RecRef);
-                TempBlob.CreateInStream(inStream);
-                fileName := 'Invoice_' + Format(Rec."Contract ID") + Rec."Payment Series" + '.pdf';
-                folderName := 'Payment Receipt';
-                uploadResult := azureBlobUploader.UploadDocumentToBlob(inStream, fileName, folderName);
-                if fileName <> '' then begin
-                    Rec."View Invoice" := fileName;
-                    Rec."View Reciept document URL" := uploadResult;
-                    Rec.Modify();
-                    Message('File uploaded successfully: %1', fileName);
+                case Rec."Payment Status" of
+                    Rec."Payment Status"::Received:
+                        begin
+                            if Rec."Payment Mode" = 'Cheque' then
+                                Rec."Cheque Status" := Rec."Cheque Status"::Cleared;
+
+                            CashReceiptJournalCodeunit.CreateCashReceiptJournal(Rec);
+                            Email.SendEmail(Rec);
+                            emailrec.SendEmail(Rec);
+
+                            ReportID := 50112;
+                            paymentmode2Grid.Reset();
+                            paymentmode2Grid.SetRange("Tenant ID", Rec."Tenant ID");
+                            paymentmode2Grid.SetRange("Contract ID", Rec."Contract ID"); // Ensure filtering on unique ID
+                            paymentmode2Grid.SetRange("Payment Series", Rec."Payment Series"); // Add this line to filter by Payment Series
+
+                            if not paymentmode2Grid.FindFirst() then
+                                Error('Not avavilable');
+                            RecRef.GetTable(paymentmode2Grid);
+                            RecRef.GetTable(Rec);
+                            TempBlob.CreateOutStream(OutStream);
+                            Report.SaveAs(ReportID, '', ReportFormat::Pdf, OutStream, RecRef);
+                            TempBlob.CreateInStream(inStream);
+
+                            fileName := 'Invoice_' + Format(Rec."Contract ID") + Rec."Payment Series" + '.pdf';
+
+                            folderName := 'Payment Receipt';
+                            uploadResult := CopyStr(azureBlobUploader.UploadDocumentToBlob(inStream, fileName, folderName), 1, 250);
+                            if fileName <> '' then begin
+                                Rec."View Invoice" := CopyStr(fileName, 1, StrLen(fileName));
+                                Rec."View Reciept document URL" := CopyStr(uploadResult, 1, StrLen(uploadResult));
+                                Rec.Modify();
+                                Message('File uploaded successfully: %1', fileName);
+                            end;
+                            Rec.Modify();
+                            paymentschedule2.SetRange("payment Series", Rec."Payment Series");
+                            paymentschedule2.SetRange("Contract ID", Rec."Contract ID");
+                            if paymentschedule2.FindSet() then
+                                repeat
+                                    paymentschedule2.Validate("Payment Status", Format(Rec."Payment Status"));
+                                    paymentschedule2.Modify();
+                                until paymentschedule2.Next() = 0
+                        end;
+                    Rec."Payment Status"::Cancelled:
+                        begin
+                            emailrec.SendEmailCancelled(Rec); // Call for Cancelled status
+                            Rec.Validate("Cheque Status", Rec."Cheque Status"::Retrieved);
+                        end;
+                    Rec."Payment Status"::Overdue:
+                        emailrec.SendEmailOverdue(Rec); // Call for Overdue status
                 end;
-                Rec.Modify();
-                paymentschedule2.SetRange("payment Series", Rec."Payment Series");
-                paymentschedule2.SetRange("Contract ID", Rec."Contract ID");
-                if paymentschedule2.FindSet() then
-                    repeat
-                        paymentschedule2.Validate("Payment Status", Format(Rec."Payment Status"));
-                        paymentschedule2.Modify();
-                    until paymentschedule2.Next() = 0
-                else
-                    if Rec."Payment Status" = Rec."Payment Status"::Cancelled then
-                        emailrec.SendEmailCancelled(Rec)
-                    else
-                        if Rec."Payment Status" = Rec."Payment Status"::Overdue then
-                            emailrec.SendEmailOverdue(Rec);
             end;
         }
         field(50113; "Cheque Status"; Enum "PDC Status Type Enum")

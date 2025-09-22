@@ -196,13 +196,32 @@ pageextension 50101 "Item Card Ext" extends "Item Card"
                     Editable = false;
                     Visible = false;
                 }
+                field("Property ID"; Rec."Property ID")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Property ID';
+                    ToolTip = 'Select the associated Property ID.';
+                    Editable = editablefalsefieldNonInventoryType;
+                    trigger OnValidate()
+                    begin
+                        AutoGenerateUnitName(Rec);
+                    end;
+                }
+
+                field("Property Name"; Rec."Property Name")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Select the associated Property Name.';
+                    Caption = 'Property Name';
+                    Editable = false;
+                }
                 field("Country"; Rec.Country)
                 {
                     ApplicationArea = All;
                     Caption = 'Country';
                     ToolTip = 'Country where the Unit is located';
                     Lookup = true;
-                    Editable = editablefalsefieldNonInventoryType;
+                    Editable = false;
                     trigger OnValidate()
                     begin
                         AutoGenerateUnitName(Rec);
@@ -215,7 +234,7 @@ pageextension 50101 "Item Card Ext" extends "Item Card"
                     Caption = 'Emirate';
                     ToolTip = 'Emirate where the Unit is located';
                     Lookup = true;
-                    Editable = editablefalsefieldNonInventoryType;
+                    Editable = false;
                     trigger OnValidate()
                     begin
                         AutoGenerateUnitName(Rec);
@@ -227,29 +246,11 @@ pageextension 50101 "Item Card Ext" extends "Item Card"
                     Caption = 'Community';
                     ToolTip = 'Community where the Unit is located';
                     Lookup = true;
-                    Editable = editablefalsefieldNonInventoryType;
-                    trigger OnValidate()
-                    begin
-                        AutoGenerateUnitName(Rec);
-                    end;
-                }
-                field("Property ID"; Rec."Property ID")
-                {
-                    ApplicationArea = All;
-                    Caption = 'Property ID';
-                    ToolTip = 'Unique Identifier for the Property';
-                    Editable = editablefalsefieldNonInventoryType;
-                    trigger OnValidate()
-                    begin
-                        AutoGenerateUnitName(Rec);
-                    end;
-                }
-                field("Property Name"; Rec."Property Name")
-                {
-                    ApplicationArea = All;
-                    Caption = 'Property Name';
-                    ToolTip = 'Name of the Property where the Unit is located';
                     Editable = false;
+                    trigger OnValidate()
+                    begin
+                        AutoGenerateUnitName(Rec);
+                    end;
                 }
                 field("Floor Number"; Rec."Floor Number")
                 {
